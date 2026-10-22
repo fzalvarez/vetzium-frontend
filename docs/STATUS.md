@@ -118,6 +118,14 @@
 - [x] Verificado con Chrome headless y clics/tecleo reales: 13 tablas con 5 filas y pie
       "Mostrando 1–5 de 5", errores de validación, altas, filtro, selección, paso a la
       página 2 con 11 registros y cambio a 25 filas por página.
+- [x] **Marketing › Promociones** (datos de ejemplo, en memoria): pestaña **Lista** con
+      Buscar producto o servicio, Estado, "Expira hasta" y + Crear promoción (nombre,
+      producto o servicio, puntos, expiración e imagen opcional con vista previa); tabla
+      con fecha de creación, imagen, promoción, producto, expiración ("Vencida" si pasó),
+      valor ("+N puntos"), estado (switch) y opciones (ver detalle, eliminar con
+      confirmación). Pestaña **Catálogo**: tarjetas de las promociones activas y vigentes.
+- [x] **Marketing › Puntos**: propietario, email, puntos vigentes, por vencer, vencidos y
+      opciones (5 clientes de ejemplo, de mayor a menor saldo).
 - [x] **Eventos › Listado** (datos de ejemplo): barra con Buscar, Fechas (desde–hasta),
       Borrar, Actualizar; segunda fila con filtros Tipo de evento, Estado (inicia en
       Pendiente), Usuario y Sala de espera (Enviado / No enviado). Tabla: Fecha (agregada
