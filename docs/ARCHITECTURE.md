@@ -42,6 +42,7 @@ src/
 | `configuracion` | — (localStorage) | `/configuracion` |
 | `ventas` | por definir | `/ventas/cuentas-activas`, `/ventas/comprobantes`, `/ventas/entradas-salidas` |
 | `clientes` | por definir | `/clientes` (listado), `/clientes/gestion` |
+| `proveedores` | por definir | `/proveedores` (directorio), `/proveedores/ordenes-compra` |
 | `productos` | por definir | `/productos` (catálogo), `/productos/descargar-stock`, `/productos/cargar-stock` |
 | `en-construccion` | — | toda ruta del menú sin pantalla propia |
 | `error-pages` | — | `*` (404), `errorElement` |
@@ -88,6 +89,13 @@ la primera es la de por defecto y no se escribe. En `Tabla`, montos y cantidades
 alinean a la derecha y "Opciones" al centro; `encabezado` reemplaza el título de una
 columna (p. ej. la casilla de seleccionar todos). Una vista sin columnas definidas
 muestra `PorDefinir`.
+
+Sobre la tabla va `BarraHerramientas`: `Buscador` y acciones a la izquierda (`children`)
+y `derecha` alineado a la derecha (p. ej. Exportar, Opciones). Botones `size="sm"`; la
+acción principal con la variante por defecto. Un botón cuya acción aún no existe llama a
+`proximamente("Acción")` (toast informativo).
+
+Colores solo con tokens (`brand-*`, `gray-*`, `error-*`…), también en `components/ui`.
 Colores solo con tokens (`brand-*`, `gray-*`) para cambiar la identidad desde `index.css`.
 
 ## Integración con el backend

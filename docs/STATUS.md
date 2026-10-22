@@ -48,8 +48,20 @@
       descripción va debajo del nombre). Solo Clientes › Gestión tiene descripción; el resto
       "Sin descripción" hasta definirlas.
 
+- [x] Proveedores, estructura visual sin datos, verificada con Chrome headless:
+      - **Directorio**: buscador y "Crear nuevo proveedor"; tabla ID, Nombre legal,
+        Número tributario, Teléfono fijo, Celular, Correo.
+      - **Órdenes de compra**: pestañas Órdenes de compra, Recepciones, Pagos (estas dos
+        por definir). Barra: Buscar producto, Más filtros, Agrupar, Borrar, Actualizar,
+        + Nuevo; a la derecha Exportar y Opciones. Tabla #, Proveedor, Fecha de creación,
+        Estado (Recibido/Aprobado), Valor neto, Impuestos, Monto, Opciones.
+      - Los botones muestran "Próximamente" (verificado con clic real).
+- [x] `Button` y `ThemeToggle` pasan de colores fijos heredados a tokens de marca.
+
 ## Siguiente
 
+- [ ] Por definir en Proveedores: Recepciones y Pagos; qué borra "Borrar"; qué filtros
+      tiene "Más filtros" y por qué campos se agrupa; qué incluye el menú Opciones.
 - [ ] Descripciones de los módulos y submódulos.
 - [ ] Por definir: pestañas Ubicación, Zona, Información y Etiquetas de Clientes ›
       Gestión; columnas de Descargar stock y Cargar stock; qué se hace con los clientes

@@ -15,3 +15,5 @@ export const GestionClientesPage = lazy(() => import("@/features/clientes/pages/
 export const CatalogoPage = lazy(() => import("@/features/productos/pages/CatalogoPage"));
 export const DescargarStockPage = lazy(() => import("@/features/productos/pages/DescargarStockPage"));
 export const CargarStockPage = lazy(() => import("@/features/productos/pages/CargarStockPage"));
+export const DirectorioProveedoresPage = lazy(() => import("@/features/proveedores/pages/DirectorioProveedoresPage"));
+export const OrdenesCompraPage = lazy(() => import("@/features/proveedores/pages/OrdenesCompraPage"));

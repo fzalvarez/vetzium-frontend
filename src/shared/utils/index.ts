@@ -14,3 +14,8 @@ export const notifySuccess = (message: string) => {
 export const notifyError = (message: string) => {
   toast.error(message);
 };
+
+/** Aviso para botones cuya acción todavía no está construida. */
+export const proximamente = (accion: string) => {
+  toast.info("Próximamente", { description: `${accion} estará disponible pronto.` });
+};

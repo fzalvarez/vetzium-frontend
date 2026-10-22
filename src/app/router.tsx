@@ -8,11 +8,13 @@ import {
   ConfiguracionPage,
   CuentasActivasPage,
   DescargarStockPage,
+  DirectorioProveedoresPage,
   EnConstruccionPage,
   EntradasSalidasPage,
   GestionClientesPage,
   InicioPage,
   ListadoClientesPage,
+  OrdenesCompraPage,
 } from "./paginas";
 import { RutaModulo } from "@/features/configuracion/components/RutaModulo";
 import Error404 from "@/features/error-pages/pages/Error404";
@@ -30,6 +32,8 @@ const PAGINAS: Record<string, React.ReactNode> = {
   "/productos": <CatalogoPage />,
   "/productos/descargar-stock": <DescargarStockPage />,
   "/productos/cargar-stock": <CargarStockPage />,
+  "/proveedores": <DirectorioProveedoresPage />,
+  "/proveedores/ordenes-compra": <OrdenesCompraPage />,
 };
 
 // Cada ruta del menú respeta lo activado/desactivado en Configuración.
