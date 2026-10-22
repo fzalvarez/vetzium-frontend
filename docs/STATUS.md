@@ -11,10 +11,15 @@
 - [x] Layout principal (`AdminLayout`): sidebar con marca y menú por grupos, header con
       tema claro/oscuro, menú móvil, contenido centrado y páginas lazy. Página `Inicio`
       vacía en `/`. Verificado con Chrome headless (escritorio, móvil y 404).
+- [x] Menú lateral mapeado: 19 módulos, 8 con submódulos (Ventas, Peluquería, Transporte,
+      Clientes, Mascotas, Eventos, Productos, Proveedores), 43 rutas. Submenús
+      desplegables (uno a la vez, se abre el de la ruta actual). Toda ruta sin pantalla
+      muestra "Módulo en construcción" con su título. Verificado con Chrome headless
+      (`/ventas/comprobantes` y `/hotel`).
 
 ## Siguiente
 
-- [ ] Definir backend, dominio y primeras features (y sus grupos del menú).
+- [ ] Definir backend, dominio y primera pantalla.
 - [ ] Identidad visual: hoy usa los colores, la tipografía y el favicon de HCVet.
 - [ ] Contenido del header (búsqueda, notificaciones, sede…) y tarjeta de usuario en el
       sidebar: dependen del dominio y de la autenticación.

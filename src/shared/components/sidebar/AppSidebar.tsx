@@ -1,42 +1,120 @@
-import { NavLink } from "react-router-dom";
-import { PawPrintIcon } from "lucide-react";
+import { useState } from "react";
+import { NavLink, useLocation } from "react-router-dom";
+import { ChevronDownIcon, PawPrintIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { INICIO_ITEM, NAV_GROUPS, type NavItem } from "@/app/navegacion";
+import { MENU, type NavItem, type SubItem } from "@/app/navegacion";
 import { useSidebarStore } from "@/shared/store/sidebar.store";
 
-const linkCls = ({ isActive }: { isActive: boolean }) =>
-  cn(
-    "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all active:scale-[0.98]",
-    isActive
-      ? "text-brand-700 bg-brand-500/10 font-semibold dark:text-brand-400 dark:bg-brand-500/15"
-      : "text-gray-600 hover:bg-brand-50 dark:text-gray-400 dark:hover:bg-white/5"
-  );
+const itemCls = "flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-sm font-medium transition-all";
+const itemActivoCls = "text-brand-700 bg-brand-500/10 font-semibold dark:text-brand-400 dark:bg-brand-500/15";
+const itemInactivoCls = "text-gray-600 hover:bg-brand-50 dark:text-gray-400 dark:hover:bg-white/5";
 
-function Enlace({ item, end }: { item: NavItem; end?: boolean }) {
+/** Módulo con submódulos que contiene la ruta actual, si hay. */
+function moduloDeRuta(pathname: string): string | null {
+  return MENU.find((item) => item.items?.some((sub) => sub.to === pathname))?.label ?? null;
+}
+
+function Enlace({ to, label, icon: Icon }: { to: string; label: string; icon: NavItem["icon"] }) {
   const closeMobileSidebar = useSidebarStore((s) => s.closeMobileSidebar);
-  const { label, icon: Icon, to } = item;
 
   return (
-    <NavLink to={to} end={end} onClick={closeMobileSidebar} className={linkCls}>
+    <NavLink
+      to={to}
+      end
+      onClick={closeMobileSidebar}
+      className={({ isActive }) => cn(itemCls, "active:scale-[0.98]", isActive ? itemActivoCls : itemInactivoCls)}
+    >
       <Icon className="size-4 shrink-0" />
       <span>{label}</span>
     </NavLink>
   );
 }
 
+function Grupo({
+  item,
+  items,
+  abierto,
+  activo,
+  onToggle,
+}: {
+  item: NavItem;
+  items: SubItem[];
+  abierto: boolean;
+  activo: boolean;
+  onToggle: () => void;
+}) {
+  const closeMobileSidebar = useSidebarStore((s) => s.closeMobileSidebar);
+  const Icon = item.icon;
+
+  return (
+    <div>
+      <button
+        type="button"
+        onClick={onToggle}
+        aria-expanded={abierto}
+        className={cn(itemCls, activo ? "text-brand-700 font-semibold dark:text-brand-400" : itemInactivoCls)}
+      >
+        <Icon className="size-4 shrink-0" />
+        <span className="flex-1 text-left">{item.label}</span>
+        <ChevronDownIcon className={cn("size-4 shrink-0 transition-transform duration-200", abierto && "rotate-180")} />
+      </button>
+
+      {/* Altura animada con grid-rows (0fr → 1fr). */}
+      <div
+        className={cn(
+          "grid transition-[grid-template-rows] duration-200 ease-in-out",
+          abierto ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+        )}
+      >
+        <div className="overflow-hidden">
+          <div className="ml-5 mt-0.5 mb-1 pl-3 flex flex-col gap-0.5 border-l border-gray-200 dark:border-gray-800">
+            {items.map((sub) => (
+              <NavLink
+                key={sub.to}
+                to={sub.to}
+                end
+                tabIndex={abierto ? undefined : -1}
+                onClick={closeMobileSidebar}
+                className={({ isActive }) =>
+                  cn(
+                    "px-3 py-2 rounded-lg text-[13px] transition-colors",
+                    isActive ? itemActivoCls : "text-gray-500 hover:bg-brand-50 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-gray-200"
+                  )
+                }
+              >
+                {sub.label}
+              </NavLink>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function AppSidebar() {
+  const { pathname } = useLocation();
   const isMobileOpen = useSidebarStore((s) => s.isMobileOpen);
+
+  // Un solo módulo desplegado a la vez; al navegar se despliega el de la ruta actual.
+  const [abierto, setAbierto] = useState<string | null>(() => moduloDeRuta(pathname));
+  const [rutaPrevia, setRutaPrevia] = useState(pathname);
+  if (rutaPrevia !== pathname) {
+    setRutaPrevia(pathname);
+    const modulo = moduloDeRuta(pathname);
+    if (modulo) setAbierto(modulo);
+  }
 
   return (
     <nav
       className={cn(
-        "fixed left-0 top-0 h-full flex flex-col p-4 gap-2 bg-white border-r border-gray-200 w-64 z-50 overflow-y-auto no-scrollbar transition-transform duration-200 ease-in-out dark:bg-gray-900 dark:border-gray-800",
+        "fixed left-0 top-0 h-full flex flex-col p-4 gap-2 bg-white border-r border-gray-200 w-64 z-50 overflow-y-auto custom-scrollbar transition-transform duration-200 ease-in-out dark:bg-gray-900 dark:border-gray-800",
         "lg:translate-x-0",
         isMobileOpen ? "translate-x-0" : "-translate-x-full"
       )}
     >
       {/* Marca */}
-      <div className="mb-6 px-2 flex items-center gap-3">
+      <div className="mb-4 px-2 flex items-center gap-3">
         <div className="w-10 h-10 bg-brand-600 rounded-lg flex items-center justify-center shrink-0 dark:bg-brand-500">
           <PawPrintIcon className="size-5 text-white" />
         </div>
@@ -46,21 +124,21 @@ export function AppSidebar() {
       </div>
 
       {/* Navegación */}
-      <div className="flex flex-col gap-1 flex-1">
-        <Enlace item={INICIO_ITEM} end />
-
-        {NAV_GROUPS.filter((group) => group.items.length > 0).map((group) => (
-          <div key={group.label} className="mt-3 pt-3 border-t border-gray-200 dark:border-gray-800">
-            <h2 className="px-3 mb-1.5 text-xs font-bold text-gray-400 uppercase tracking-widest dark:text-gray-500">
-              {group.label}
-            </h2>
-            <div className="flex flex-col gap-0.5">
-              {group.items.map((item) => (
-                <Enlace key={item.to} item={item} />
-              ))}
-            </div>
-          </div>
-        ))}
+      <div className="flex flex-col gap-0.5 flex-1">
+        {MENU.map((item) =>
+          item.items ? (
+            <Grupo
+              key={item.label}
+              item={item}
+              items={item.items}
+              abierto={abierto === item.label}
+              activo={item.items.some((sub) => sub.to === pathname)}
+              onToggle={() => setAbierto((actual) => (actual === item.label ? null : item.label))}
+            />
+          ) : (
+            <Enlace key={item.to} to={item.to} label={item.label} icon={item.icon} />
+          )
+        )}
       </div>
     </nav>
   );

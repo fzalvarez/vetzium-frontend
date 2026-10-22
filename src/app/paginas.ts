@@ -5,3 +5,4 @@ import { lazy } from "react";
 // propio archivo: router.tsx exporta `router`, y un archivo que mezcla componentes
 // con otras exportaciones rompe el fast refresh de Vite.
 export const InicioPage = lazy(() => import("@/features/inicio/pages/InicioPage"));
+export const EnConstruccionPage = lazy(() => import("@/features/en-construccion/pages/EnConstruccionPage"));

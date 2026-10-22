@@ -12,7 +12,7 @@ src/
 ├── app/
 │   ├── router.tsx               # rutas (createBrowserRouter)
 │   ├── paginas.ts               # páginas lazy (un chunk por pantalla)
-│   ├── navegacion.ts            # items y grupos del menú lateral
+│   ├── navegacion.ts            # menú lateral (módulos y submódulos, con rutas)
 │   └── layouts/                 # AppLayout (RouterProvider), AdminLayout (sidebar + header)
 ├── features/<feature>/
 │   ├── pages/                   # vistas de ruta
@@ -38,6 +38,7 @@ src/
 | Feature | Backend | Rutas |
 |---|---|---|
 | `inicio` | — | `/` |
+| `en-construccion` | — | toda ruta del menú sin pantalla propia |
 | `error-pages` | — | `*` (404), `errorElement` |
 
 ## Layout
@@ -48,8 +49,18 @@ del header, con fondo oscuro que lo cierra), header sticky de 64px con las accio
 `handle: { anchoCompleto: true }` usa todo el ancho. Las páginas se cargan lazy
 dentro de un `Suspense`.
 
-Para agregar una pantalla: página en `features/<f>/pages`, `lazy` en `paginas.ts`,
-ruta hija en `router.tsx` y, si va en el menú, item en `navegacion.ts`.
+### Menú lateral
+
+`MENU` en `navegacion.ts` es la única fuente del menú y de sus rutas. Un módulo tiene
+ruta propia (`to`) o submódulos (`items`); el primer submódulo usa la ruta base del
+módulo (Ventas → `/ventas`, Comprobantes → `/ventas/comprobantes`). En el sidebar se
+despliega un módulo a la vez y, al navegar, se abre el de la ruta actual.
+
+`router.tsx` crea una ruta "en construcción" (con título `Módulo › Submódulo`) para
+cada ruta del menú que no esté en `rutasConPagina`.
+
+Para construir una pantalla del menú: página en `features/<f>/pages`, `lazy` en
+`paginas.ts`, ruta en `paginas` de `router.tsx` y su `to` en `rutasConPagina`.
 Colores solo con tokens (`brand-*`, `gray-*`) para cambiar la identidad desde `index.css`.
 
 ## Integración con el backend
