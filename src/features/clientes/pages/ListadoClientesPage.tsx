@@ -7,10 +7,12 @@ import { usePaginacion } from "@/shared/hooks/usePaginacion";
 import { useSeleccion } from "@/shared/hooks/useSeleccion";
 import { formatearFecha } from "@/shared/utils/fechas";
 import { ESTADOS_CLIENTE } from "../constants";
-import { CLIENTES_EJEMPLO, nombreCompleto } from "../datos-ejemplo";
+import { nombreCompleto } from "../datos-ejemplo";
+import { useClientesStore } from "../store/clientes.store";
 
 export default function ListadoClientesPage() {
-  const { visibles, paginacion } = usePaginacion(CLIENTES_EJEMPLO);
+  const clientes = useClientesStore((s) => s.clientes);
+  const { visibles, paginacion } = usePaginacion(clientes);
   const seleccion = useSeleccion(visibles.map((c) => c.id));
 
   const columnas: Columna[] = [
@@ -50,7 +52,7 @@ export default function ListadoClientesPage() {
 
         <Tabla
           columnas={columnas}
-          vacia={CLIENTES_EJEMPLO.length === 0}
+          vacia={clientes.length === 0}
           mensajeVacio="No hay clientes registrados."
           paginacion={paginacion}
         >

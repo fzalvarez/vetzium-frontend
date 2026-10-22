@@ -9,7 +9,9 @@ import { Tarjeta } from "@/shared/components/Tarjeta";
 import { usePaginacion } from "@/shared/hooks/usePaginacion";
 import { calcularEdad } from "@/shared/utils/fechas";
 import { coincide } from "@/shared/utils/texto";
-import { CLIENTES_EJEMPLO, nombreCompleto } from "@/features/clientes/datos-ejemplo";
+import { nombreCompleto } from "@/features/clientes/datos-ejemplo";
+import { useClientesStore } from "@/features/clientes/store/clientes.store";
+import type { Cliente } from "@/features/clientes/types";
 import { SEXOS } from "../constants";
 import { useMascotasStore } from "../store/mascotas.store";
 
@@ -24,17 +26,18 @@ const COLUMNAS: Columna[] = [
   { titulo: "Opciones", alinear: "centro" },
 ];
 
-const propietario = (clienteId: number) => {
-  const c = CLIENTES_EJEMPLO.find((x) => x.id === clienteId);
+const propietario = (clientes: Cliente[], clienteId: number) => {
+  const c = clientes.find((x) => x.id === clienteId);
   return c ? nombreCompleto(c) : "";
 };
 
 export default function ListadoMascotasPage() {
   const mascotas = useMascotasStore((s) => s.mascotas);
+  const clientes = useClientesStore((s) => s.clientes);
   const [busqueda, setBusqueda] = useState("");
 
   const filtradas = mascotas.filter((m) =>
-    coincide(busqueda, m.nombre, m.numeroHistoria, m.especie, m.raza, propietario(m.clienteId))
+    coincide(busqueda, m.nombre, m.numeroHistoria, m.especie, m.raza, propietario(clientes, m.clienteId))
   );
   const { visibles, paginacion } = usePaginacion(filtradas);
 
@@ -65,7 +68,7 @@ export default function ListadoMascotasPage() {
               <Celda>{m.raza}</Celda>
               <Celda>{SEXOS[m.sexo]}</Celda>
               <Celda>{m.fechaNacimiento ? calcularEdad(m.fechaNacimiento) : null}</Celda>
-              <Celda>{propietario(m.clienteId)}</Celda>
+              <Celda>{propietario(clientes, m.clienteId)}</Celda>
               <CeldaOpciones etiqueta={m.nombre} />
             </Fila>
           ))}

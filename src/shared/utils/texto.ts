@@ -8,3 +8,11 @@ export function coincide(busqueda: string, ...textos: (string | null | undefined
   const b = normalizar(busqueda.trim());
   return b === "" || textos.some((t) => t != null && normalizar(t).includes(b));
 }
+
+/** "Alérgico, Senior" → ["Alérgico", "Senior"] (etiquetas escritas separadas por coma). */
+export function separarEtiquetas(texto: string): string[] {
+  return texto
+    .split(",")
+    .map((e) => e.trim())
+    .filter(Boolean);
+}

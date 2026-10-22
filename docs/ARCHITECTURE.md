@@ -42,7 +42,7 @@ src/
 | `marketing` | por definir (`datos-ejemplo.ts`, en memoria) | `/marketing/promociones`, `/marketing/puntos` |
 | `eventos` | por definir (`datos-ejemplo.ts`) | `/eventos/listado` |
 | `sala-espera` | por definir (`sala-espera.store` en memoria) | `/sala-espera` |
-| `mascotas` | por definir (`mascotas.store` en memoria) | `/mascotas` (listado), `/mascotas/:id` (mascota abierta, fuera del menú) |
+| `mascotas` | por definir (`mascotas.store` en memoria) | `/mascotas` (listado), `/mascotas/:id` (mascota abierta) y `/mascotas/nueva?cliente=&volver=` (registro), fuera del menú |
 | `dashboard` | por definir (hoy `datos-ejemplo.ts`) | `/dashboard` |
 | `configuracion` | — (módulos: localStorage; resto: `configuracion.store` en memoria) | `/configuracion` (General), `/configuracion/usuarios`, `/roles`, `/metodos-pago`, `/datos-fiscales`; el resto en construcción |
 | `ventas` | por definir (en memoria con `datos-ejemplo.ts`; totales en `lib/totales.ts`) | `/ventas` (venta), `/ventas/cuentas-activas`, `/ventas/comprobantes`, `/ventas/entradas-salidas` |
@@ -112,6 +112,17 @@ operación lo vuelven obligatorio (`crearMovimientoCajaSchema`). Permisos de rol
 módulo (`claveDe` de `MENU`) × Ver/Crear/Editar/Eliminar; marcar una acción marca Ver y
 quitar Ver quita todo. El rol fijo (Administrador) no se edita. Aún no se aplican los
 permisos al menú: no hay sesión.
+
+### Datos de la sesión (stores en memoria)
+
+Mientras no hay backend, lo que varias pantallas comparten vive en stores Zustand sin
+persistir (se reinician al recargar): `clientes.store`, `mascotas.store`,
+`configuracion.store`, `sala-espera.store` y `venta.store` (la venta en curso se
+conserva al ir a registrar una mascota y volver). Las búsquedas de propietario leen
+`clientes.store`, así un cliente recién registrado aparece en todas partes.
+
+RENIEC está **simulado** (`clientes/reniec-simulado.ts`): unos DNI de ejemplo devuelven
+datos; el modal lo dice. Se reemplaza por el servicio real vía backend.
 
 ### Formularios y modales
 

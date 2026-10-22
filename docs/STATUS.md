@@ -118,6 +118,13 @@
 - [x] Verificado con Chrome headless y clics/tecleo reales: 13 tablas con 5 filas y pie
       "Mostrando 1–5 de 5", errores de validación, altas, filtro, selección, paso a la
       página 2 con 11 registros y cambio a 25 filas por página.
+- [x] **Ventas › Ventas: nuevo cliente y mascota.** Botón "Nuevo cliente" (usuario +) abre
+      "Registrar cliente": nombre, apellido, N.° de documento (DNI, con botón **RENIEC** que
+      abre la búsqueda **simulada** y completa nombre, apellido y nacimiento), fecha de
+      nacimiento, correo, teléfono móvil, dirección y referencia; el cliente queda
+      seleccionado. Botón "Agregar mascota" (perro +), habilitado con cliente, lleva a
+      "Registrar mascota" vinculada a ese cliente y vuelve a la venta, que se conserva.
+      Verificado con clics reales.
 - [x] **Marketing › Promociones** (datos de ejemplo, en memoria): pestaña **Lista** con
       Buscar producto o servicio, Estado, "Expira hasta" y + Crear promoción (nombre,
       producto o servicio, puntos, expiración e imagen opcional con vista previa); tabla
@@ -185,6 +192,8 @@
       Chrome headless; en móvil se ocultan Calendario y Maximizar.
 
 ## Siguiente
+
+- [ ] RENIEC real (vía backend) y otros tipos de documento (CE, pasaporte, RUC).
 
 - [ ] Ventas: cómo se aplican descuentos (por línea, global, %), qué abren los accesos
       rápidos, acción final (¿Cobrar / Emitir comprobante / Guardar en cuenta activa?) y

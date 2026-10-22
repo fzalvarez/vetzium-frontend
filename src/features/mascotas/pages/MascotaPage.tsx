@@ -5,7 +5,7 @@ import { Pestanas } from "@/shared/components/Pestanas";
 import { PorDefinir } from "@/shared/components/PorDefinir";
 import { Tarjeta } from "@/shared/components/Tarjeta";
 import { usePestanaUrl } from "@/shared/hooks/usePestanaUrl";
-import { CLIENTES_EJEMPLO } from "@/features/clientes/datos-ejemplo";
+import { useClientesStore } from "@/features/clientes/store/clientes.store";
 import Error404 from "@/features/error-pages/pages/Error404";
 import { EditarMascota } from "../components/EditarMascota";
 import { FichaMascota } from "../components/FichaMascota";
@@ -29,10 +29,11 @@ const PESTANAS = [
 export default function MascotaPage() {
   const { id } = useParams();
   const mascota = useMascotasStore((s) => s.mascotas.find((m) => m.id === Number(id)));
+  const clientes = useClientesStore((s) => s.clientes);
   const [vista, setVista] = usePestanaUrl(VISTAS);
 
   if (!mascota) return <Error404 />;
-  const propietario = CLIENTES_EJEMPLO.find((c) => c.id === mascota.clienteId);
+  const propietario = clientes.find((c) => c.id === mascota.clienteId);
 
   return (
     <>

@@ -2,7 +2,8 @@ import { Link } from "react-router-dom";
 import { CheckIcon, MegaphoneIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { CLIENTES_EJEMPLO, nombreCompleto } from "@/features/clientes/datos-ejemplo";
+import { nombreCompleto } from "@/features/clientes/datos-ejemplo";
+import { useClientesStore } from "@/features/clientes/store/clientes.store";
 import type { Mascota } from "@/features/mascotas/types";
 import type { Turno } from "../types";
 
@@ -28,7 +29,7 @@ export function TarjetaTurno({
   onLlamar: () => void;
   onFinalizar: () => void;
 }) {
-  const propietario = CLIENTES_EJEMPLO.find((c) => c.id === mascota?.clienteId);
+  const propietario = useClientesStore((s) => s.clientes.find((c) => c.id === mascota?.clienteId));
 
   const tiempo =
     turno.estado === "espera"

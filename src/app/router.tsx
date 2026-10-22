@@ -21,6 +21,7 @@ import {
   ListadoMascotasPage,
   LotesPage,
   MascotaPage,
+  NuevaMascotaPage,
   MetodosPagoPage,
   OrdenesCompraPage,
   PromocionesPage,
@@ -93,6 +94,14 @@ export const router = createBrowserRouter([
       ...rutasMenu,
       ...rutasConfiguracion,
       // Detalle fuera del menú: respeta el módulo Mascotas › Listado.
+      {
+        path: "mascotas/nueva",
+        element: (
+          <RutaModulo claves={["mascotas", "/mascotas"]}>
+            <NuevaMascotaPage />
+          </RutaModulo>
+        ),
+      },
       {
         path: "mascotas/:id",
         element: (

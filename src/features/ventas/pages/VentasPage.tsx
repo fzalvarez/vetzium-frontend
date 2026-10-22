@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Trash2Icon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input, SelectNativo } from "@/components/ui/input";
@@ -9,15 +8,15 @@ import { Celda, Fila, Tabla, type Columna } from "@/shared/components/Tabla";
 import { Tarjeta } from "@/shared/components/Tarjeta";
 import { formatearNumero, formatearSoles } from "@/shared/utils/formato";
 import { coincide } from "@/shared/utils/texto";
-import type { Cliente } from "@/features/clientes/types";
+import { useClientesStore } from "@/features/clientes/store/clientes.store";
 import { useConfiguracionStore } from "@/features/configuracion/store/configuracion.store";
-import { MASCOTAS_EJEMPLO } from "@/features/mascotas/datos-ejemplo";
-import { ALMACENES_EJEMPLO } from "@/features/productos/datos-ejemplo";
+import { useMascotasStore } from "@/features/mascotas/store/mascotas.store";
 import { BarraCliente } from "../components/BarraCliente";
 import { ResumenVenta } from "../components/ResumenVenta";
 import { ITEMS_VENDIBLES_EJEMPLO } from "../datos-ejemplo";
 import { calcularLinea, calcularTotales } from "../lib/totales";
-import type { ItemVendible, LineaVenta } from "../types/venta";
+import { ALMACENES_VENTA, useVentaStore } from "../store/venta.store";
+import type { ItemVendible } from "../types/venta";
 
 const COLUMNAS: Columna[] = [
   { titulo: "Concepto" },
@@ -30,36 +29,21 @@ const COLUMNAS: Columna[] = [
   { titulo: "Opciones", alinear: "centro" },
 ];
 
-// Solo se vende desde almacenes activos marcados "Usar para ventas".
-const ALMACENES_VENTA = ALMACENES_EJEMPLO.filter((a) => a.estado === "activo" && a.usarParaVentas);
-
 export default function VentasPage() {
   const tasaIgv = useConfiguracionStore((s) => s.datosFiscales.tasaIgv);
-  const [cliente, setCliente] = useState<Cliente | null>(null);
-  const [almacen, setAlmacen] = useState(ALMACENES_VENTA[0]?.nombre ?? "");
-  const [lineas, setLineas] = useState<LineaVenta[]>([]);
+  const clientes = useClientesStore((s) => s.clientes);
+  const todasMascotas = useMascotasStore((s) => s.mascotas);
+  // La venta en curso vive en un store: se conserva al ir a registrar una mascota y volver.
+  const { clienteId, almacen, lineas, setCliente, setAlmacen, actualizar, quitar, agregar: agregarLinea } = useVentaStore();
 
-  const mascotas = cliente ? MASCOTAS_EJEMPLO.filter((m) => m.clienteId === cliente.id) : [];
+  const cliente = clientes.find((c) => c.id === clienteId) ?? null;
+  const mascotas = cliente ? todasMascotas.filter((m) => m.clienteId === cliente.id) : [];
   // Productos con stock en el almacén elegido; los servicios no dependen del almacén.
   const disponibles = ITEMS_VENDIBLES_EJEMPLO.filter((i) => i.tipo === "servicio" || i.almacen === almacen);
   const totales = calcularTotales(lineas, tasaIgv);
 
-  const seleccionarCliente = (c: Cliente) => {
-    setCliente(c);
-    // La mascota de cada línea pertenece al cliente anterior: se limpia.
-    setLineas((actuales) => actuales.map((l) => ({ ...l, mascotaId: null })));
-  };
-
-  const agregar = (item: ItemVendible) =>
-    setLineas((actuales) => {
-      const existente = actuales.find((l) => l.item.id === item.id);
-      if (existente) return actuales.map((l) => (l === existente ? { ...l, cantidad: l.cantidad + 1 } : l));
-      // Con una sola mascota, se asigna sola.
-      return [...actuales, { item, cantidad: 1, mascotaId: mascotas.length === 1 ? mascotas[0].id : null }];
-    });
-
-  const actualizar = (id: string, cambios: Partial<LineaVenta>) =>
-    setLineas((actuales) => actuales.map((l) => (l.item.id === id ? { ...l, ...cambios } : l)));
+  // Con una sola mascota, se asigna sola.
+  const agregar = (item: ItemVendible) => agregarLinea(item, mascotas.length === 1 ? mascotas[0].id : null);
 
   return (
     <>
@@ -67,7 +51,12 @@ export default function VentasPage() {
 
       <div className="flex flex-col gap-6">
         <Tarjeta className="overflow-visible">
-          <BarraCliente cliente={cliente} mascotas={mascotas} onSeleccionar={seleccionarCliente} onQuitar={() => setCliente(null)} />
+          <BarraCliente
+            cliente={cliente}
+            mascotas={mascotas}
+            onSeleccionar={(c) => setCliente(c.id)}
+            onQuitar={() => setCliente(null)}
+          />
         </Tarjeta>
 
         <Tarjeta className="overflow-visible">
@@ -164,7 +153,7 @@ export default function VentasPage() {
                       size="icon-sm"
                       aria-label={`Quitar ${l.item.nombre}`}
                       title="Quitar"
-                      onClick={() => setLineas((actuales) => actuales.filter((x) => x.item.id !== l.item.id))}
+                      onClick={() => quitar(l.item.id)}
                       className="hover:text-error-600 dark:hover:text-error-400"
                     >
                       <Trash2Icon className="size-4" />

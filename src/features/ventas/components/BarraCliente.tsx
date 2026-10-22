@@ -1,20 +1,26 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   CarIcon,
   ConciergeBellIcon,
+  DogIcon,
   MessageSquarePlusIcon,
   PencilIcon,
   PlusIcon,
   ShowerHeadIcon,
   StethoscopeIcon,
+  UserPlusIcon,
   XIcon,
   type LucideIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { BuscadorSeleccion } from "@/shared/components/BuscadorSeleccion";
-import { proximamente } from "@/shared/utils";
+import { notifySuccess, proximamente } from "@/shared/utils";
 import { coincide } from "@/shared/utils/texto";
-import { CLIENTES_EJEMPLO, nombreCompleto } from "@/features/clientes/datos-ejemplo";
+import { ClienteModal } from "@/features/clientes/components/ClienteModal";
+import { nombreCompleto } from "@/features/clientes/datos-ejemplo";
+import { useClientesStore } from "@/features/clientes/store/clientes.store";
 import type { Cliente } from "@/features/clientes/types";
 import type { Mascota } from "@/features/mascotas/types";
 
@@ -31,11 +37,17 @@ function BotonIcono({
   etiqueta,
   disabled,
   destacado,
+  onClick,
+  children,
 }: {
   icono: LucideIcon;
   etiqueta: string;
   disabled?: boolean;
   destacado?: boolean;
+  /** Sin onClick, avisa "Próximamente". */
+  onClick?: () => void;
+  /** Contenido extra sobre el ícono (p. ej. un "+"). */
+  children?: React.ReactNode;
 }) {
   return (
     <Button
@@ -44,10 +56,11 @@ function BotonIcono({
       title={etiqueta}
       aria-label={etiqueta}
       disabled={disabled}
-      onClick={() => proximamente(etiqueta)}
-      className={cn(destacado && "bg-warning-500 hover:bg-warning-600")}
+      onClick={onClick ?? (() => proximamente(etiqueta))}
+      className={cn("relative", destacado && "bg-warning-500 hover:bg-warning-600")}
     >
       <Icono className="size-4" />
+      {children}
     </Button>
   );
 }
@@ -64,6 +77,11 @@ export function BarraCliente({
   onSeleccionar: (cliente: Cliente) => void;
   onQuitar: () => void;
 }) {
+  const navigate = useNavigate();
+  const clientes = useClientesStore((s) => s.clientes);
+  const agregarCliente = useClientesStore((s) => s.agregarCliente);
+  const [registrando, setRegistrando] = useState(false);
+
   return (
     <div className="flex flex-col gap-4 p-5">
       <div className="flex flex-wrap items-end gap-3">
@@ -73,7 +91,7 @@ export function BarraCliente({
           </label>
           <BuscadorSeleccion
             id="venta-cliente"
-            opciones={CLIENTES_EJEMPLO}
+            opciones={clientes}
             filtrar={(c, q) => coincide(q, nombreCompleto(c), c.email, ...c.telefonos)}
             clave={(c) => c.id}
             onSeleccionar={onSeleccionar}
@@ -92,7 +110,16 @@ export function BarraCliente({
 
         <div className="flex flex-wrap items-center gap-2">
           <BotonIcono icono={PencilIcon} etiqueta="Editar cliente" disabled={!cliente} />
-          <BotonIcono icono={PlusIcon} etiqueta="Nuevo cliente" />
+          <BotonIcono icono={UserPlusIcon} etiqueta="Nuevo cliente" onClick={() => setRegistrando(true)} />
+          {/* Registrar mascota del cliente elegido: lleva a la página de registro y vuelve. */}
+          <BotonIcono
+            icono={DogIcon}
+            etiqueta={cliente ? `Agregar mascota a ${nombreCompleto(cliente)}` : "Agregar mascota (elige un cliente)"}
+            disabled={!cliente}
+            onClick={() => cliente && navigate(`/mascotas/nueva?cliente=${cliente.id}&volver=/ventas`)}
+          >
+            <PlusIcon className="absolute right-1 top-1 size-2.5 stroke-3" aria-hidden />
+          </BotonIcono>
           {ACCESOS.map((a) => (
             <BotonIcono key={a.etiqueta} icono={a.icono} etiqueta={a.etiqueta} />
           ))}
@@ -127,6 +154,19 @@ export function BarraCliente({
             <XIcon className="size-4" />
           </Button>
         </div>
+      )}
+
+      {registrando && (
+        <ClienteModal
+          onClose={() => setRegistrando(false)}
+          onGuardar={(datos) => {
+            // El cliente nuevo queda seleccionado en la venta.
+            const nuevo = agregarCliente(datos);
+            onSeleccionar(nuevo);
+            notifySuccess(`Cliente "${nombreCompleto(nuevo)}" registrado.`);
+            setRegistrando(false);
+          }}
+        />
       )}
     </div>
   );

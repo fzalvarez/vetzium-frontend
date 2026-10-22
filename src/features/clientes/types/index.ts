@@ -10,6 +10,12 @@ export interface Cliente {
   email: string | null;
   direccion: string | null;
   estado: EstadoCliente;
+  /** N.° de documento de identidad (DNI); opcional en los datos de ejemplo. */
+  documento?: string | null;
+  /** "YYYY-MM-DD" */
+  fechaNacimiento?: string | null;
+  /** Referencia para ubicar la dirección. */
+  referencia?: string | null;
 }
 
 /** Fila de "Nuevos clientes": clientes registrados en un mes. */

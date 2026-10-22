@@ -11,7 +11,8 @@ import { Tarjeta } from "@/shared/components/Tarjeta";
 import { usePaginacion } from "@/shared/hooks/usePaginacion";
 import { formatearFecha } from "@/shared/utils/fechas";
 import { coincide } from "@/shared/utils/texto";
-import { CLIENTES_EJEMPLO, nombreCompleto } from "@/features/clientes/datos-ejemplo";
+import { nombreCompleto } from "@/features/clientes/datos-ejemplo";
+import { useClientesStore } from "@/features/clientes/store/clientes.store";
 import { useConfiguracionStore } from "@/features/configuracion/store/configuracion.store";
 import { useMascotasStore } from "@/features/mascotas/store/mascotas.store";
 import { ESTADOS_EVENTO, TIPOS_EVENTO, TONO_ESTADO_EVENTO } from "../constants";
@@ -36,6 +37,7 @@ const opciones = (mapa: Record<string, string>) => [TODOS, ...Object.entries(map
 export default function ListadoEventosPage() {
   const usuarios = useConfiguracionStore((s) => s.usuarios);
   const mascotas = useMascotasStore((s) => s.mascotas);
+  const clientes = useClientesStore((s) => s.clientes);
 
   const [busqueda, setBusqueda] = useState("");
   const [rango, setRango] = useState({ desde: "", hasta: "" });
@@ -44,7 +46,7 @@ export default function ListadoEventosPage() {
   const [usuario, setUsuario] = useState("todos");
   const [sala, setSala] = useState("todos");
 
-  const cliente = (id: number) => CLIENTES_EJEMPLO.find((c) => c.id === id);
+  const cliente = (id: number) => clientes.find((c) => c.id === id);
   const mascota = (id: number) => mascotas.find((m) => m.id === id);
   const usuarioNombre = (id: number) => usuarios.find((u) => u.id === id)?.nombre ?? "";
 
