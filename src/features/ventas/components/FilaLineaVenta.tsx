@@ -27,10 +27,19 @@ import { VendedorModal } from "./VendedorModal";
 
 type ModalAbierto = "precio" | "descuento" | "vendedor" | "comentario" | null;
 
+// Color de una opción ya aplicada a la línea: verde (regalo), amarillo (descuento) o
+// azul (comentario, vendedor).
+const ACTIVA = {
+  marca: "bg-brand-50 text-brand-600 dark:bg-brand-500/15 dark:text-brand-400",
+  exito: "bg-success-50 text-success-700 dark:bg-success-500/15 dark:text-success-400",
+  aviso: "bg-warning-50 text-warning-700 dark:bg-warning-500/15 dark:text-warning-400",
+};
+
 function Accion({
   icono: Icono,
   etiqueta,
   activa = false,
+  tono = "marca",
   peligro = false,
   onClick,
 }: {
@@ -38,21 +47,20 @@ function Accion({
   etiqueta: string;
   /** Resaltada cuando la línea ya la tiene (p. ej. descuento aplicado). */
   activa?: boolean;
+  tono?: keyof typeof ACTIVA;
+  /** Acción destructiva (quitar): siempre en rojo. */
   peligro?: boolean;
   onClick: () => void;
 }) {
   return (
     <Button
-      variant="ghost"
+      variant={peligro ? "destructive-ghost" : "ghost"}
       size="icon-sm"
       title={etiqueta}
       aria-label={etiqueta}
       aria-pressed={activa || undefined}
       onClick={onClick}
-      className={cn(
-        activa && "bg-brand-50 text-brand-600 dark:bg-brand-500/15 dark:text-brand-400",
-        peligro && "hover:text-error-600 dark:hover:text-error-400"
-      )}
+      className={cn(activa && ACTIVA[tono])}
     >
       <Icono className="size-4" />
     </Button>
@@ -145,11 +153,18 @@ export function FilaLineaVenta({
           <Accion icono={ClockIcon} etiqueta="Tiempo" onClick={() => proximamente("Tiempo")} />
           <Accion icono={MessageSquareIcon} etiqueta="Comentario" activa={!!linea.comentario} onClick={() => setModal("comentario")} />
           <Accion icono={UserCheckIcon} etiqueta="Asignar vendedor" activa={!!vendedor} onClick={() => setModal("vendedor")} />
-          <Accion icono={PercentIcon} etiqueta="Aplicar descuento" activa={!!linea.descuento && !linea.regalo} onClick={() => setModal("descuento")} />
+          <Accion
+            icono={PercentIcon}
+            etiqueta="Aplicar descuento"
+            activa={!!linea.descuento && !linea.regalo}
+            tono="aviso"
+            onClick={() => setModal("descuento")}
+          />
           <Accion
             icono={GiftIcon}
             etiqueta={linea.regalo ? "Quitar regalo" : "Aplicar regalo"}
             activa={!!linea.regalo}
+            tono="exito"
             onClick={() => onActualizar({ regalo: !linea.regalo })}
           />
           <Accion icono={Trash2Icon} etiqueta={`Quitar ${nombre}`} peligro onClick={onQuitar} />

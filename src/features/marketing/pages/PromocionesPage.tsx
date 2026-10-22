@@ -131,12 +131,11 @@ function Lista({
                   <EyeIcon className="size-4" />
                 </Button>
                 <Button
-                  variant="ghost"
+                  variant="destructive-ghost"
                   size="icon-sm"
                   title="Eliminar"
                   aria-label={`Eliminar ${p.nombre}`}
                   onClick={() => setEliminando(p)}
-                  className="hover:text-error-600 dark:hover:text-error-400"
                 >
                   <Trash2Icon className="size-4" />
                 </Button>

@@ -177,6 +177,18 @@ y `derecha` alineado a la derecha. Los botones habituales están en `AccionesTab
 Filtros tipo "Estados: Todos" con `SelectorFiltro`.
 
 Colores solo con tokens (`brand-*`, `gray-*`, `error-*`…), también en `components/ui`.
+
+**Color con significado** (variantes de `Button`, tonos de `Insignia` y acentos):
+
+| Color | Cuándo | Ejemplos |
+|---|---|---|
+| Rojo (`destructive`, `destructive-outline`, `destructive-ghost`) | eliminar, quitar, anular, borrar, salida de dinero | Borrar, tacho, Anular, + Salida |
+| Amarillo (`warning`) | llamar la atención | Llamar (sala), Agregar nota, Marcar como pendiente, Demora, Por vencer, descuento |
+| Verde (`success`, `success-outline`) | concretar algo positivo | Emitir comprobante, Ir a caja, Finalizar, + Entrada, Usar datos de RENIEC, Activar todos, regalo |
+| Azul de marca (`default`) | crear y guardar | Nuevo, Guardar, Registrar |
+
+El verde y el rojo se reservan para esos casos; crear y guardar siguen en azul para que
+el color no pierda fuerza. Sobre amarillo el texto va oscuro (contraste).
 Colores solo con tokens (`brand-*`, `gray-*`) para cambiar la identidad desde `index.css`.
 
 ## Integración con el backend

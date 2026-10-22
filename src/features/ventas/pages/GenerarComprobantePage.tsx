@@ -385,12 +385,12 @@ export default function GenerarComprobantePage() {
                 { label: "Generar nota de crédito", icono: FileMinusIcon, onClick: () => proximamente("Generar nota de crédito") },
                 { label: "Enviar", icono: SendIcon, onClick: () => proximamente("Enviar") },
                 { label: "Enviar por WhatsApp", icono: MessageCircleIcon, onClick: () => proximamente("Enviar por WhatsApp") },
-                { label: "Marcar como pendiente", icono: ClockIcon, onClick: () => proximamente("Marcar como pendiente") },
-                { label: "Anular", icono: BanIcon, peligro: true, onClick: () => proximamente("Anular") },
+                { label: "Marcar como pendiente", icono: ClockIcon, tono: "aviso", onClick: () => proximamente("Marcar como pendiente") },
+                { label: "Anular", icono: BanIcon, tono: "peligro", onClick: () => proximamente("Anular") },
               ]}
             />
             {!emitido && (
-              <Button onClick={emitirComprobante}>
+              <Button variant="success" onClick={emitirComprobante}>
                 <CircleCheckIcon className="size-4" />
                 Emitir comprobante
               </Button>

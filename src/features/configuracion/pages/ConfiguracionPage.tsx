@@ -148,7 +148,7 @@ export default function ConfiguracionPage() {
         modulo="Configuración"
         titulo="General"
         acciones={
-          <Button variant="outline" onClick={activarTodos} disabled={desactivados.size === 0}>
+          <Button variant="success-outline" onClick={activarTodos} disabled={desactivados.size === 0}>
             <RotateCcwIcon className="size-4" />
             Activar todos
           </Button>

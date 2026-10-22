@@ -118,6 +118,11 @@
 - [x] Verificado con Chrome headless y clics/tecleo reales: 13 tablas con 5 filas y pie
       "Mostrando 1–5 de 5", errores de validación, altas, filtro, selección, paso a la
       página 2 con 11 registros y cambio a 25 filas por página.
+- [x] **Color con significado** en botones y acentos: rojo para eliminar/quitar/anular/
+      salidas, amarillo para alertas (llamar, nota, pendiente, demora, descuento), verde
+      para lo positivo (emitir, ir a caja, finalizar, entrada, regalo, activar todos);
+      íconos del Dashboard y contadores de Sala de espera con su tono. Revisado en claro y
+      oscuro.
 - [x] **Ventas › Ventas: opciones por línea.** Valor unitario editable ("Cambiar precio":
       valor y precio de venta enlazados). Opciones: tiempo (próximamente), comentario,
       asignar vendedor (usuarios activos, para comisión), descuento (monto o %), regalo y

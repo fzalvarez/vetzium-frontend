@@ -69,6 +69,7 @@ export function MovimientoCajaModal({
       titulo={`Nueva ${nombre} de caja`}
       descripcion={tipo === "entrada" ? "Dinero que ingresa a la caja." : "Dinero que sale de la caja."}
       etiquetaGuardar={`Registrar ${nombre}`}
+      varianteGuardar={tipo === "entrada" ? "success" : "destructive"}
       onClose={onClose}
       onSubmit={guardar}
     >

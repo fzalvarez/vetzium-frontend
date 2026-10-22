@@ -9,6 +9,7 @@ export function ModalFormulario({
   titulo,
   descripcion,
   etiquetaGuardar,
+  varianteGuardar = "default",
   onClose,
   onSubmit,
   children,
@@ -16,6 +17,8 @@ export function ModalFormulario({
   titulo: string;
   descripcion?: string;
   etiquetaGuardar: string;
+  /** Color del botón de guardar (p. ej. verde para una entrada, rojo para una salida). */
+  varianteGuardar?: "default" | "success" | "destructive";
   onClose: () => void;
   onSubmit: (e?: React.BaseSyntheticEvent) => void;
   children: React.ReactNode;
@@ -33,7 +36,7 @@ export function ModalFormulario({
           <Button variant="outline" onClick={onClose}>
             Cancelar
           </Button>
-          <Button type="submit" form={formId}>
+          <Button type="submit" form={formId} variant={varianteGuardar}>
             {etiquetaGuardar}
           </Button>
         </>

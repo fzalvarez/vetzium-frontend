@@ -34,7 +34,7 @@ export function BotonAgrupar({ onClick }: Props) {
 
 export function BotonBorrar({ onClick }: Props) {
   return (
-    <Button variant="outline" size="sm" onClick={onClick ?? (() => proximamente("Borrar"))}>
+    <Button variant="destructive-outline" size="sm" onClick={onClick ?? (() => proximamente("Borrar"))}>
       <Trash2Icon className="size-4" />
       Borrar
     </Button>
@@ -51,9 +51,14 @@ export function BotonActualizar({ onClick }: Props) {
 }
 
 /** Acción principal de creación. `que` nombra lo que se crea en el aviso ("Nueva orden de compra"). */
-export function BotonNuevo({ onClick, label = "Nuevo", que }: Props & { label?: string; que: string }) {
+export function BotonNuevo({
+  onClick,
+  label = "Nuevo",
+  que,
+  variante = "default",
+}: Props & { label?: string; que: string; variante?: "default" | "success" | "destructive" }) {
   return (
-    <Button size="sm" onClick={onClick ?? (() => proximamente(que))}>
+    <Button size="sm" variant={variante} onClick={onClick ?? (() => proximamente(que))}>
       <PlusIcon className="size-4" />
       {label}
     </Button>

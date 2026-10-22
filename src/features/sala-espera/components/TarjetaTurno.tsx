@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
-import { CheckIcon, MegaphoneIcon } from "lucide-react";
+import { AlertTriangleIcon, CheckIcon, MegaphoneIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { Insignia } from "@/shared/components/Insignia";
 import { nombreCompleto } from "@/features/clientes/datos-ejemplo";
 import { useClientesStore } from "@/features/clientes/store/clientes.store";
 import type { Mascota } from "@/features/mascotas/types";
@@ -67,23 +68,22 @@ export function TarjetaTurno({
       <p className="mt-2 text-sm text-gray-700 dark:text-gray-300">{turno.motivo}</p>
 
       <div className="mt-3 flex items-center justify-between gap-2">
-        <span
-          className={cn(
-            "text-xs tabular-nums",
-            demora ? "font-semibold text-warning-700 dark:text-warning-400" : "text-gray-500 dark:text-gray-400"
-          )}
-        >
+        <span className="flex flex-wrap items-center gap-1.5 text-xs tabular-nums text-gray-500 dark:text-gray-400">
           {tiempo}
-          {demora && " · demora"}
+          {demora && (
+            <Insignia tono="aviso" icono={AlertTriangleIcon}>
+              Demora
+            </Insignia>
+          )}
         </span>
         {turno.estado === "espera" && (
-          <Button size="sm" onClick={onLlamar}>
+          <Button size="sm" variant="warning" onClick={onLlamar}>
             <MegaphoneIcon className="size-4" />
             Llamar
           </Button>
         )}
         {turno.estado === "atencion" && (
-          <Button size="sm" variant="outline" onClick={onFinalizar}>
+          <Button size="sm" variant="success" onClick={onFinalizar}>
             <CheckIcon className="size-4" />
             Finalizar
           </Button>

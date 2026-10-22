@@ -7,7 +7,8 @@ export interface OpcionMenu {
   label: string;
   icono?: LucideIcon;
   onClick: () => void;
-  peligro?: boolean;
+  /** Rojo para acciones destructivas (anular); amarillo para las de atención (pendiente). */
+  tono?: "peligro" | "aviso";
 }
 
 /** Botón con lista de acciones que se abre hacia arriba (para pies de página). */
@@ -57,7 +58,7 @@ export function MenuDesplegable({
           role="menu"
           className="absolute bottom-full right-0 z-30 mb-1 min-w-56 rounded-lg border border-gray-200 bg-white py-1 shadow-theme-lg dark:border-gray-700 dark:bg-gray-800"
         >
-          {opciones.map(({ label, icono: IconoOpcion, onClick, peligro }) => (
+          {opciones.map(({ label, icono: IconoOpcion, onClick, tono }) => (
             <li key={label} role="none">
               <button
                 type="button"
@@ -68,7 +69,11 @@ export function MenuDesplegable({
                 }}
                 className={cn(
                   "flex w-full items-center gap-2 px-3 py-2 text-left text-sm hover:bg-gray-50 dark:hover:bg-white/5",
-                  peligro ? "text-error-600 dark:text-error-400" : "text-gray-700 dark:text-gray-200"
+                  tono === "peligro"
+                    ? "text-error-600 dark:text-error-400"
+                    : tono === "aviso"
+                      ? "text-warning-700 dark:text-warning-400"
+                      : "text-gray-700 dark:text-gray-200"
                 )}
               >
                 {IconoOpcion && <IconoOpcion className="size-4 shrink-0" />}

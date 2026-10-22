@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { cn } from "@/lib/utils";
 import { BotonNuevo } from "@/shared/components/AccionesTabla";
 import { EncabezadoPagina } from "@/shared/components/EncabezadoPagina";
 import { EtiquetaEjemplo } from "@/shared/components/Insignia";
@@ -10,10 +11,27 @@ import { TarjetaTurno } from "../components/TarjetaTurno";
 import { useSalaEsperaStore } from "../store/sala-espera.store";
 import type { EstadoTurno, Turno } from "../types";
 
-const COLUMNAS: { estado: EstadoTurno; titulo: string; vacio: string }[] = [
-  { estado: "espera", titulo: "En espera", vacio: "Nadie esperando." },
-  { estado: "atencion", titulo: "En atención", vacio: "Nadie en atención." },
-  { estado: "atendido", titulo: "Atendidos hoy", vacio: "Aún no hay atendidos." },
+// Cada columna con su color: espera (amarillo, pide atención), en atención (azul),
+// atendidos (verde).
+const COLUMNAS: { estado: EstadoTurno; titulo: string; vacio: string; contador: string }[] = [
+  {
+    estado: "espera",
+    titulo: "En espera",
+    vacio: "Nadie esperando.",
+    contador: "bg-warning-100 text-warning-800 dark:bg-warning-500/15 dark:text-warning-400",
+  },
+  {
+    estado: "atencion",
+    titulo: "En atención",
+    vacio: "Nadie en atención.",
+    contador: "bg-brand-100 text-brand-700 dark:bg-brand-500/15 dark:text-brand-400",
+  },
+  {
+    estado: "atendido",
+    titulo: "Atendidos hoy",
+    vacio: "Aún no hay atendidos.",
+    contador: "bg-success-100 text-success-800 dark:bg-success-500/15 dark:text-success-400",
+  },
 ];
 
 // En espera: por orden de llegada. En atención y atendidos: el más reciente arriba.
@@ -56,7 +74,7 @@ export default function SalaEsperaPage() {
             <Tarjeta key={col.estado} className="bg-gray-50/80 dark:bg-gray-900">
               <div className="flex items-center justify-between border-b border-gray-200 px-4 py-3 dark:border-gray-800">
                 <h2 className="text-sm font-semibold text-gray-800 dark:text-gray-100">{col.titulo}</h2>
-                <span className="rounded-full bg-gray-200 px-2 py-0.5 text-xs font-bold tabular-nums text-gray-700 dark:bg-white/10 dark:text-gray-300">
+                <span className={cn("rounded-full px-2 py-0.5 text-xs font-bold tabular-nums", col.contador)}>
                   {lista.length}
                 </span>
               </div>

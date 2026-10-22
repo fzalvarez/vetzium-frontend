@@ -100,13 +100,12 @@ export function FormasPago({
                 )}
               </div>
               <Button
-                variant="ghost"
+                variant="destructive-ghost"
                 size="icon"
                 aria-label="Quitar forma de pago"
                 title="Quitar"
                 disabled={deshabilitado || pagos.length === 1}
                 onClick={() => onChange(pagos.filter((x) => x.id !== p.id))}
-                className="hover:text-error-600 dark:hover:text-error-400"
               >
                 <Trash2Icon className="size-4" />
               </Button>
@@ -126,7 +125,11 @@ export function FormasPago({
           <span
             className={cn(
               "font-semibold",
-              diferencia > 0 ? "text-warning-700 dark:text-warning-400" : "text-gray-800 dark:text-gray-100"
+              diferencia > 0
+                ? "text-warning-700 dark:text-warning-400"
+                : diferencia === 0
+                  ? "text-success-700 dark:text-success-400"
+                  : "text-gray-800 dark:text-gray-100"
             )}
           >
             {diferencia > 0 ? `Falta ${formatearSoles(diferencia)}` : diferencia < 0 ? `Vuelto ${formatearSoles(-diferencia)}` : "Completo"}

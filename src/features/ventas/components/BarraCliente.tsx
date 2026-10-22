@@ -14,7 +14,6 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 import { BuscadorSeleccion } from "@/shared/components/BuscadorSeleccion";
 import { notifySuccess, proximamente } from "@/shared/utils";
 import { coincide } from "@/shared/utils/texto";
@@ -51,13 +50,13 @@ function BotonIcono({
 }) {
   return (
     <Button
-      variant={destacado ? "default" : "outline"}
+      variant={destacado ? "warning" : "outline"}
       size="icon"
       title={etiqueta}
       aria-label={etiqueta}
       disabled={disabled}
       onClick={onClick ?? (() => proximamente(etiqueta))}
-      className={cn("relative", destacado && "bg-warning-500 hover:bg-warning-600")}
+      className="relative"
     >
       <Icono className="size-4" />
       {children}

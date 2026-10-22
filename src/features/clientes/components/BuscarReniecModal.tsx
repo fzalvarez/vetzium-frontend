@@ -53,7 +53,7 @@ export function BuscarReniecModal({
           <Button variant="outline" onClick={onClose} disabled={buscando}>
             Cancelar
           </Button>
-          <Button onClick={() => resultado && onUsar(resultado)} disabled={!resultado}>
+          <Button variant="success" onClick={() => resultado && onUsar(resultado)} disabled={!resultado}>
             Usar estos datos
           </Button>
         </>

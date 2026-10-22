@@ -62,8 +62,8 @@ export default function EntradasSalidasPage() {
           <BotonMasFiltros />
           <BotonBorrar />
           <BotonActualizar />
-          <BotonNuevo label="Entrada" que="Entrada" onClick={() => setNuevo("entrada")} />
-          <BotonNuevo label="Salida" que="Salida" onClick={() => setNuevo("salida")} />
+          <BotonNuevo label="Entrada" que="Entrada" variante="success" onClick={() => setNuevo("entrada")} />
+          <BotonNuevo label="Salida" que="Salida" variante="destructive" onClick={() => setNuevo("salida")} />
         </BarraHerramientas>
 
         <Tabla

@@ -55,7 +55,7 @@ export function DescuentoModal({
       footer={
         <>
           {actual && (
-            <Button variant="ghost" className="mr-auto" onClick={() => onAplicar(null)}>
+            <Button variant="destructive-ghost" className="mr-auto" onClick={() => onAplicar(null)}>
               Quitar descuento
             </Button>
           )}

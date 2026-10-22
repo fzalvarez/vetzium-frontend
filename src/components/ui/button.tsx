@@ -15,8 +15,21 @@ const buttonVariants = cva(
           "border border-gray-300 bg-white text-gray-700 hover:bg-brand-50 hover:border-brand-500 hover:text-brand-600 dark:border-gray-700 dark:bg-transparent dark:text-gray-100 dark:hover:bg-white/5 dark:hover:border-brand-400 dark:hover:text-brand-400",
         ghost:
           "text-gray-600 hover:bg-brand-50 hover:text-brand-600 dark:text-gray-300 dark:hover:bg-white/5 dark:hover:text-brand-400",
+        // Color con significado: rojo = eliminar/quitar/anular; verde = concretar algo
+        // positivo (emitir, cobrar, finalizar); amarillo = llamar la atención. El texto
+        // sobre amarillo va oscuro: el blanco no tiene contraste suficiente.
         destructive:
-          "bg-error-600 text-white hover:bg-error-700 dark:hover:bg-error-500",
+          "bg-error-600 text-white hover:bg-error-700 active:scale-[0.98] shadow-theme-xs dark:hover:bg-error-500",
+        success:
+          "bg-success-700 text-white hover:bg-success-800 active:scale-[0.98] shadow-theme-xs dark:bg-success-600 dark:hover:bg-success-700",
+        warning:
+          "bg-warning-400 text-gray-900 hover:bg-warning-500 active:scale-[0.98] shadow-theme-xs",
+        "destructive-outline":
+          "border border-error-300 bg-white text-error-600 hover:bg-error-50 hover:border-error-500 dark:border-error-500/40 dark:bg-transparent dark:text-error-400 dark:hover:bg-error-500/10",
+        "success-outline":
+          "border border-success-300 bg-white text-success-700 hover:bg-success-50 hover:border-success-500 dark:border-success-500/40 dark:bg-transparent dark:text-success-400 dark:hover:bg-success-500/10",
+        "destructive-ghost":
+          "text-error-500 hover:bg-error-50 hover:text-error-600 dark:text-error-400 dark:hover:bg-error-500/10",
         link: "text-brand-600 underline-offset-4 hover:underline dark:text-brand-400",
       },
       size: {

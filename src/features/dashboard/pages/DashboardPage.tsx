@@ -39,9 +39,9 @@ export default function DashboardPage() {
 
       <div className="flex flex-col gap-6">
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-          <TarjetaKpi etiqueta="Ventas del día" valor={formatearSoles(KPIS.ventasDelDia)} icono={ReceiptIcon} />
-          <TarjetaKpi etiqueta="Ventas del mes" valor={formatearSoles(KPIS.ventasDelMes)} icono={WalletIcon} />
-          <TarjetaKpi etiqueta="Sala de espera" valor={formatearNumero(enEspera)} icono={ArmchairIcon} />
+          <TarjetaKpi etiqueta="Ventas del día" valor={formatearSoles(KPIS.ventasDelDia)} icono={ReceiptIcon} tono="exito" />
+          <TarjetaKpi etiqueta="Ventas del mes" valor={formatearSoles(KPIS.ventasDelMes)} icono={WalletIcon} tono="exito" />
+          <TarjetaKpi etiqueta="Sala de espera" valor={formatearNumero(enEspera)} icono={ArmchairIcon} tono="aviso" />
           <TarjetaKpi etiqueta="Citas de hoy" valor={formatearNumero(KPIS.citasDeHoy)} icono={CalendarCheckIcon} />
         </div>
 

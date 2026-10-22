@@ -131,7 +131,7 @@ export default function VentasPage() {
           <div className="flex flex-col gap-5 border-t border-gray-200 p-5 dark:border-gray-800">
             <ResumenVenta totales={totales} />
             <div className="flex justify-end">
-              <Button onClick={() => navigate("/ventas/comprobantes/nuevo")} disabled={!cliente || lineas.length === 0}>
+              <Button variant="success" onClick={() => navigate("/ventas/comprobantes/nuevo")} disabled={!cliente || lineas.length === 0}>
                 <ReceiptTextIcon className="size-4" />
                 Ir a caja y generar comprobante
               </Button>
