@@ -2,7 +2,8 @@
 
 Frontend de Vetzium. Todo en **español**: dominio, código, documentación y respuestas.
 
-Antes de trabajar, leer `docs/STATUS.md` y `docs/ARCHITECTURE.md`. No inventar reglas de
+Antes de trabajar, leer `docs/STATUS.md`, `docs/ARCHITECTURE.md` y `docs/PRODUCTO.md`
+(características de referencia del producto: alinear con ellas, no tomarlas como requisitos). No inventar reglas de
 negocio: preguntar antes.
 
 - Referencia de estructura y estilo: `hcvet-dev-frontend` (que a su vez sigue a `tms`):
