@@ -1,6 +1,37 @@
+import { CLIENTES_EJEMPLO, nombreCompleto } from "@/features/clientes/datos-ejemplo";
+import type { CuentaPorCliente, ItemCuenta } from "./types/cuenta-activa";
 import type { MovimientoCaja } from "./types/movimiento-caja";
 
-// DATOS DE EJEMPLO: no hay backend todavía. La página lo indica con una etiqueta.
+// DATOS DE EJEMPLO: no hay backend todavía. Las páginas lo indican con una etiqueta.
+
+export const ITEMS_CUENTA_EJEMPLO: ItemCuenta[] = [
+  { id: 5, fechaRegistro: "2026-10-22", clienteId: 1, mascota: "Firulais", descripcion: "Vacuna séxtuple", precioUnitario: 85, cantidad: 1 },
+  { id: 4, fechaRegistro: "2026-10-21", clienteId: 2, mascota: "Luna", descripcion: "Hospitalización (día)", precioUnitario: 120, cantidad: 2 },
+  { id: 3, fechaRegistro: "2026-10-20", clienteId: 3, mascota: "Michi", descripcion: "Desparasitación interna", precioUnitario: 25, cantidad: 2 },
+  { id: 2, fechaRegistro: "2026-10-19", clienteId: 5, mascota: "Rocky", descripcion: "Baño y corte", precioUnitario: 60, cantidad: 1 },
+  { id: 1, fechaRegistro: "2026-10-17", clienteId: 4, mascota: "Toby", descripcion: "Radiografía", precioUnitario: 90, cantidad: 1 },
+];
+
+/** Cuentas por cliente calculadas desde los ítems (así ambas pestañas cuadran). */
+export function cuentasPorCliente(items: ItemCuenta[]): CuentaPorCliente[] {
+  const porCliente = new Map<number, CuentaPorCliente>();
+  for (const item of items) {
+    const cliente = CLIENTES_EJEMPLO.find((c) => c.id === item.clienteId);
+    const actual = porCliente.get(item.clienteId) ?? {
+      clienteId: item.clienteId,
+      cliente: cliente ? nombreCompleto(cliente) : `Cliente ${item.clienteId}`,
+      telefono: cliente?.telefonos[0] ?? null,
+      ultimoMovimiento: item.fechaRegistro,
+      items: 0,
+      monto: 0,
+    };
+    actual.items += 1;
+    actual.monto += item.precioUnitario * item.cantidad;
+    if (item.fechaRegistro > actual.ultimoMovimiento) actual.ultimoMovimiento = item.fechaRegistro;
+    porCliente.set(item.clienteId, actual);
+  }
+  return [...porCliente.values()].sort((a, b) => b.ultimoMovimiento.localeCompare(a.ultimoMovimiento));
+}
 export const MOVIMIENTOS_CAJA_EJEMPLO: MovimientoCaja[] = [
   {
     id: 5,

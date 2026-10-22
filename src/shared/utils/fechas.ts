@@ -6,6 +6,18 @@ export function hoyPeru(): string {
   return new Intl.DateTimeFormat("en-CA", { timeZone: ZONA_PERU }).format(new Date());
 }
 
+const MESES = [
+  "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+  "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre",
+];
+
+/** "2026-10" → "Octubre 2026". */
+export function formatearMes(anioMes: string): string {
+  const [anio, mes] = anioMes.split("-");
+  const nombre = MESES[Number(mes) - 1];
+  return nombre && anio ? `${nombre} ${anio}` : anioMes;
+}
+
 /** "2026-10-22" → "22/10/2026". */
 export function formatearFecha(iso: string): string {
   const [anio, mes, dia] = iso.split("-");

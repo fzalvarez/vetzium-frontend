@@ -1,9 +1,8 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "@/components/ui/button";
 import { Input, SelectNativo } from "@/components/ui/input";
-import { Modal } from "@/components/ui/modal";
 import { Campo } from "@/shared/components/Campo";
+import { ModalFormulario } from "@/shared/components/ModalFormulario";
 import { hoyPeru } from "@/shared/utils/fechas";
 import { MEDIOS_PAGO, TIPOS_MOVIMIENTO_CAJA } from "../constants";
 import type { MovimientoCaja, TipoMovimientoCaja } from "../types/movimiento-caja";
@@ -58,74 +57,63 @@ export function MovimientoCajaModal({
   });
 
   return (
-    <Modal
-      open
+    <ModalFormulario
+      titulo={`Nueva ${nombre} de caja`}
+      descripcion={tipo === "entrada" ? "Dinero que ingresa a la caja." : "Dinero que sale de la caja."}
+      etiquetaGuardar={`Registrar ${nombre}`}
       onClose={onClose}
-      title={`Nueva ${nombre} de caja`}
-      description={tipo === "entrada" ? "Dinero que ingresa a la caja." : "Dinero que sale de la caja."}
-      footer={
-        <>
-          <Button variant="outline" onClick={onClose}>
-            Cancelar
-          </Button>
-          <Button type="submit" form="form-movimiento-caja">
-            Registrar {nombre}
-          </Button>
-        </>
-      }
+      onSubmit={guardar}
     >
-      <form id="form-movimiento-caja" onSubmit={guardar} noValidate className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <Campo etiqueta="Fecha" htmlFor="mc-fecha" error={errors.fecha?.message}>
-          <Input id="mc-fecha" type="date" aria-invalid={!!errors.fecha} {...register("fecha")} />
-        </Campo>
+      <Campo etiqueta="Fecha" htmlFor="mc-fecha" error={errors.fecha?.message}>
+        <Input id="mc-fecha" type="date" aria-invalid={!!errors.fecha} {...register("fecha")} />
+      </Campo>
 
-        <Campo etiqueta="Medio de pago" htmlFor="mc-medio" error={errors.medioPago?.message}>
-          <SelectNativo id="mc-medio" aria-invalid={!!errors.medioPago} {...register("medioPago")}>
-            <option value="">Seleccione...</option>
-            {MEDIOS_PAGO.map((m) => (
-              <option key={m} value={m}>
-                {m}
-              </option>
-            ))}
-          </SelectNativo>
-        </Campo>
+      <Campo etiqueta="Medio de pago" htmlFor="mc-medio" error={errors.medioPago?.message}>
+        <SelectNativo id="mc-medio" aria-invalid={!!errors.medioPago} {...register("medioPago")}>
+          <option value="">Seleccione...</option>
+          {MEDIOS_PAGO.map((m) => (
+            <option key={m} value={m}>
+              {m}
+            </option>
+          ))}
+        </SelectNativo>
+      </Campo>
 
-        <Campo
-          etiqueta="Descripción"
-          htmlFor="mc-descripcion"
-          error={errors.descripcion?.message}
-          className="sm:col-span-2"
-        >
-          <Input
-            id="mc-descripcion"
-            placeholder={tipo === "entrada" ? "Ej.: Pago de consulta" : "Ej.: Compra de insumos"}
-            aria-invalid={!!errors.descripcion}
-            {...register("descripcion")}
-          />
-        </Campo>
+      <Campo
+        etiqueta="Descripción"
+        htmlFor="mc-descripcion"
+        error={errors.descripcion?.message}
+        className="sm:col-span-2"
+      >
+        <Input
+          id="mc-descripcion"
+          placeholder={tipo === "entrada" ? "Ej.: Pago de consulta" : "Ej.: Compra de insumos"}
+          aria-invalid={!!errors.descripcion}
+          {...register("descripcion")}
+        />
+      </Campo>
 
-        <Campo etiqueta="Monto (S/)" htmlFor="mc-monto" error={errors.monto?.message}>
-          <Input
-            id="mc-monto"
-            inputMode="decimal"
-            placeholder="0.00"
-            aria-invalid={!!errors.monto}
-            {...register("monto")}
-          />
-        </Campo>
+      <Campo etiqueta="Monto (S/)" htmlFor="mc-monto" error={errors.monto?.message}>
+        <Input
+          id="mc-monto"
+          inputMode="decimal"
+          placeholder="0.00"
+          aria-invalid={!!errors.monto}
+          {...register("monto")}
+        />
+      </Campo>
 
-        <Campo etiqueta="Etiquetas" htmlFor="mc-etiquetas" ayuda="Separadas por coma.">
-          <Input id="mc-etiquetas" placeholder="Ej.: Consulta, Adelanto" {...register("etiquetas")} />
-        </Campo>
+      <Campo etiqueta="Etiquetas" htmlFor="mc-etiquetas" ayuda="Separadas por coma.">
+        <Input id="mc-etiquetas" placeholder="Ej.: Consulta, Adelanto" {...register("etiquetas")} />
+      </Campo>
 
-        <Campo etiqueta="Doc. de referencia" htmlFor="mc-doc" error={errors.docReferencia?.message}>
-          <Input id="mc-doc" placeholder="Ej.: B001-000154" {...register("docReferencia")} />
-        </Campo>
+      <Campo etiqueta="Doc. de referencia" htmlFor="mc-doc" error={errors.docReferencia?.message}>
+        <Input id="mc-doc" placeholder="Ej.: B001-000154" {...register("docReferencia")} />
+      </Campo>
 
-        <Campo etiqueta="N.° de operación" htmlFor="mc-operacion" error={errors.numeroOperacion?.message}>
-          <Input id="mc-operacion" placeholder="Opcional" {...register("numeroOperacion")} />
-        </Campo>
-      </form>
-    </Modal>
+      <Campo etiqueta="N.° de operación" htmlFor="mc-operacion" error={errors.numeroOperacion?.message}>
+        <Input id="mc-operacion" placeholder="Opcional" {...register("numeroOperacion")} />
+      </Campo>
+    </ModalFormulario>
   );
 }

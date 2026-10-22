@@ -100,11 +100,33 @@
       Etiquetas, Doc. de referencia, N.° de operación; validan con zod y agregan la fila
       arriba con aviso. Tipo de movimiento con ícono + texto. Verificado con clics y
       tecleo reales en Chrome headless (errores, alta, Esc, búsqueda "cirugia").
+- [x] **Datos de ejemplo y paginación en todas las tablas** (13): Cuentas activas (por
+      cliente —calculada desde los ítems— y por ítems), Entradas/Salidas, Clientes
+      (listado y nuevos por mes), Catálogo, Descargas, Cargas, Stock por almacén,
+      Almacenes, Lotes, Directorio y Órdenes de compra. 5 registros por tabla, con los
+      mismos clientes, productos, almacenes y proveedores entre tablas.
+- [x] Funciona en el cliente: búsquedas (Entradas/Salidas, Descargas, Cargas, Lotes,
+      Directorio, Órdenes de compra —por número y proveedor, las OC aún no tienen
+      productos—), filtro Estados de Almacenes, selección con "seleccionar todos"
+      (Clientes, Catálogo).
+- [x] **Modales de alta funcionales** (validan y agregan la fila en memoria con número
+      correlativo y aviso): Entrada / Salida de caja, Descargar stock (DS-…), Cargar
+      stock (CS-…), Nuevo almacén, Crear nuevo proveedor (RUC 11 dígitos, correo) y
+      Nueva orden de compra (OC-…, IGV y monto calculados al escribir).
+- [x] Avisos arriba a la derecha (abajo tapaban la paginación tras guardar).
+- [x] Verificado con Chrome headless y clics/tecleo reales: 13 tablas con 5 filas y pie
+      "Mostrando 1–5 de 5", errores de validación, altas, filtro, selección, paso a la
+      página 2 con 11 registros y cambio a 25 filas por página.
 - [x] Barra superior: Buscar, Calendario, Maximizar ventana (pantalla completa real,
       alterna a Restaurar), Ayuda, tema y Mi cuenta. Verificado con clics reales en
       Chrome headless; en móvil se ocultan Calendario y Maximizar.
 
 ## Siguiente
+
+- [ ] Valores provisionales a confirmar: estados de cliente y almacén (Activo/Inactivo),
+      tipo de almacén "Secundario", tipos de operación de carga/descarga, IGV 18% en
+      órdenes de compra, "Registrado por" sin sesión ("Usuario actual").
+- [ ] Comprobantes sigue sin columnas (no tiene tabla ni datos).
 
 - [ ] Entradas/Salidas: medios de pago reales (hoy provisionales: Efectivo, Yape, Plin,
       Tarjeta, Transferencia), etiquetas (¿lista fija desde Configuración › Etiquetas?),

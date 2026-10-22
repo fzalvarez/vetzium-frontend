@@ -116,6 +116,18 @@ alinean a la derecha y "Opciones" al centro; `encabezado` reemplaza el título d
 columna (p. ej. la casilla de seleccionar todos). Una vista sin columnas definidas
 muestra `PorDefinir`.
 
+Filas con `Fila`, `Celda` (sin valor muestra "—"; `numerica`, `destacada`, `alinear`),
+`CeldaCasilla` (selección, con `useSeleccion`) y `CeldaOpciones` (menú ⋮). Estados con
+`Insignia` (siempre texto; ícono opcional). **Toda tabla lleva paginación**:
+`usePaginacion(items)` devuelve `visibles` y `paginacion`, que se pasa a
+`<Tabla paginacion>` (pie "Mostrando X–Y de N", filas por página 10/25/50 y páginas).
+Mientras no hay backend, cada feature tiene `datos-ejemplo.ts` (5 registros coherentes
+entre tablas) y la página muestra `EtiquetaEjemplo`; las altas viven en memoria.
+
+Altas con `ModalFormulario` (formulario en grilla de 2 columnas + Cancelar/Guardar) y
+react-hook-form + zod. Los avisos (sonner) salen arriba a la derecha, bajo la barra
+superior: abajo tapaban la paginación.
+
 Sobre la tabla va `BarraHerramientas`: `Buscador` y acciones a la izquierda (`children`)
 y `derecha` alineado a la derecha. Los botones habituales están en `AccionesTabla`
 (`BotonMasFiltros`, `BotonAgrupar`, `BotonBorrar`, `BotonActualizar`, `BotonNuevo` y

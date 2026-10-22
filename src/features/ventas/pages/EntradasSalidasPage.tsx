@@ -1,6 +1,4 @@
 import { useState } from "react";
-import { EllipsisVerticalIcon } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import {
   AccionesDerecha,
   BotonActualizar,
@@ -11,11 +9,14 @@ import {
 import { BarraHerramientas } from "@/shared/components/BarraHerramientas";
 import { Buscador } from "@/shared/components/Buscador";
 import { EncabezadoPagina } from "@/shared/components/EncabezadoPagina";
-import { Tabla, type Columna } from "@/shared/components/Tabla";
+import { EtiquetaEjemplo } from "@/shared/components/Insignia";
+import { Celda, CeldaOpciones, Fila, Tabla, type Columna } from "@/shared/components/Tabla";
 import { Tarjeta } from "@/shared/components/Tarjeta";
-import { notifySuccess, proximamente } from "@/shared/utils";
+import { usePaginacion } from "@/shared/hooks/usePaginacion";
+import { notifySuccess } from "@/shared/utils";
 import { formatearFecha } from "@/shared/utils/fechas";
 import { formatearSoles } from "@/shared/utils/formato";
+import { coincide } from "@/shared/utils/texto";
 import { MovimientoCajaModal } from "../components/MovimientoCajaModal";
 import { TipoMovimientoBadge } from "../components/TipoMovimientoBadge";
 import { MOVIMIENTOS_CAJA_EJEMPLO } from "../datos-ejemplo";
@@ -35,20 +36,14 @@ const COLUMNAS: Columna[] = [
   { titulo: "Opciones", alinear: "centro" },
 ];
 
-const celda = "px-4 py-3 text-sm text-gray-700 whitespace-nowrap dark:text-gray-300";
-const vacio = <span className="text-gray-400 dark:text-gray-500">—</span>;
-
-/** Para buscar sin importar mayúsculas ni tildes ("cirugia" encuentra "Cirugía"). */
-const normalizar = (texto: string) =>
-  texto.normalize("NFD").replace(/\p{Diacritic}/gu, "").toLowerCase();
-
 export default function EntradasSalidasPage() {
   // Sin backend: los movimientos viven en memoria (se pierden al recargar).
   const [movimientos, setMovimientos] = useState<MovimientoCaja[]>(MOVIMIENTOS_CAJA_EJEMPLO);
   const [busqueda, setBusqueda] = useState("");
   const [nuevo, setNuevo] = useState<TipoMovimientoCaja | null>(null);
 
-  const filtrados = movimientos.filter((m) => normalizar(m.descripcion).includes(normalizar(busqueda.trim())));
+  const filtrados = movimientos.filter((m) => coincide(busqueda, m.descripcion));
+  const { visibles, paginacion } = usePaginacion(filtrados);
 
   const guardar = (movimiento: Omit<MovimientoCaja, "id">) => {
     const id = Math.max(0, ...movimientos.map((m) => m.id)) + 1;
@@ -59,15 +54,7 @@ export default function EntradasSalidasPage() {
 
   return (
     <>
-      <EncabezadoPagina
-        modulo="Ventas"
-        titulo="Entradas / Salidas de caja"
-        acciones={
-          <span className="rounded-full bg-warning-50 px-3 py-1 text-xs font-semibold text-warning-700 dark:bg-warning-500/15 dark:text-warning-400">
-            Datos de ejemplo
-          </span>
-        }
-      />
+      <EncabezadoPagina modulo="Ventas" titulo="Entradas / Salidas de caja" acciones={<EtiquetaEjemplo />} />
 
       <Tarjeta>
         <BarraHerramientas derecha={<AccionesDerecha />}>
@@ -83,14 +70,15 @@ export default function EntradasSalidasPage() {
           columnas={COLUMNAS}
           vacia={filtrados.length === 0}
           mensajeVacio={busqueda ? "Ningún movimiento coincide con la búsqueda." : "No hay movimientos registrados."}
+          paginacion={paginacion}
         >
-          {filtrados.map((m) => (
-            <tr key={m.id} className="transition-colors hover:bg-gray-50 dark:hover:bg-white/5">
-              <td className={`${celda} tabular-nums text-gray-500 dark:text-gray-400`}>{m.id}</td>
-              <td className={`${celda} tabular-nums`}>{formatearFecha(m.fecha)}</td>
-              <td className={`${celda} font-medium text-gray-800 dark:text-gray-100`}>{m.descripcion}</td>
-              <td className={celda}>
-                {m.etiquetas.length > 0 ? (
+          {visibles.map((m) => (
+            <Fila key={m.id}>
+              <Celda numerica className="text-gray-500 dark:text-gray-400">{m.id}</Celda>
+              <Celda numerica>{formatearFecha(m.fecha)}</Celda>
+              <Celda destacada>{m.descripcion}</Celda>
+              <Celda>
+                {m.etiquetas.length > 0 && (
                   <div className="flex gap-1">
                     {m.etiquetas.map((e) => (
                       <span
@@ -101,34 +89,18 @@ export default function EntradasSalidasPage() {
                       </span>
                     ))}
                   </div>
-                ) : (
-                  vacio
                 )}
-              </td>
-              <td className={celda}>{m.medioPago}</td>
-              <td className={`${celda} text-right tabular-nums`}>
-                {m.tipo === "entrada" ? formatearSoles(m.monto) : vacio}
-              </td>
-              <td className={`${celda} text-right tabular-nums`}>
-                {m.tipo === "salida" ? formatearSoles(m.monto) : vacio}
-              </td>
-              <td className={`${celda} tabular-nums`}>{m.docReferencia ?? vacio}</td>
-              <td className={`${celda} tabular-nums`}>{m.numeroOperacion ?? vacio}</td>
-              <td className={celda}>
+              </Celda>
+              <Celda>{m.medioPago}</Celda>
+              <Celda alinear="derecha" numerica>{m.tipo === "entrada" ? formatearSoles(m.monto) : null}</Celda>
+              <Celda alinear="derecha" numerica>{m.tipo === "salida" ? formatearSoles(m.monto) : null}</Celda>
+              <Celda numerica>{m.docReferencia}</Celda>
+              <Celda numerica>{m.numeroOperacion}</Celda>
+              <Celda>
                 <TipoMovimientoBadge tipo={m.tipo} />
-              </td>
-              <td className={`${celda} text-center`}>
-                <Button
-                  variant="ghost"
-                  size="icon-sm"
-                  aria-label={`Opciones del movimiento ${m.id}`}
-                  title="Opciones"
-                  onClick={() => proximamente("Opciones del movimiento")}
-                >
-                  <EllipsisVerticalIcon className="size-4" />
-                </Button>
-              </td>
-            </tr>
+              </Celda>
+              <CeldaOpciones etiqueta={`movimiento ${m.id}`} />
+            </Fila>
           ))}
         </Tabla>
       </Tarjeta>
