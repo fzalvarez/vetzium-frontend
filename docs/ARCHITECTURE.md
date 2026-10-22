@@ -24,9 +24,10 @@ src/
 │   ├── store/                   # estado Zustand del feature
 │   └── constants.ts             # etiquetas de enums
 ├── shared/
-│   ├── components/              # LoadingOverlay, ThemeHydrator, ThemeToggle, ToasterWithTheme
+│   ├── components/              # EncabezadoPagina, Tarjeta, Pestanas, Tabla (con estado
+│   │   │                        # vacío/carga), LoadingOverlay, ThemeToggle, ToasterWithTheme…
 │   │   └── sidebar/             # AppSidebar, AppHeader, Backdrop
-│   ├── hooks/useCarga.ts        # carga de datos por clave, con recarga
+│   ├── hooks/                   # useCarga (carga por clave), usePestanaUrl (?vista=)
 │   ├── lib/                     # axios, mensajes de error
 │   ├── store/                   # loading, theme, sidebar (menú móvil)
 │   ├── types/                   # ServiceResponse (con status HTTP)
@@ -38,6 +39,7 @@ src/
 | Feature | Backend | Rutas |
 |---|---|---|
 | `inicio` | — | `/` |
+| `ventas` | por definir | `/ventas/cuentas-activas`, `/ventas/comprobantes`, `/ventas/entradas-salidas` |
 | `en-construccion` | — | toda ruta del menú sin pantalla propia |
 | `error-pages` | — | `*` (404), `errorElement` |
 
@@ -56,11 +58,18 @@ ruta propia (`to`) o submódulos (`items`); el primer submódulo usa la ruta bas
 módulo (Ventas → `/ventas`, Comprobantes → `/ventas/comprobantes`). En el sidebar se
 despliega un módulo a la vez y, al navegar, se abre el de la ruta actual.
 
-`router.tsx` crea una ruta "en construcción" (con título `Módulo › Submódulo`) para
-cada ruta del menú que no esté en `rutasConPagina`.
+`router.tsx` crea una ruta por cada entrada del menú: la pantalla de `PAGINAS` si existe
+o "en construcción" (con título `Módulo › Submódulo`).
 
 Para construir una pantalla del menú: página en `features/<f>/pages`, `lazy` en
-`paginas.ts`, ruta en `paginas` de `router.tsx` y su `to` en `rutasConPagina`.
+`paginas.ts` y su entrada en `PAGINAS` de `router.tsx`.
+
+### Pantallas de listado
+
+`EncabezadoPagina` (módulo + título + acciones) y debajo una `Tarjeta` con `Pestanas`
+(si hay varias vistas) y `Tabla`. La pestaña activa va en `?vista=` (`usePestanaUrl`);
+la primera es la de por defecto y no se escribe. En `Tabla`, montos y cantidades se
+alinean a la derecha y "Opciones" al centro.
 Colores solo con tokens (`brand-*`, `gray-*`) para cambiar la identidad desde `index.css`.
 
 ## Integración con el backend

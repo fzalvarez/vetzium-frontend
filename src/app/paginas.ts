@@ -6,3 +6,6 @@ import { lazy } from "react";
 // con otras exportaciones rompe el fast refresh de Vite.
 export const InicioPage = lazy(() => import("@/features/inicio/pages/InicioPage"));
 export const EnConstruccionPage = lazy(() => import("@/features/en-construccion/pages/EnConstruccionPage"));
+export const CuentasActivasPage = lazy(() => import("@/features/ventas/pages/CuentasActivasPage"));
+export const ComprobantesPage = lazy(() => import("@/features/ventas/pages/ComprobantesPage"));
+export const EntradasSalidasPage = lazy(() => import("@/features/ventas/pages/EntradasSalidasPage"));

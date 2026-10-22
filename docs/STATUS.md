@@ -16,10 +16,21 @@
       desplegables (uno a la vez, se abre el de la ruta actual). Toda ruta sin pantalla
       muestra "Módulo en construcción" con su título. Verificado con Chrome headless
       (`/ventas/comprobantes` y `/hotel`).
+- [x] Ventas, estructura visual sin datos (no hay backend), verificada con Chrome headless:
+      - **Cuentas activas**: pestañas *Por cliente* (Cliente, Teléfono, Último movimiento,
+        Ítems en la lista, Monto, Opciones) y *Por ítems* (Fecha de registro, Cliente,
+        Mascota, Descripción, P. U., Cantidad, Total, Opciones).
+      - **Comprobantes**: pestañas *Comprobantes emitidos* y *Por ítems*; columnas por definir.
+      - **Entradas/Salidas**: tabla (ID, Fecha, Descripción, Etiquetas, Medio de pago,
+        Entrada, Salida, Doc. de referencia, N.° de operación, Tipo de movimiento, Opciones).
+- [x] Componentes compartidos: `EncabezadoPagina`, `Tarjeta`, `Pestanas`, `Tabla`,
+      `usePestanaUrl`.
 
 ## Siguiente
 
-- [ ] Definir backend, dominio y primera pantalla.
+- [ ] Columnas de las dos pestañas de Comprobantes.
+- [ ] Qué hace "Opciones" en cada tabla; filtros/búsqueda; acciones de cabecera.
+- [ ] Backend y contrato de la API para llenar las tablas.
 - [ ] Identidad visual: hoy usa los colores, la tipografía y el favicon de HCVet.
 - [ ] Contenido del header (búsqueda, notificaciones, sede…) y tarjeta de usuario en el
       sidebar: dependen del dominio y de la autenticación.
