@@ -1,6 +1,6 @@
 import { createBrowserRouter, type RouteObject } from "react-router-dom";
 import AdminLayout from "./layouts/AdminLayout";
-import { rutasDelMenu } from "./navegacion";
+import { MENU_CONFIGURACION, rutasDelMenu } from "./navegacion";
 import {
   AlmacenesPage,
   CargarStockPage,
@@ -8,6 +8,7 @@ import {
   ComprobantesPage,
   ConfiguracionPage,
   CuentasActivasPage,
+  DashboardPage,
   DescargarStockPage,
   DirectorioProveedoresPage,
   EnConstruccionPage,
@@ -23,10 +24,11 @@ import { RutaModulo } from "@/features/configuracion/components/RutaModulo";
 import Error404 from "@/features/error-pages/pages/Error404";
 import RouteErrorBoundary from "@/features/error-pages/pages/RouteErrorBoundary";
 
-// Pantallas ya construidas, por ruta del menú. Cualquier otra ruta del menú muestra
+// Pantallas ya construidas, por ruta. Cualquier otra ruta del menú muestra
 // "en construcción"; al construir una pantalla se agrega aquí.
 const PAGINAS: Record<string, React.ReactNode> = {
   "/": <InicioPage />,
+  "/dashboard": <DashboardPage />,
   "/ventas/cuentas-activas": <CuentasActivasPage />,
   "/ventas/comprobantes": <ComprobantesPage />,
   "/ventas/entradas-salidas": <EntradasSalidasPage />,
@@ -40,6 +42,7 @@ const PAGINAS: Record<string, React.ReactNode> = {
   "/productos/lotes": <LotesPage />,
   "/proveedores": <DirectorioProveedoresPage />,
   "/proveedores/ordenes-compra": <OrdenesCompraPage />,
+  "/configuracion": <ConfiguracionPage />,
 };
 
 // Cada ruta del menú respeta lo activado/desactivado en Configuración.
@@ -53,12 +56,19 @@ const rutasMenu: RouteObject[] = rutasDelMenu().map(({ to, titulo, claves }) =>
       }
 );
 
+// Configuración no se puede desactivar: sus rutas no pasan por RutaModulo.
+const rutasConfiguracion: RouteObject[] = MENU_CONFIGURACION.items.map((sub) => ({
+  path: sub.to.slice(1),
+  element: PAGINAS[sub.to] ?? <EnConstruccionPage />,
+  handle: { titulo: `${MENU_CONFIGURACION.label} › ${sub.label}` },
+}));
+
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <AdminLayout />,
     errorElement: <RouteErrorBoundary />,
-    children: [...rutasMenu, { path: "configuracion", element: <ConfiguracionPage /> }],
+    children: [...rutasMenu, ...rutasConfiguracion],
   },
   {
     path: "*",

@@ -23,9 +23,21 @@ import {
   HistoryIcon,
   HomeIcon,
   HotelIcon,
+  LandmarkIcon,
   LayersIcon,
+  LayoutDashboardIcon,
   ListIcon,
+  ListTreeIcon,
   MegaphoneIcon,
+  MessageCircleIcon,
+  NetworkIcon,
+  PuzzleIcon,
+  SettingsIcon,
+  ShieldCheckIcon,
+  SlidersHorizontalIcon,
+  TagIcon,
+  UserIcon,
+  CreditCardIcon,
   PackageIcon,
   PackageMinusIcon,
   PackagePlusIcon,
@@ -65,6 +77,7 @@ export const RUTAS_FIJAS = new Set(["/"]);
 // usa la ruta base del módulo (p. ej. Ventas → /ventas).
 export const MENU: NavItem[] = [
   { label: "Inicio", icon: HomeIcon, to: "/" },
+  { label: "Dashboard", icon: LayoutDashboardIcon, to: "/dashboard" },
   {
     id: "ventas",
     label: "Ventas",
@@ -168,7 +181,33 @@ export const MENU: NavItem[] = [
   { label: "Gestión", icon: Settings2Icon, to: "/gestion" },
   { label: "Marketing", icon: MegaphoneIcon, to: "/marketing" },
   { label: "Cloud", icon: CloudIcon, to: "/cloud" },
+  { label: "Gestión Multisede", icon: NetworkIcon, to: "/multisede" },
+  { label: "WhatsApp", icon: MessageCircleIcon, to: "/whatsapp" },
+  { label: "Complementos", icon: PuzzleIcon, to: "/complementos" },
 ];
+
+// Configuración va fuera de MENU: fija al pie del sidebar y no se puede desactivar
+// (si no, se podría perder el acceso a los interruptores de módulos).
+export const MENU_CONFIGURACION = {
+  id: "configuracion",
+  label: "Configuración",
+  icon: SettingsIcon,
+  items: [
+    {
+      label: "General",
+      icon: SlidersHorizontalIcon,
+      to: "/configuracion",
+      descripcion: "Activación de los módulos del menú.",
+    },
+    { label: "Datos fiscales", icon: LandmarkIcon, to: "/configuracion/datos-fiscales" },
+    { label: "Comprobantes", icon: FileTextIcon, to: "/configuracion/comprobantes" },
+    { label: "Métodos de pago", icon: CreditCardIcon, to: "/configuracion/metodos-pago" },
+    { label: "Etiquetas", icon: TagIcon, to: "/configuracion/etiquetas" },
+    { label: "Usuarios", icon: UserIcon, to: "/configuracion/usuarios" },
+    { label: "Roles", icon: ShieldCheckIcon, to: "/configuracion/roles" },
+    { label: "Clasificación", icon: ListTreeIcon, to: "/configuracion/clasificacion" },
+  ],
+} satisfies NavItem;
 
 /**
  * Todas las rutas del menú con su título ("Ventas › Comprobantes") y las claves que

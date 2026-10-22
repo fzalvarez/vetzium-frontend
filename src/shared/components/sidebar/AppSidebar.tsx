@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
-import { ChevronDownIcon, PawPrintIcon, SettingsIcon } from "lucide-react";
+import { ChevronDownIcon, PawPrintIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { MENU, filtrarMenu, type NavItem, type SubItem } from "@/app/navegacion";
+import { MENU, MENU_CONFIGURACION, filtrarMenu, type NavItem, type SubItem } from "@/app/navegacion";
 import { useDesactivados } from "@/features/configuracion/hooks/useDesactivados";
 import { useSidebarStore } from "@/shared/store/sidebar.store";
 
@@ -12,7 +12,7 @@ const itemInactivoCls = "text-gray-600 hover:bg-brand-50 dark:text-gray-400 dark
 
 /** Módulo con submódulos que contiene la ruta actual, si hay. */
 function moduloDeRuta(pathname: string): string | null {
-  return MENU.find((item) => item.items?.some((sub) => sub.to === pathname))?.label ?? null;
+  return [...MENU, MENU_CONFIGURACION].find((item) => item.items?.some((sub) => sub.to === pathname))?.label ?? null;
 }
 
 function Enlace({ to, label, icon: Icon }: { to: string; label: string; icon: NavItem["icon"] }) {
@@ -146,7 +146,15 @@ export function AppSidebar() {
 
       {/* Fuera del menú configurable: siempre visible. */}
       <div className="pt-3 border-t border-gray-200 dark:border-gray-800">
-        <Enlace to="/configuracion" label="Configuración" icon={SettingsIcon} />
+        <Grupo
+          item={MENU_CONFIGURACION}
+          items={MENU_CONFIGURACION.items}
+          abierto={abierto === MENU_CONFIGURACION.label}
+          activo={MENU_CONFIGURACION.items.some((sub) => sub.to === pathname)}
+          onToggle={() =>
+            setAbierto((actual) => (actual === MENU_CONFIGURACION.label ? null : MENU_CONFIGURACION.label))
+          }
+        />
       </div>
     </nav>
   );

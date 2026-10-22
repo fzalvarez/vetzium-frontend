@@ -76,8 +76,22 @@
         Registrado por, Opciones. "Por ítems" sigue por definir.
       - **Catálogo**: columna de casilla de selección antes de Cód. de barras.
 - [x] Ícono en cada submódulo (menú lateral y Configuración).
+- [x] Menú: Dashboard (tras Inicio); Gestión Multisede, WhatsApp y Complementos (tras
+      Cloud, que ya existía). Configuración pasa a grupo con General (interruptores de
+      módulos), Datos fiscales, Comprobantes, Métodos de pago, Etiquetas, Usuarios,
+      Roles, Clasificación; el grupo se abre solo al entrar a una de sus rutas.
+- [x] **Dashboard** con **datos de ejemplo** (etiqueta visible): KPIs Ventas del día,
+      Ventas del mes, Sala de espera, Citas de hoy; barras Ventas del mes (monto × día);
+      dona Distribución de ventas por categoría (532 al centro; Vacunaciones, Consultas,
+      Desparasitaciones, Otros a la derecha); barras horizontales Visitas médicas por
+      especie; barras Promedio de visitas diarias (por día de la semana). Verificado con
+      Chrome headless en claro y oscuro, con hover real (tooltip de barra y centro de la
+      dona).
 
 ## Siguiente
+
+- [ ] Dashboard: reemplazar `datos-ejemplo.ts` por la API; confirmar especies, período
+      del "Promedio de visitas diarias" y si Dashboard reemplaza a Inicio.
 
 - [ ] Por definir en Productos: estados de un almacén (el filtro solo tiene "Todos") y
       tipos de almacén además de "Principal".

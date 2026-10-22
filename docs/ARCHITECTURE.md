@@ -39,7 +39,8 @@ src/
 | Feature | Backend | Rutas |
 |---|---|---|
 | `inicio` | — | `/` |
-| `configuracion` | — (localStorage) | `/configuracion` |
+| `dashboard` | por definir (hoy `datos-ejemplo.ts`) | `/dashboard` |
+| `configuracion` | — (localStorage) | `/configuracion` (General) y `/configuracion/*` |
 | `ventas` | por definir | `/ventas/cuentas-activas`, `/ventas/comprobantes`, `/ventas/entradas-salidas` |
 | `clientes` | por definir | `/clientes` (listado), `/clientes/gestion` |
 | `proveedores` | por definir | `/proveedores` (directorio), `/proveedores/ordenes-compra` |
@@ -70,7 +71,11 @@ Para construir una pantalla del menú: página en `features/<f>/pages`, `lazy` e
 
 ### Módulos activables (Configuración)
 
-`/configuracion` lista `MENU` con un interruptor y la `descripcion` de cada módulo y
+Configuración es un grupo propio (`MENU_CONFIGURACION`, fuera de `MENU`) fijo al pie
+del sidebar: General, Datos fiscales, Comprobantes, Métodos de pago, Etiquetas,
+Usuarios, Roles, Clasificación. Sus rutas no pasan por `RutaModulo`.
+
+`/configuracion` (General) lista `MENU` con un interruptor y la `descripcion` de cada módulo y
 submódulo ("Sin descripción" si está vacía; solo se llena cuando está claro qué hace,
 hoy solo Clientes › Gestión). La clave
 de un módulo es su `id` si tiene submódulos, si no su ruta; la de un submódulo, su ruta.
@@ -81,6 +86,16 @@ de un módulo es su `id` si tiene submódulos, si no su ruta; la de un submódul
 - Rutas: `RutaModulo` envuelve cada ruta del menú y muestra "Este módulo está
   desactivado" si su módulo o submódulo lo está.
 - Inicio (`RUTAS_FIJAS`) y Configuración (pie del sidebar) no se pueden desactivar.
+
+### Gráficos (Dashboard)
+
+SVG propio, sin librería (`features/dashboard/components`): `GraficoBarras` (una
+serie, eje Y con paso redondo, tooltip por columna), `GraficoDona` (≤ 4 categorías,
+total al centro, leyenda con valor y %; hover muestra la categoría al centro) y
+`BarrasHorizontales` (valor escrito, sin tooltip). Cada `TarjetaGrafico` incluye la
+tabla equivalente oculta para lectores de pantalla. Una serie usa `brand-*`; las
+categorías usan `serie-1…4` (tokens en `index.css`, paleta de referencia validada para
+claro y oscuro, en orden fijo). Nunca doble eje.
 
 ### Pantallas de listado
 

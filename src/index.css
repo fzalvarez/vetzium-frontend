@@ -31,6 +31,13 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+
+  /* Series categóricas de gráficos (paleta de referencia dataviz, orden fijo).
+     Validadas: CVD ΔE ≥ 9.1 y visión normal ≥ 22.9 entre vecinas sobre #ffffff. */
+  --serie-1: #2a78d6;
+  --serie-2: #eb6834;
+  --serie-3: #1baf7a;
+  --serie-4: #eda100;
 }
 
 .dark {
@@ -60,6 +67,12 @@
   --sidebar-accent-foreground: #f2f4f7;
   --sidebar-border: #1d2939;
   --sidebar-ring: #465fff;
+
+  /* Mismos tonos, escalonados para fondo oscuro (validados sobre #101828, ≥ 3:1). */
+  --serie-1: #3987e5;
+  --serie-2: #d95926;
+  --serie-3: #199e70;
+  --serie-4: #c98500;
 }
 
 @theme inline {
@@ -92,6 +105,10 @@
   --color-sidebar-accent: var(--sidebar-accent);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
+  --color-serie-1: var(--serie-1);
+  --color-serie-2: var(--serie-2);
+  --color-serie-3: var(--serie-3);
+  --color-serie-4: var(--serie-4);
   --color-sidebar-ring: var(--sidebar-ring);
 
   --font-*: initial;

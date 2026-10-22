@@ -92,7 +92,8 @@ export default function ConfiguracionPage() {
   return (
     <>
       <EncabezadoPagina
-        titulo="Configuración"
+        modulo="Configuración"
+        titulo="General"
         acciones={
           <Button variant="outline" onClick={activarTodos} disabled={desactivados.size === 0}>
             <RotateCcwIcon className="size-4" />
