@@ -92,6 +92,6 @@ export const LOTES_EJEMPLO: Lote[] = [
   { id: 5, fechaRegistro: "2026-10-02", producto: "Vacuna séxtuple canina", numeroLote: "L-ZT2409", almacen: "Almacén principal", fechaVencimiento: "2027-04-30", cantidadEntrada: 30, saldo: 24 },
   { id: 4, fechaRegistro: "2026-09-25", producto: "Bravecto 20–40 kg", numeroLote: "L-MS8812", almacen: "Farmacia", fechaVencimiento: "2028-01-31", cantidadEntrada: 20, saldo: 12 },
   { id: 3, fechaRegistro: "2026-09-18", producto: "Alimento adulto raza mediana 15 kg", numeroLote: "L-RC5521", almacen: "Almacén principal", fechaVencimiento: "2027-03-15", cantidadEntrada: 10, saldo: 8 },
-  { id: 2, fechaRegistro: "2026-09-10", producto: "Shampoo hipoalergénico 500 ml", numeroLote: "L-PT0934", almacen: "Peluquería", fechaVencimiento: "2028-06-30", cantidadEntrada: 24, saldo: 15 },
-  { id: 1, fechaRegistro: "2026-08-29", producto: "Jeringa descartable 5 ml x100", numeroLote: "L-BD7710", almacen: "Hospitalización", fechaVencimiento: "2030-12-31", cantidadEntrada: 10, saldo: 6 },
+  { id: 2, fechaRegistro: "2026-09-10", producto: "Shampoo hipoalergénico 500 ml", numeroLote: "L-PT0934", almacen: "Peluquería", fechaVencimiento: "2026-10-12", cantidadEntrada: 24, saldo: 15 },
+  { id: 1, fechaRegistro: "2026-08-29", producto: "Jeringa descartable 5 ml x100", numeroLote: "L-BD7710", almacen: "Hospitalización", fechaVencimiento: "2026-11-08", cantidadEntrada: 10, saldo: 6 },
 ];

@@ -90,6 +90,10 @@ de un módulo es su `id` si tiene submódulos, si no su ruta; la de un submódul
   desactivado" si su módulo o submódulo lo está.
 - Inicio (`RUTAS_FIJAS`) y Configuración (pie del sidebar) no se pueden desactivar.
 
+**Reglas de los módulos** (`reglas.store`, persistido como `vetzium-reglas`): parámetros
+que cambian el comportamiento de un módulo, editables en Configuración › General. Hoy:
+días de aviso de vencimiento de lotes (30 por defecto).
+
 ### Configuración compartida (`configuracion.store`)
 
 Usuarios, roles, métodos de pago y datos fiscales viven en un store Zustand **sin

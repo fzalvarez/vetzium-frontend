@@ -16,6 +16,8 @@ import { usePaginacion } from "@/shared/hooks/usePaginacion";
 import { formatearFecha } from "@/shared/utils/fechas";
 import { formatearNumero } from "@/shared/utils/formato";
 import { coincide } from "@/shared/utils/texto";
+import { useReglasStore } from "@/features/configuracion/store/reglas.store";
+import { EstadoVencimiento } from "../components/EstadoVencimiento";
 import { LOTES_EJEMPLO } from "../datos-ejemplo";
 
 const COLUMNAS: Columna[] = [
@@ -31,6 +33,7 @@ const COLUMNAS: Columna[] = [
 ];
 
 export default function LotesPage() {
+  const diasAviso = useReglasStore((s) => s.diasAvisoVencimiento);
   const [busqueda, setBusqueda] = useState("");
   const filtrados = LOTES_EJEMPLO.filter((l) => coincide(busqueda, l.producto));
   const { visibles, paginacion } = usePaginacion(filtrados);
@@ -61,7 +64,12 @@ export default function LotesPage() {
               <Celda destacada>{l.producto}</Celda>
               <Celda numerica>{l.numeroLote}</Celda>
               <Celda>{l.almacen}</Celda>
-              <Celda numerica>{formatearFecha(l.fechaVencimiento)}</Celda>
+              <Celda numerica>
+                <span className="flex items-center gap-2">
+                  {formatearFecha(l.fechaVencimiento)}
+                  <EstadoVencimiento fecha={l.fechaVencimiento} diasAviso={diasAviso} />
+                </span>
+              </Celda>
               <Celda alinear="derecha" numerica>{formatearNumero(l.cantidadEntrada)}</Celda>
               <Celda alinear="derecha" numerica>{formatearNumero(l.saldo)}</Celda>
               <CeldaOpciones etiqueta={`lote ${l.numeroLote}`} />

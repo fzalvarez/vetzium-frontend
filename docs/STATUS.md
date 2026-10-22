@@ -117,6 +117,10 @@
 - [x] Verificado con Chrome headless y clics/tecleo reales: 13 tablas con 5 filas y pie
       "Mostrando 1–5 de 5", errores de validación, altas, filtro, selección, paso a la
       página 2 con 11 registros y cambio a 25 filas por página.
+- [x] **Reglas de los módulos** (Configuración › General, arriba de los módulos; se
+      guarda en el navegador): Productos › Lotes "Aviso de vencimiento" = 30 días (1–365).
+      Lotes muestra "Vencido" o "Por vencer · N días" junto a la fecha. Verificado: con 30
+      días marca shampoo (vencido) y jeringas (17 días); con 10, solo el vencido.
 - [x] **Mascotas** (datos de ejemplo en `mascotas.store`, en memoria):
       - **Listado** (`/mascotas`): N.° HC, nombre (abre la mascota), especie, raza, sexo,
         edad, propietario; buscador y paginación.

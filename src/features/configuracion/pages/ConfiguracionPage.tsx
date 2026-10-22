@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { MENU, RUTAS_FIJAS, claveDe, type NavItem } from "@/app/navegacion";
 import { EncabezadoPagina } from "@/shared/components/EncabezadoPagina";
 import { Tarjeta } from "@/shared/components/Tarjeta";
+import { ReglasModulos } from "../components/ReglasModulos";
 import { useModulosStore } from "../store/modulos.store";
 import { useDesactivados } from "../hooks/useDesactivados";
 
@@ -101,6 +102,11 @@ export default function ConfiguracionPage() {
           </Button>
         }
       />
+
+      {/* Reglas arriba: es corta; la lista de módulos es larga. */}
+      <div className="mb-6">
+        <ReglasModulos />
+      </div>
 
       <Tarjeta>
         <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-800">

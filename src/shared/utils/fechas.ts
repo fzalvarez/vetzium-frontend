@@ -49,6 +49,15 @@ export function calcularEdad(nacimiento: string): string {
   return [txtA, txtM].filter(Boolean).join(" ");
 }
 
+/** Días desde hoy (Perú) hasta una fecha "YYYY-MM-DD"; negativo si ya pasó. */
+export function diasHasta(fecha: string): number {
+  const utc = (f: string) => {
+    const [a, m, d] = f.split("-").map(Number);
+    return Date.UTC(a, m - 1, d);
+  };
+  return Math.round((utc(fecha) - utc(hoyPeru())) / 86_400_000);
+}
+
 /** "2026-10-22T10:15" → "22/10/2026 10:15". */
 export function formatearFechaHora(fechaHora: string): string {
   const [fecha, hora] = fechaHora.split("T");
