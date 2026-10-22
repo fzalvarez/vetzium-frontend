@@ -117,6 +117,16 @@
 - [x] Verificado con Chrome headless y clics/tecleo reales: 13 tablas con 5 filas y pie
       "Mostrando 1–5 de 5", errores de validación, altas, filtro, selección, paso a la
       página 2 con 11 registros y cambio a 25 filas por página.
+- [x] **Mascotas** (datos de ejemplo en `mascotas.store`, en memoria):
+      - **Listado** (`/mascotas`): N.° HC, nombre (abre la mascota), especie, raza, sexo,
+        edad, propietario; buscador y paginación.
+      - **Mascota abierta** (`/mascotas/:id`): izquierda foto (o ícono de la especie) y
+        datos (N.° HC, especie, raza, sexo, esterilizado, nacimiento, edad calculada,
+        etiquetas, propietario). Derecha pestañas: Editar (funciona), **Historia
+        clínica** (por defecto: Registro de consulta con fecha/hora, motivo, anamnesis y
+        7 constantes —temperatura, FC, FR, peso, deshidratación, TLC, PA— y consultas
+        anteriores), Calendario, Galería, Historia de compras, Órdenes de peluquería y
+        Auditoría (por definir). Verificado con clics reales.
 - [x] **Ventas › Ventas** (`/ventas`, pantalla de venta) con datos de ejemplo:
       - Buscar y seleccionar cliente (combobox con teclado); al elegirlo se ven sus
         datos y mascotas. A la derecha: Editar (requiere cliente), Nuevo cliente, Baño /

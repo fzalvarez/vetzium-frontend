@@ -22,4 +22,9 @@ function SelectNativo({ className, children, ...props }: React.ComponentProps<"s
   );
 }
 
-export { Input, SelectNativo };
+/** Texto de varias líneas con el mismo estilo que Input. */
+function Textarea({ className, ...props }: React.ComponentProps<"textarea">) {
+  return <textarea data-slot="textarea" className={cn(campoCls, "h-auto min-h-24 py-2", className)} {...props} />;
+}
+
+export { Input, SelectNativo, Textarea };

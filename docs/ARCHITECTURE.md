@@ -39,6 +39,7 @@ src/
 | Feature | Backend | Rutas |
 |---|---|---|
 | `inicio` | — | `/` |
+| `mascotas` | por definir (`mascotas.store` en memoria) | `/mascotas` (listado), `/mascotas/:id` (mascota abierta, fuera del menú) |
 | `dashboard` | por definir (hoy `datos-ejemplo.ts`) | `/dashboard` |
 | `configuracion` | — (módulos: localStorage; resto: `configuracion.store` en memoria) | `/configuracion` (General), `/configuracion/usuarios`, `/roles`, `/metodos-pago`, `/datos-fiscales`; el resto en construcción |
 | `ventas` | por definir (en memoria con `datos-ejemplo.ts`; totales en `lib/totales.ts`) | `/ventas` (venta), `/ventas/cuentas-activas`, `/ventas/comprobantes`, `/ventas/entradas-salidas` |

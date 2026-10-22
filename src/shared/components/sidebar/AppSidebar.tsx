@@ -10,9 +10,15 @@ const itemCls = "flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-sm f
 const itemActivoCls = "text-brand-700 bg-brand-500/10 font-semibold dark:text-brand-400 dark:bg-brand-500/15";
 const itemInactivoCls = "text-gray-600 hover:bg-brand-50 dark:text-gray-400 dark:hover:bg-white/5";
 
+/** ¿La ruta es la del submódulo o una pantalla dentro de él (p. ej. /mascotas/3)? */
+const enSubmodulo = (pathname: string, to: string) => pathname === to || pathname.startsWith(`${to}/`);
+
 /** Módulo con submódulos que contiene la ruta actual, si hay. */
 function moduloDeRuta(pathname: string): string | null {
-  return [...MENU, MENU_CONFIGURACION].find((item) => item.items?.some((sub) => sub.to === pathname))?.label ?? null;
+  return (
+    [...MENU, MENU_CONFIGURACION].find((item) => item.items?.some((sub) => enSubmodulo(pathname, sub.to)))?.label ??
+    null
+  );
 }
 
 function Enlace({ to, label, icon: Icon }: { to: string; label: string; icon: NavItem["icon"] }) {
@@ -135,7 +141,7 @@ export function AppSidebar() {
               item={item}
               items={item.items}
               abierto={abierto === item.label}
-              activo={item.items.some((sub) => sub.to === pathname)}
+              activo={item.items.some((sub) => enSubmodulo(pathname, sub.to))}
               onToggle={() => setAbierto((actual) => (actual === item.label ? null : item.label))}
             />
           ) : (
@@ -150,7 +156,7 @@ export function AppSidebar() {
           item={MENU_CONFIGURACION}
           items={MENU_CONFIGURACION.items}
           abierto={abierto === MENU_CONFIGURACION.label}
-          activo={MENU_CONFIGURACION.items.some((sub) => sub.to === pathname)}
+          activo={MENU_CONFIGURACION.items.some((sub) => enSubmodulo(pathname, sub.to))}
           onToggle={() =>
             setAbierto((actual) => (actual === MENU_CONFIGURACION.label ? null : MENU_CONFIGURACION.label))
           }

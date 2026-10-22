@@ -17,7 +17,9 @@ import {
   GestionClientesPage,
   InicioPage,
   ListadoClientesPage,
+  ListadoMascotasPage,
   LotesPage,
+  MascotaPage,
   MetodosPagoPage,
   OrdenesCompraPage,
   RolesPage,
@@ -40,6 +42,7 @@ const PAGINAS: Record<string, React.ReactNode> = {
   "/ventas/entradas-salidas": <EntradasSalidasPage />,
   "/clientes": <ListadoClientesPage />,
   "/clientes/gestion": <GestionClientesPage />,
+  "/mascotas": <ListadoMascotasPage />,
   "/productos": <CatalogoPage />,
   "/productos/descargar-stock": <DescargarStockPage />,
   "/productos/cargar-stock": <CargarStockPage />,
@@ -78,7 +81,19 @@ export const router = createBrowserRouter([
     path: "/",
     element: <AdminLayout />,
     errorElement: <RouteErrorBoundary />,
-    children: [...rutasMenu, ...rutasConfiguracion],
+    children: [
+      ...rutasMenu,
+      ...rutasConfiguracion,
+      // Detalle fuera del menú: respeta el módulo Mascotas › Listado.
+      {
+        path: "mascotas/:id",
+        element: (
+          <RutaModulo claves={["mascotas", "/mascotas"]}>
+            <MascotaPage />
+          </RutaModulo>
+        ),
+      },
+    ],
   },
   {
     path: "*",
