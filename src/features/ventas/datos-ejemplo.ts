@@ -1,8 +1,32 @@
 import { CLIENTES_EJEMPLO, nombreCompleto } from "@/features/clientes/datos-ejemplo";
+import { PRODUCTOS_EJEMPLO, STOCK_ALMACEN_EJEMPLO } from "@/features/productos/datos-ejemplo";
 import type { CuentaPorCliente, ItemCuenta } from "./types/cuenta-activa";
 import type { MovimientoCaja } from "./types/movimiento-caja";
+import type { ItemVendible } from "./types/venta";
 
 // DATOS DE EJEMPLO: no hay backend todavía. Las páginas lo indican con una etiqueta.
+
+/**
+ * Lo que se puede vender: productos con stock (precio de venta de Stock por almacén),
+ * una bolsa plástica (afecta a ICBPER) y servicios (precios de Cuentas activas).
+ */
+export const ITEMS_VENDIBLES_EJEMPLO: ItemVendible[] = [
+  ...STOCK_ALMACEN_EJEMPLO.map((s) => ({
+    id: `p-${PRODUCTOS_EJEMPLO.find((p) => p.nombre === s.producto)?.id ?? s.id}`,
+    tipo: "producto" as const,
+    nombre: s.producto,
+    precio: s.precioVenta,
+    almacen: s.almacen,
+    stock: s.stockContable,
+    icbper: false,
+  })),
+  { id: "p-bolsa", tipo: "producto", nombre: "Bolsa plástica", precio: 0.1, almacen: "Almacén principal", stock: 200, icbper: true },
+  { id: "s-1", tipo: "servicio", nombre: "Consulta general", precio: 60, almacen: null, stock: null, icbper: false },
+  { id: "s-2", tipo: "servicio", nombre: "Baño y corte", precio: 60, almacen: null, stock: null, icbper: false },
+  { id: "s-3", tipo: "servicio", nombre: "Radiografía", precio: 90, almacen: null, stock: null, icbper: false },
+  { id: "s-4", tipo: "servicio", nombre: "Hospitalización (día)", precio: 120, almacen: null, stock: null, icbper: false },
+  { id: "s-5", tipo: "servicio", nombre: "Desparasitación interna", precio: 25, almacen: null, stock: null, icbper: false },
+];
 
 export const ITEMS_CUENTA_EJEMPLO: ItemCuenta[] = [
   { id: 5, fechaRegistro: "2026-10-22", clienteId: 1, mascota: "Firulais", descripcion: "Vacuna séxtuple", precioUnitario: 85, cantidad: 1 },

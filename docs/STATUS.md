@@ -117,6 +117,19 @@
 - [x] Verificado con Chrome headless y clics/tecleo reales: 13 tablas con 5 filas y pie
       "Mostrando 1–5 de 5", errores de validación, altas, filtro, selección, paso a la
       página 2 con 11 registros y cambio a 25 filas por página.
+- [x] **Ventas › Ventas** (`/ventas`, pantalla de venta) con datos de ejemplo:
+      - Buscar y seleccionar cliente (combobox con teclado); al elegirlo se ven sus
+        datos y mascotas. A la derecha: Editar (requiere cliente), Nuevo cliente, Baño /
+        peluquería, Hotel, Movilidad, Consulta y "Agregar nota" (color distinto); por
+        ahora "Próximamente".
+      - Almacén de origen (activos con "Usar para ventas") y buscador de productos (con
+        stock en ese almacén) y servicios; requiere cliente. Repetir un ítem suma 1.
+      - Tabla: Concepto, Valor unitario, Cantidad (editable), Subtotal, Impuestos, Total,
+        Mascota (del cliente; se asigna sola si tiene una), Opciones (quitar). Sin
+        paginación a propósito: es la cuenta en curso y los totales deben verse completos.
+      - Resumen: valor bruto, descuentos (0 por ahora), valor con descuentos, impuestos
+        (IGV de Datos fiscales; precios con IGV incluido), ICBPER (S/ 0.50 por bolsa) y
+        total. Verificado con Chrome headless: S/ 230.60 y S/ 171.80 en los casos probados.
 - [x] **Configuración** con datos de ejemplo compartidos en la sesión:
       - **Usuarios**: buscador, tabla (usuario con iniciales y correo, rol, estado, último
         acceso) y modal "Nuevo usuario" (nombre, correo, rol, estado).
@@ -133,6 +146,10 @@
       Chrome headless; en móvil se ocultan Calendario y Maximizar.
 
 ## Siguiente
+
+- [ ] Ventas: cómo se aplican descuentos (por línea, global, %), qué abren los accesos
+      rápidos, acción final (¿Cobrar / Emitir comprobante / Guardar en cuenta activa?) y
+      si el precio de lista incluye IGV (hoy sí).
 
 - [ ] Configuración: confirmar roles base y sus permisos, acciones por módulo (¿solo
       Ver/Crear/Editar/Eliminar?), regímenes/ambiente/IGV, si los usuarios pertenecen a

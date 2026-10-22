@@ -41,7 +41,7 @@ src/
 | `inicio` | — | `/` |
 | `dashboard` | por definir (hoy `datos-ejemplo.ts`) | `/dashboard` |
 | `configuracion` | — (módulos: localStorage; resto: `configuracion.store` en memoria) | `/configuracion` (General), `/configuracion/usuarios`, `/roles`, `/metodos-pago`, `/datos-fiscales`; el resto en construcción |
-| `ventas` | por definir (Entradas/Salidas en memoria con `datos-ejemplo.ts`) | `/ventas/cuentas-activas`, `/ventas/comprobantes`, `/ventas/entradas-salidas` |
+| `ventas` | por definir (en memoria con `datos-ejemplo.ts`; totales en `lib/totales.ts`) | `/ventas` (venta), `/ventas/cuentas-activas`, `/ventas/comprobantes`, `/ventas/entradas-salidas` |
 | `clientes` | por definir | `/clientes` (listado), `/clientes/gestion` |
 | `proveedores` | por definir | `/proveedores` (directorio), `/proveedores/ordenes-compra` |
 | `productos` | por definir | `/productos` (catálogo), `/productos/descargar-stock`, `/productos/cargar-stock` (ambas con `MovimientosStock`), `/productos/stock-almacen`, `/productos/almacenes`, `/productos/lotes` |

@@ -23,6 +23,7 @@ import {
   RolesPage,
   StockAlmacenPage,
   UsuariosPage,
+  VentasPage,
 } from "./paginas";
 import { RutaModulo } from "@/features/configuracion/components/RutaModulo";
 import Error404 from "@/features/error-pages/pages/Error404";
@@ -33,6 +34,7 @@ import RouteErrorBoundary from "@/features/error-pages/pages/RouteErrorBoundary"
 const PAGINAS: Record<string, React.ReactNode> = {
   "/": <InicioPage />,
   "/dashboard": <DashboardPage />,
+  "/ventas": <VentasPage />,
   "/ventas/cuentas-activas": <CuentasActivasPage />,
   "/ventas/comprobantes": <ComprobantesPage />,
   "/ventas/entradas-salidas": <EntradasSalidasPage />,
