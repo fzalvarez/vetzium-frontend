@@ -39,6 +39,7 @@ src/
 | Feature | Backend | Rutas |
 |---|---|---|
 | `inicio` | — | `/` |
+| `eventos` | por definir (`datos-ejemplo.ts`) | `/eventos/listado` |
 | `sala-espera` | por definir (`sala-espera.store` en memoria) | `/sala-espera` |
 | `mascotas` | por definir (`mascotas.store` en memoria) | `/mascotas` (listado), `/mascotas/:id` (mascota abierta, fuera del menú) |
 | `dashboard` | por definir (hoy `datos-ejemplo.ts`) | `/dashboard` |

@@ -118,6 +118,11 @@
 - [x] Verificado con Chrome headless y clics/tecleo reales: 13 tablas con 5 filas y pie
       "Mostrando 1–5 de 5", errores de validación, altas, filtro, selección, paso a la
       página 2 con 11 registros y cambio a 25 filas por página.
+- [x] **Eventos › Listado** (datos de ejemplo): barra con Buscar, Fechas (desde–hasta),
+      Borrar, Actualizar; segunda fila con filtros Tipo de evento, Estado (inicia en
+      Pendiente), Usuario y Sala de espera (Enviado / No enviado). Tabla: Fecha (agregada
+      para el filtro de fechas), Cliente, Mascota, Teléfonos, Correo, Motivo, Tipo, Estado,
+      Usuario responsable, Opciones; paginación. Tipos y estados provisionales.
 - [x] Menú: **Gestión** (Gráfico de ventas, Trimestral, Ingresos, Rankings › Pacientes /
       Clientes / Ítems, Detalle mensual) y **Marketing** (Newsletter, Encuestas, Puntos,
       Ajustes, Promociones, Estados de cuenta), en construcción. El menú admite 3 niveles

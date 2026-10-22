@@ -10,6 +10,7 @@ export const EnConstruccionPage = lazy(() => import("@/features/en-construccion/
 export const ListadoMascotasPage = lazy(() => import("@/features/mascotas/pages/ListadoMascotasPage"));
 export const MascotaPage = lazy(() => import("@/features/mascotas/pages/MascotaPage"));
 export const SalaEsperaPage = lazy(() => import("@/features/sala-espera/pages/SalaEsperaPage"));
+export const ListadoEventosPage = lazy(() => import("@/features/eventos/pages/ListadoEventosPage"));
 export const VentasPage = lazy(() => import("@/features/ventas/pages/VentasPage"));
 export const CuentasActivasPage = lazy(() => import("@/features/ventas/pages/CuentasActivasPage"));
 export const ComprobantesPage = lazy(() => import("@/features/ventas/pages/ComprobantesPage"));
