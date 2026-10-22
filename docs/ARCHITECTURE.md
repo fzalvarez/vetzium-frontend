@@ -40,7 +40,7 @@ src/
 |---|---|---|
 | `inicio` | — | `/` |
 | `dashboard` | por definir (hoy `datos-ejemplo.ts`) | `/dashboard` |
-| `configuracion` | — (localStorage) | `/configuracion` (General) y `/configuracion/*` |
+| `configuracion` | — (módulos: localStorage; resto: `configuracion.store` en memoria) | `/configuracion` (General), `/configuracion/usuarios`, `/roles`, `/metodos-pago`, `/datos-fiscales`; el resto en construcción |
 | `ventas` | por definir (Entradas/Salidas en memoria con `datos-ejemplo.ts`) | `/ventas/cuentas-activas`, `/ventas/comprobantes`, `/ventas/entradas-salidas` |
 | `clientes` | por definir | `/clientes` (listado), `/clientes/gestion` |
 | `proveedores` | por definir | `/proveedores` (directorio), `/proveedores/ordenes-compra` |
@@ -88,6 +88,17 @@ de un módulo es su `id` si tiene submódulos, si no su ruta; la de un submódul
 - Rutas: `RutaModulo` envuelve cada ruta del menú y muestra "Este módulo está
   desactivado" si su módulo o submódulo lo está.
 - Inicio (`RUTAS_FIJAS`) y Configuración (pie del sidebar) no se pueden desactivar.
+
+### Configuración compartida (`configuracion.store`)
+
+Usuarios, roles, métodos de pago y datos fiscales viven en un store Zustand **sin
+persistir** (datos de ejemplo; se reinicia al recargar), para que las pantallas se
+afecten entre sí en la sesión: los roles alimentan el modal de usuarios y su conteo; los
+métodos de pago **activos** son los que ofrece el modal de caja, y los que piden N.° de
+operación lo vuelven obligatorio (`crearMovimientoCajaSchema`). Permisos de rol: matriz
+módulo (`claveDe` de `MENU`) × Ver/Crear/Editar/Eliminar; marcar una acción marca Ver y
+quitar Ver quita todo. El rol fijo (Administrador) no se edita. Aún no se aplican los
+permisos al menú: no hay sesión.
 
 ### Formularios y modales
 

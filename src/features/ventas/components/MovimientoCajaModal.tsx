@@ -1,12 +1,13 @@
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input, SelectNativo } from "@/components/ui/input";
 import { Campo } from "@/shared/components/Campo";
 import { ModalFormulario } from "@/shared/components/ModalFormulario";
 import { hoyPeru } from "@/shared/utils/fechas";
-import { MEDIOS_PAGO, TIPOS_MOVIMIENTO_CAJA } from "../constants";
+import { useConfiguracionStore } from "@/features/configuracion/store/configuracion.store";
+import { TIPOS_MOVIMIENTO_CAJA } from "../constants";
 import type { MovimientoCaja, TipoMovimientoCaja } from "../types/movimiento-caja";
-import { movimientoCajaSchema, type MovimientoCajaForm } from "../validation/movimiento-caja.schema";
+import { crearMovimientoCajaSchema, type MovimientoCajaForm } from "../validation/movimiento-caja.schema";
 
 const valoresIniciales = (): MovimientoCajaForm => ({
   fecha: hoyPeru(),
@@ -28,14 +29,21 @@ export function MovimientoCajaModal({
   onClose: () => void;
   onGuardar: (movimiento: Omit<MovimientoCaja, "id">) => void;
 }) {
+  // Medios de pago de Configuración › Métodos de pago: solo los activos.
+  const metodosPago = useConfiguracionStore((s) => s.metodosPago);
+  const activos = metodosPago.filter((m) => m.activo);
+  const requierenOperacion = activos.filter((m) => m.requiereOperacion).map((m) => m.nombre);
+
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
   } = useForm<MovimientoCajaForm>({
-    resolver: zodResolver(movimientoCajaSchema),
+    resolver: zodResolver(crearMovimientoCajaSchema(requierenOperacion)),
     defaultValues: valoresIniciales(),
   });
+  const medioPago = useWatch({ control, name: "medioPago" });
 
   const nombre = TIPOS_MOVIMIENTO_CAJA[tipo].toLowerCase();
 
@@ -71,9 +79,9 @@ export function MovimientoCajaModal({
       <Campo etiqueta="Medio de pago" htmlFor="mc-medio" error={errors.medioPago?.message}>
         <SelectNativo id="mc-medio" aria-invalid={!!errors.medioPago} {...register("medioPago")}>
           <option value="">Seleccione...</option>
-          {MEDIOS_PAGO.map((m) => (
-            <option key={m} value={m}>
-              {m}
+          {activos.map((m) => (
+            <option key={m.id} value={m.nombre}>
+              {m.nombre}
             </option>
           ))}
         </SelectNativo>
@@ -112,7 +120,12 @@ export function MovimientoCajaModal({
       </Campo>
 
       <Campo etiqueta="N.° de operación" htmlFor="mc-operacion" error={errors.numeroOperacion?.message}>
-        <Input id="mc-operacion" placeholder="Opcional" {...register("numeroOperacion")} />
+        <Input
+          id="mc-operacion"
+          placeholder={requierenOperacion.includes(medioPago) ? `Obligatorio con ${medioPago}` : "Opcional"}
+          aria-invalid={!!errors.numeroOperacion}
+          {...register("numeroOperacion")}
+        />
       </Campo>
     </ModalFormulario>
   );

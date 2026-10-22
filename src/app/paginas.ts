@@ -11,6 +11,10 @@ export const CuentasActivasPage = lazy(() => import("@/features/ventas/pages/Cue
 export const ComprobantesPage = lazy(() => import("@/features/ventas/pages/ComprobantesPage"));
 export const EntradasSalidasPage = lazy(() => import("@/features/ventas/pages/EntradasSalidasPage"));
 export const ConfiguracionPage = lazy(() => import("@/features/configuracion/pages/ConfiguracionPage"));
+export const UsuariosPage = lazy(() => import("@/features/configuracion/pages/UsuariosPage"));
+export const RolesPage = lazy(() => import("@/features/configuracion/pages/RolesPage"));
+export const MetodosPagoPage = lazy(() => import("@/features/configuracion/pages/MetodosPagoPage"));
+export const DatosFiscalesPage = lazy(() => import("@/features/configuracion/pages/DatosFiscalesPage"));
 export const ListadoClientesPage = lazy(() => import("@/features/clientes/pages/ListadoClientesPage"));
 export const GestionClientesPage = lazy(() => import("@/features/clientes/pages/GestionClientesPage"));
 export const CatalogoPage = lazy(() => import("@/features/productos/pages/CatalogoPage"));

@@ -117,11 +117,27 @@
 - [x] Verificado con Chrome headless y clics/tecleo reales: 13 tablas con 5 filas y pie
       "Mostrando 1–5 de 5", errores de validación, altas, filtro, selección, paso a la
       página 2 con 11 registros y cambio a 25 filas por página.
+- [x] **Configuración** con datos de ejemplo compartidos en la sesión:
+      - **Usuarios**: buscador, tabla (usuario con iniciales y correo, rol, estado, último
+        acceso) y modal "Nuevo usuario" (nombre, correo, rol, estado).
+      - **Roles**: tabla (rol, descripción, usuarios, módulos con acceso) y "Nuevo rol";
+        modal **Permisos** por módulo × Ver/Crear/Editar/Eliminar; Administrador fijo.
+      - **Métodos de pago**: tabla con interruptor Activo y "Nuevo método" (tipo, pedir
+        N.° de operación). Entradas/Salidas usa solo los activos y exige el N.° de
+        operación cuando el método lo pide.
+      - **Datos fiscales**: formulario Empresa / Domicilio fiscal / Facturación
+        electrónica (RUC 11 dígitos, régimen SUNAT, ambiente, IGV), Guardar y Descartar.
+      - Verificado con clics reales navegando dentro de la SPA (sin recargar).
 - [x] Barra superior: Buscar, Calendario, Maximizar ventana (pantalla completa real,
       alterna a Restaurar), Ayuda, tema y Mi cuenta. Verificado con clics reales en
       Chrome headless; en móvil se ocultan Calendario y Maximizar.
 
 ## Siguiente
+
+- [ ] Configuración: confirmar roles base y sus permisos, acciones por módulo (¿solo
+      Ver/Crear/Editar/Eliminar?), regímenes/ambiente/IGV, si los usuarios pertenecen a
+      una sede (Gestión Multisede) y qué hace "Opciones" (editar, desactivar, reenviar
+      invitación). Aplicar permisos al menú cuando exista sesión.
 
 - [ ] Valores provisionales a confirmar: estados de cliente y almacén (Activo/Inactivo),
       tipo de almacén "Secundario", tipos de operación de carga/descarga, IGV 18% en

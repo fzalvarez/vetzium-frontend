@@ -9,6 +9,7 @@ import {
   ConfiguracionPage,
   CuentasActivasPage,
   DashboardPage,
+  DatosFiscalesPage,
   DescargarStockPage,
   DirectorioProveedoresPage,
   EnConstruccionPage,
@@ -17,8 +18,11 @@ import {
   InicioPage,
   ListadoClientesPage,
   LotesPage,
+  MetodosPagoPage,
   OrdenesCompraPage,
+  RolesPage,
   StockAlmacenPage,
+  UsuariosPage,
 } from "./paginas";
 import { RutaModulo } from "@/features/configuracion/components/RutaModulo";
 import Error404 from "@/features/error-pages/pages/Error404";
@@ -43,6 +47,10 @@ const PAGINAS: Record<string, React.ReactNode> = {
   "/proveedores": <DirectorioProveedoresPage />,
   "/proveedores/ordenes-compra": <OrdenesCompraPage />,
   "/configuracion": <ConfiguracionPage />,
+  "/configuracion/usuarios": <UsuariosPage />,
+  "/configuracion/roles": <RolesPage />,
+  "/configuracion/metodos-pago": <MetodosPagoPage />,
+  "/configuracion/datos-fiscales": <DatosFiscalesPage />,
 };
 
 // Cada ruta del menú respeta lo activado/desactivado en Configuración.
