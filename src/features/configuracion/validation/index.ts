@@ -20,6 +20,7 @@ export const metodoPagoSchema = z.object({
   nombre: z.string().trim().min(1, "Ingresa el nombre.").max(50, "Máximo 50 caracteres."),
   tipo: z.enum(["efectivo", "billetera", "tarjeta", "transferencia"]),
   requiereOperacion: z.enum(["si", "no"]),
+  observaciones: z.string().trim().max(200, "Máximo 200 caracteres."),
 });
 export type MetodoPagoForm = z.infer<typeof metodoPagoSchema>;
 

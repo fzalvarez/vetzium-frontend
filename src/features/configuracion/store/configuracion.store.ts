@@ -13,6 +13,9 @@ interface ConfiguracionState {
   usuarios: Usuario[];
   roles: Rol[];
   metodosPago: MetodoPago[];
+  /** Método que se propone primero al cobrar. */
+  metodoPredeterminadoId: number;
+  setMetodoPredeterminado: (id: number) => void;
   datosFiscales: DatosFiscales;
   agregarUsuario: (usuario: Omit<Usuario, "id" | "ultimoAcceso">) => void;
   agregarRol: (rol: Pick<Rol, "nombre" | "descripcion">) => void;
@@ -24,10 +27,19 @@ interface ConfiguracionState {
 
 const siguienteId = (items: { id: number }[]) => Math.max(0, ...items.map((i) => i.id)) + 1;
 
+/** Método predeterminado vigente: el elegido si está activo; si no, el primer activo. */
+export function metodoPredeterminado(metodos: MetodoPago[], id: number): MetodoPago | undefined {
+  const activos = metodos.filter((m) => m.activo);
+  return activos.find((m) => m.id === id) ?? activos[0];
+}
+
 export const useConfiguracionStore = create<ConfiguracionState>()((set) => ({
   usuarios: USUARIOS_EJEMPLO,
   roles: ROLES_EJEMPLO,
   metodosPago: METODOS_PAGO_EJEMPLO,
+  metodoPredeterminadoId: METODOS_PAGO_EJEMPLO[0].id,
+
+  setMetodoPredeterminado: (id) => set({ metodoPredeterminadoId: id }),
   datosFiscales: DATOS_FISCALES_EJEMPLO,
 
   agregarUsuario: (usuario) =>

@@ -66,11 +66,11 @@ export const USUARIOS_EJEMPLO: Usuario[] = [
 ];
 
 export const METODOS_PAGO_EJEMPLO: MetodoPago[] = [
-  { id: 1, nombre: "Efectivo", tipo: "efectivo", requiereOperacion: false, activo: true },
-  { id: 2, nombre: "Yape", tipo: "billetera", requiereOperacion: true, activo: true },
-  { id: 3, nombre: "Plin", tipo: "billetera", requiereOperacion: true, activo: true },
-  { id: 4, nombre: "Tarjeta", tipo: "tarjeta", requiereOperacion: true, activo: true },
-  { id: 5, nombre: "Transferencia", tipo: "transferencia", requiereOperacion: true, activo: true },
+  { id: 1, nombre: "Efectivo", tipo: "efectivo", requiereOperacion: false, observaciones: "Caja principal.", activo: true },
+  { id: 2, nombre: "Yape", tipo: "billetera", requiereOperacion: true, observaciones: "Número 987 100 200.", activo: true },
+  { id: 3, nombre: "Plin", tipo: "billetera", requiereOperacion: true, observaciones: "", activo: true },
+  { id: 4, nombre: "Tarjeta", tipo: "tarjeta", requiereOperacion: true, observaciones: "POS Izipay; comisión 3.5 %.", activo: true },
+  { id: 5, nombre: "Transferencia", tipo: "transferencia", requiereOperacion: true, observaciones: "BCP cta. cte. 193-0000000-0-00.", activo: true },
 ];
 
 export const DATOS_FISCALES_EJEMPLO: DatosFiscales = {

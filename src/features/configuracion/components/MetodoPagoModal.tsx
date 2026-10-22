@@ -21,11 +21,17 @@ export function MetodoPagoModal({
     formState: { errors },
   } = useForm<MetodoPagoForm>({
     resolver: zodResolver(metodoPagoSchema),
-    defaultValues: { nombre: "", tipo: "billetera", requiereOperacion: "si" },
+    defaultValues: { nombre: "", tipo: "billetera", requiereOperacion: "si", observaciones: "" },
   });
 
   const guardar = handleSubmit((v) =>
-    onGuardar({ nombre: v.nombre.trim(), tipo: v.tipo, requiereOperacion: v.requiereOperacion === "si", activo: true })
+    onGuardar({
+      nombre: v.nombre.trim(),
+      tipo: v.tipo,
+      requiereOperacion: v.requiereOperacion === "si",
+      observaciones: v.observaciones.trim(),
+      activo: true,
+    })
   );
 
   return (
@@ -53,6 +59,10 @@ export function MetodoPagoModal({
           <option value="si">Sí</option>
           <option value="no">No</option>
         </SelectNativo>
+      </Campo>
+
+      <Campo etiqueta="Observaciones" htmlFor="mp-observaciones" error={errors.observaciones?.message} className="sm:col-span-2">
+        <Input id="mp-observaciones" placeholder="Ej.: Cuenta, número de Yape, comisión del POS" {...register("observaciones")} />
       </Campo>
     </ModalFormulario>
   );

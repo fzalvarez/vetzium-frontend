@@ -28,6 +28,7 @@ export interface MetodoPago {
   tipo: TipoMetodoPago;
   /** Si es obligatorio registrar el N.° de operación al usarlo. */
   requiereOperacion: boolean;
+  observaciones: string;
   activo: boolean;
 }
 
