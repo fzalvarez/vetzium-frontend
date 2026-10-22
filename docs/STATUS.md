@@ -66,6 +66,16 @@
         almacén, Estado, Usar para ventas, Opciones.
 - [x] Botones de barra compartidos (`AccionesTabla`) y `SelectorFiltro`; Órdenes de compra
       los usa (sin cambio visual).
+- [x] Productos, verificado con Chrome headless:
+      - **Stock por almacén**: Producto, Almacén, Precio de compra, Precio de venta,
+        Stock contable.
+      - **Descargar stock / Cargar stock** (componente común `MovimientosStock`): pestaña
+        Descargas/Cargas emitidas con barra (Buscar número, Más filtros, Agrupar, Borrar,
+        Actualizar, + Descargar/Cargar stock; Exportar y Opciones) y tabla N.° de
+        descarga/carga, Fecha de creación, Tipo de operación, Motivo, Responsable,
+        Registrado por, Opciones. "Por ítems" sigue por definir.
+      - **Catálogo**: columna de casilla de selección antes de Cód. de barras.
+- [x] Ícono en cada submódulo (menú lateral y Configuración).
 
 ## Siguiente
 

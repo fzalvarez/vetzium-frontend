@@ -12,12 +12,14 @@ import { useDesactivados } from "../hooks/useDesactivados";
 // baja debajo del nombre.
 const filaCls = "grid grid-cols-[1fr_auto] md:grid-cols-[minmax(240px,1fr)_2fr_auto] items-center gap-x-6 gap-y-0.5 px-6";
 
-function Descripcion({ texto }: { texto?: string }) {
+function Descripcion({ texto, submodulo = false }: { texto?: string; submodulo?: boolean }) {
   return (
     <p
       className={cn(
-        // En móvil, alineada con el nombre (ícono/sangría de 44px).
-        "col-start-1 row-start-2 ml-11 md:col-start-2 md:row-start-1 md:ml-0 text-sm",
+        // En móvil, alineada con el nombre: tras el ícono del módulo (44px) o tras la
+        // sangría + ícono del submódulo (66px).
+        "col-start-1 row-start-2 md:col-start-2 md:row-start-1 md:ml-0 text-sm",
+        submodulo ? "ml-16.5" : "ml-11",
         texto ? "text-gray-600 dark:text-gray-300" : "italic text-gray-400 dark:text-gray-500"
       )}
     >
@@ -62,10 +64,11 @@ function FilaModulo({ item, desactivados }: { item: NavItem; desactivados: Reado
             return (
               <li key={sub.to} className={cn(filaCls, "py-2")}>
                 {/* Sangría alineada con el texto del módulo, con guía vertical. */}
-                <p className="ml-4 pl-7 border-l border-gray-200 py-0.5 text-sm text-gray-700 dark:border-gray-800 dark:text-gray-200">
+                <p className="ml-4 pl-7 border-l border-gray-200 py-0.5 flex items-center gap-2 text-sm text-gray-700 dark:border-gray-800 dark:text-gray-200">
+                  <sub.icon className="size-3.5 shrink-0 text-gray-400" />
                   {sub.label}
                 </p>
-                <Descripcion texto={sub.descripcion} />
+                <Descripcion texto={sub.descripcion} submodulo />
                 <Switch
                   className="row-span-2 md:row-span-1"
                   checked={subActivo}

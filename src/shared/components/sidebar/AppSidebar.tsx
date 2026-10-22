@@ -78,12 +78,13 @@ function Grupo({
                 onClick={closeMobileSidebar}
                 className={({ isActive }) =>
                   cn(
-                    "px-3 py-2 rounded-lg text-[13px] transition-colors",
+                    "flex items-center gap-2.5 px-3 py-2 rounded-lg text-[13px] transition-colors",
                     isActive ? itemActivoCls : "text-gray-500 hover:bg-brand-50 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-gray-200"
                   )
                 }
               >
-                {sub.label}
+                <sub.icon className="size-3.5 shrink-0" />
+                <span>{sub.label}</span>
               </NavLink>
             ))}
           </div>

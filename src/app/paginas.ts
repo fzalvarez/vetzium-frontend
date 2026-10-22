@@ -15,7 +15,8 @@ export const GestionClientesPage = lazy(() => import("@/features/clientes/pages/
 export const CatalogoPage = lazy(() => import("@/features/productos/pages/CatalogoPage"));
 export const DescargarStockPage = lazy(() => import("@/features/productos/pages/DescargarStockPage"));
 export const CargarStockPage = lazy(() => import("@/features/productos/pages/CargarStockPage"));
-export const AlmacenesPage = lazy(() => import("@/features/productos/pages/AlmacenesPage"));
+export const StockAlmacenPage = lazy(() => import("@/features/productos/pages/StockAlmacenPage"));
+export const AlmacenesPage =lazy(() => import("@/features/productos/pages/AlmacenesPage"));
 export const LotesPage = lazy(() => import("@/features/productos/pages/LotesPage"));
 export const DirectorioProveedoresPage = lazy(() => import("@/features/proveedores/pages/DirectorioProveedoresPage"));
 export const OrdenesCompraPage = lazy(() => import("@/features/proveedores/pages/OrdenesCompraPage"));

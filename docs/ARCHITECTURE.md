@@ -43,7 +43,7 @@ src/
 | `ventas` | por definir | `/ventas/cuentas-activas`, `/ventas/comprobantes`, `/ventas/entradas-salidas` |
 | `clientes` | por definir | `/clientes` (listado), `/clientes/gestion` |
 | `proveedores` | por definir | `/proveedores` (directorio), `/proveedores/ordenes-compra` |
-| `productos` | por definir | `/productos` (catálogo), `/productos/descargar-stock`, `/productos/cargar-stock`, `/productos/almacenes`, `/productos/lotes` |
+| `productos` | por definir | `/productos` (catálogo), `/productos/descargar-stock`, `/productos/cargar-stock` (ambas con `MovimientosStock`), `/productos/stock-almacen`, `/productos/almacenes`, `/productos/lotes` |
 | `en-construccion` | — | toda ruta del menú sin pantalla propia |
 | `error-pages` | — | `*` (404), `errorElement` |
 
@@ -56,8 +56,9 @@ ancho máximo). Las páginas se cargan lazy dentro de un `Suspense`.
 
 ### Menú lateral
 
-`MENU` en `navegacion.ts` es la única fuente del menú y de sus rutas. Un módulo tiene
-ruta propia (`to`) o submódulos (`items`); el primer submódulo usa la ruta base del
+`MENU` en `navegacion.ts` es la única fuente del menú y de sus rutas. Módulos y
+submódulos llevan ícono (`lucide-react`). Un módulo tiene ruta propia (`to`) o
+submódulos (`items`); el primer submódulo usa la ruta base del
 módulo (Ventas → `/ventas`, Comprobantes → `/ventas/comprobantes`). En el sidebar se
 despliega un módulo a la vez y, al navegar, se abre el de la ruta actual.
 

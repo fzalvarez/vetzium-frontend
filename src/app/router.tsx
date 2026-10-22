@@ -17,6 +17,7 @@ import {
   ListadoClientesPage,
   LotesPage,
   OrdenesCompraPage,
+  StockAlmacenPage,
 } from "./paginas";
 import { RutaModulo } from "@/features/configuracion/components/RutaModulo";
 import Error404 from "@/features/error-pages/pages/Error404";
@@ -34,6 +35,7 @@ const PAGINAS: Record<string, React.ReactNode> = {
   "/productos": <CatalogoPage />,
   "/productos/descargar-stock": <DescargarStockPage />,
   "/productos/cargar-stock": <CargarStockPage />,
+  "/productos/stock-almacen": <StockAlmacenPage />,
   "/productos/almacenes": <AlmacenesPage />,
   "/productos/lotes": <LotesPage />,
   "/proveedores": <DirectorioProveedoresPage />,
