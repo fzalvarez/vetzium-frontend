@@ -32,8 +32,21 @@
       Hotel y Ventas › Comprobantes los quita del menú, la URL muestra el aviso, el
       estado se conserva al recargar y "Activar todos" lo limpia.
 
+- [x] Clientes y Productos, estructura visual sin datos, verificada con Chrome headless:
+      - **Clientes › Listado**: casilla de selección, Fecha de registro, Nombres y
+        apellidos, Teléfonos, Email, Dirección, Estado, Opciones.
+      - **Clientes › Gestión** (indicadores): pestañas Nuevos clientes (Mes, Clientes
+        registrados), Ubicación, Zona, Información, Etiquetas (estas cuatro por definir).
+      - **Productos › Catálogo**: Cód. de barras, Nombre, Marca, Proveedor, Líneas,
+        Código tributario, Empresa.
+      - **Descargar stock** (Descargas emitidas, Por ítems) y **Cargar stock** (Cargas
+        emitidas, Por ítems): columnas por definir.
+
 ## Siguiente
 
+- [ ] Por definir: pestañas Ubicación, Zona, Información y Etiquetas de Clientes ›
+      Gestión; columnas de Descargar stock y Cargar stock; qué se hace con los clientes
+      seleccionados (acciones masivas).
 - [ ] Configuración de módulos en el backend (hoy es por navegador) y quién puede cambiarla.
 
 - [ ] Columnas de las dos pestañas de Comprobantes.

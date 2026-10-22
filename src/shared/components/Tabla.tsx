@@ -3,6 +3,8 @@ import { cn } from "@/lib/utils";
 
 export interface Columna {
   titulo: string;
+  /** Reemplaza al título en el encabezado (p. ej. la casilla de "seleccionar todos"). */
+  encabezado?: React.ReactNode;
   /** Montos y cantidades a la derecha; acciones al centro. */
   alinear?: "izquierda" | "derecha" | "centro";
 }
@@ -44,7 +46,7 @@ export function Tabla({
                   alinearCelda(c)
                 )}
               >
-                {c.titulo}
+                {c.encabezado ?? c.titulo}
               </th>
             ))}
           </tr>

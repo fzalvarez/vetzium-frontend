@@ -2,12 +2,17 @@ import { createBrowserRouter, type RouteObject } from "react-router-dom";
 import AdminLayout from "./layouts/AdminLayout";
 import { rutasDelMenu } from "./navegacion";
 import {
+  CargarStockPage,
+  CatalogoPage,
   ComprobantesPage,
   ConfiguracionPage,
   CuentasActivasPage,
+  DescargarStockPage,
   EnConstruccionPage,
   EntradasSalidasPage,
+  GestionClientesPage,
   InicioPage,
+  ListadoClientesPage,
 } from "./paginas";
 import { RutaModulo } from "@/features/configuracion/components/RutaModulo";
 import Error404 from "@/features/error-pages/pages/Error404";
@@ -20,6 +25,11 @@ const PAGINAS: Record<string, React.ReactNode> = {
   "/ventas/cuentas-activas": <CuentasActivasPage />,
   "/ventas/comprobantes": <ComprobantesPage />,
   "/ventas/entradas-salidas": <EntradasSalidasPage />,
+  "/clientes": <ListadoClientesPage />,
+  "/clientes/gestion": <GestionClientesPage />,
+  "/productos": <CatalogoPage />,
+  "/productos/descargar-stock": <DescargarStockPage />,
+  "/productos/cargar-stock": <CargarStockPage />,
 };
 
 // Cada ruta del menú respeta lo activado/desactivado en Configuración.

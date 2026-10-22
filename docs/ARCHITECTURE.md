@@ -41,6 +41,8 @@ src/
 | `inicio` | — | `/` |
 | `configuracion` | — (localStorage) | `/configuracion` |
 | `ventas` | por definir | `/ventas/cuentas-activas`, `/ventas/comprobantes`, `/ventas/entradas-salidas` |
+| `clientes` | por definir | `/clientes` (listado), `/clientes/gestion` |
+| `productos` | por definir | `/productos` (catálogo), `/productos/descargar-stock`, `/productos/cargar-stock` |
 | `en-construccion` | — | toda ruta del menú sin pantalla propia |
 | `error-pages` | — | `*` (404), `errorElement` |
 
@@ -82,7 +84,9 @@ de un módulo es su `id` si tiene submódulos, si no su ruta; la de un submódul
 `EncabezadoPagina` (módulo + título + acciones) y debajo una `Tarjeta` con `Pestanas`
 (si hay varias vistas) y `Tabla`. La pestaña activa va en `?vista=` (`usePestanaUrl`);
 la primera es la de por defecto y no se escribe. En `Tabla`, montos y cantidades se
-alinean a la derecha y "Opciones" al centro.
+alinean a la derecha y "Opciones" al centro; `encabezado` reemplaza el título de una
+columna (p. ej. la casilla de seleccionar todos). Una vista sin columnas definidas
+muestra `PorDefinir`.
 Colores solo con tokens (`brand-*`, `gray-*`) para cambiar la identidad desde `index.css`.
 
 ## Integración con el backend
