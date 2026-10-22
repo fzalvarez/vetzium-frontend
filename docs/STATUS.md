@@ -92,11 +92,23 @@
       móvil, las etiquetas van verticales). El gráfico reserva su alto y se mide antes
       de pintar, así no aparece vacío ni hace saltar la tarjeta. Verificado a 500,
       1366 y 1920px.
+- [x] **Ventas › Entradas / Salidas de caja** con 5 movimientos de **ejemplo** (etiqueta
+      visible, en memoria: se pierden al recargar). Barra: Buscar por descripción
+      (funciona, sin distinguir tildes ni mayúsculas), Más filtros, Borrar, Actualizar,
+      + Entrada, + Salida; a la derecha Exportar y Opciones. Modales "Nueva entrada/salida
+      de caja" funcionales: Fecha (hoy, Perú), Medio de pago, Descripción, Monto (S/),
+      Etiquetas, Doc. de referencia, N.° de operación; validan con zod y agregan la fila
+      arriba con aviso. Tipo de movimiento con ícono + texto. Verificado con clics y
+      tecleo reales en Chrome headless (errores, alta, Esc, búsqueda "cirugia").
 - [x] Barra superior: Buscar, Calendario, Maximizar ventana (pantalla completa real,
       alterna a Restaurar), Ayuda, tema y Mi cuenta. Verificado con clics reales en
       Chrome headless; en móvil se ocultan Calendario y Maximizar.
 
 ## Siguiente
+
+- [ ] Entradas/Salidas: medios de pago reales (hoy provisionales: Efectivo, Yape, Plin,
+      Tarjeta, Transferencia), etiquetas (¿lista fija desde Configuración › Etiquetas?),
+      qué campos son obligatorios, qué hace "Opciones" por fila y la API.
 
 - [ ] Qué abren Buscar, Calendario, Ayuda y Mi cuenta (hoy "Próximamente").
 

@@ -1,0 +1,13 @@
+// Fechas en hora de Perú (UTC-5), como en hcvet.
+const ZONA_PERU = "America/Lima";
+
+/** Fecha de hoy en Perú, "YYYY-MM-DD" (formato de los inputs date). */
+export function hoyPeru(): string {
+  return new Intl.DateTimeFormat("en-CA", { timeZone: ZONA_PERU }).format(new Date());
+}
+
+/** "2026-10-22" → "22/10/2026". */
+export function formatearFecha(iso: string): string {
+  const [anio, mes, dia] = iso.split("-");
+  return anio && mes && dia ? `${dia}/${mes}/${anio}` : iso;
+}

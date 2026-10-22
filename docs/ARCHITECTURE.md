@@ -41,7 +41,7 @@ src/
 | `inicio` | — | `/` |
 | `dashboard` | por definir (hoy `datos-ejemplo.ts`) | `/dashboard` |
 | `configuracion` | — (localStorage) | `/configuracion` (General) y `/configuracion/*` |
-| `ventas` | por definir | `/ventas/cuentas-activas`, `/ventas/comprobantes`, `/ventas/entradas-salidas` |
+| `ventas` | por definir (Entradas/Salidas en memoria con `datos-ejemplo.ts`) | `/ventas/cuentas-activas`, `/ventas/comprobantes`, `/ventas/entradas-salidas` |
 | `clientes` | por definir | `/clientes` (listado), `/clientes/gestion` |
 | `proveedores` | por definir | `/proveedores` (directorio), `/proveedores/ordenes-compra` |
 | `productos` | por definir | `/productos` (catálogo), `/productos/descargar-stock`, `/productos/cargar-stock` (ambas con `MovimientosStock`), `/productos/stock-almacen`, `/productos/almacenes`, `/productos/lotes` |
@@ -88,6 +88,14 @@ de un módulo es su `id` si tiene submódulos, si no su ruta; la de un submódul
 - Rutas: `RutaModulo` envuelve cada ruta del menú y muestra "Este módulo está
   desactivado" si su módulo o submódulo lo está.
 - Inicio (`RUTAS_FIJAS`) y Configuración (pie del sidebar) no se pueden desactivar.
+
+### Formularios y modales
+
+`components/ui/modal.tsx` (Radix Dialog, patrón de `tms`: Esc, clic afuera, foco
+atrapado, pie con acciones). Formularios con react-hook-form + zod
+(`features/<f>/validation`), campos con `Campo` (etiqueta + error/ayuda), `Input` y
+`SelectNativo`. El modal se monta solo cuando se abre, así cada apertura empieza limpia.
+Fechas en hora de Perú (`shared/utils/fechas.ts`), montos con `formatearSoles`.
 
 ### Gráficos (Dashboard)
 
