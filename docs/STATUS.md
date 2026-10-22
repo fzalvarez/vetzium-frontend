@@ -118,6 +118,24 @@
 - [x] Verificado con Chrome headless y clics/tecleo reales: 13 tablas con 5 filas y pie
       "Mostrando 1–5 de 5", errores de validación, altas, filtro, selección, paso a la
       página 2 con 11 registros y cambio a 25 filas por página.
+- [x] **Ventas › Ventas: opciones por línea.** Valor unitario editable ("Cambiar precio":
+      valor y precio de venta enlazados). Opciones: tiempo (próximamente), comentario,
+      asignar vendedor (usuarios activos, para comisión), descuento (monto o %), regalo y
+      quitar; descuentos y regalos entran en los totales. "Ir a caja y generar comprobante".
+- [x] **Generar comprobante** (`/ventas/comprobantes/nuevo`): datos del comprobante (fecha de
+      emisión, emisor, tipo —boleta, factura, nota de venta—, vencimiento, serie, número
+      correlativo, tipo de operación) y del cliente (doc. de identidad, número, cliente,
+      email, dirección); conceptos; resumen con subtotal, descuento global (modal monto/%),
+      valor neto, gravadas, impuestos y TOTAL; observaciones; formas de pago (varias, con
+      N.° de operación si el método lo pide, falta/vuelto). Emitir (simulado) habilita
+      Imprimir ticket, Imprimir PDF y Opciones (nota de crédito, enviar, WhatsApp, marcar
+      pendiente, anular — próximamente); Regresar empieza una venta nueva. Desde el menú,
+      Comprobantes sigue mostrando sus pestañas.
+- [x] **Configuración › Métodos de pago**: nombre, tipo de pago, observaciones, estado y
+      opciones; selector "Método de pago predeterminado" (solo activos), que se propone al
+      cobrar.
+- [x] Verificado con clics reales: venta S/ 129.00 (precio cambiado + 10 %), comprobante con
+      5 % global S/ 122.54, errores de factura sin RUC y Yape sin operación, emisión B001-000155.
 - [x] **Ventas › Ventas: nuevo cliente y mascota.** Botón "Nuevo cliente" (usuario +) abre
       "Registrar cliente": nombre, apellido, N.° de documento (DNI, con botón **RENIEC** que
       abre la búsqueda **simulada** y completa nombre, apellido y nacimiento), fecha de
@@ -192,6 +210,9 @@
       Chrome headless; en móvil se ocultan Calendario y Maximizar.
 
 ## Siguiente
+
+- [ ] Comprobante: qué es "tiempo" en las opciones de línea, series reales, otros tipos de
+      operación, reglas de boleta sin documento, emisión real (SUNAT/OSE) e impresión.
 
 - [ ] RENIEC real (vía backend) y otros tipos de documento (CE, pasaporte, RUC).
 

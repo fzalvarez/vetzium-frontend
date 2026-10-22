@@ -45,7 +45,7 @@ src/
 | `mascotas` | por definir (`mascotas.store` en memoria) | `/mascotas` (listado), `/mascotas/:id` (mascota abierta) y `/mascotas/nueva?cliente=&volver=` (registro), fuera del menú |
 | `dashboard` | por definir (hoy `datos-ejemplo.ts`) | `/dashboard` |
 | `configuracion` | — (módulos: localStorage; resto: `configuracion.store` en memoria) | `/configuracion` (General), `/configuracion/usuarios`, `/roles`, `/metodos-pago`, `/datos-fiscales`; el resto en construcción |
-| `ventas` | por definir (en memoria con `datos-ejemplo.ts`; totales en `lib/totales.ts`) | `/ventas` (venta), `/ventas/cuentas-activas`, `/ventas/comprobantes`, `/ventas/entradas-salidas` |
+| `ventas` | por definir (en memoria con `datos-ejemplo.ts`; totales en `lib/totales.ts`) | `/ventas` (venta), `/ventas/comprobantes/nuevo` (generar comprobante, fuera del menú), `/ventas/cuentas-activas`, `/ventas/comprobantes`, `/ventas/entradas-salidas` |
 | `clientes` | por definir | `/clientes` (listado), `/clientes/gestion` |
 | `proveedores` | por definir | `/proveedores` (directorio), `/proveedores/ordenes-compra` |
 | `productos` | por definir | `/productos` (catálogo), `/productos/descargar-stock`, `/productos/cargar-stock` (ambas con `MovimientosStock`), `/productos/stock-almacen`, `/productos/almacenes`, `/productos/lotes` |
@@ -120,6 +120,11 @@ persistir (se reinician al recargar): `clientes.store`, `mascotas.store`,
 `configuracion.store`, `sala-espera.store` y `venta.store` (la venta en curso se
 conserva al ir a registrar una mascota y volver). Las búsquedas de propietario leen
 `clientes.store`, así un cliente recién registrado aparece en todas partes.
+
+Totales de venta y comprobante en `ventas/lib/totales.ts`: precios con IGV; por línea,
+precio cambiado, descuento (monto o %) o regalo (100 %); el comprobante agrega un
+descuento global sobre el valor de venta y recalcula el IGV. La emisión es **simulada**
+(correlativos en `comprobantes.store`, sin SUNAT).
 
 RENIEC está **simulado** (`clientes/reniec-simulado.ts`): unos DNI de ejemplo devuelven
 datos; el modal lo dice. Se reemplaza por el servicio real vía backend.

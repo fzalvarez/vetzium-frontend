@@ -14,6 +14,7 @@ export const SalaEsperaPage = lazy(() => import("@/features/sala-espera/pages/Sa
 export const ListadoEventosPage = lazy(() => import("@/features/eventos/pages/ListadoEventosPage"));
 export const PromocionesPage = lazy(() => import("@/features/marketing/pages/PromocionesPage"));
 export const PuntosPage = lazy(() => import("@/features/marketing/pages/PuntosPage"));
+export const GenerarComprobantePage = lazy(() => import("@/features/ventas/pages/GenerarComprobantePage"));
 export const VentasPage = lazy(() => import("@/features/ventas/pages/VentasPage"));
 export const CuentasActivasPage = lazy(() => import("@/features/ventas/pages/CuentasActivasPage"));
 export const ComprobantesPage = lazy(() => import("@/features/ventas/pages/ComprobantesPage"));

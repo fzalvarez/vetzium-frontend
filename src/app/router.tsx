@@ -14,6 +14,7 @@ import {
   DirectorioProveedoresPage,
   EnConstruccionPage,
   EntradasSalidasPage,
+  GenerarComprobantePage,
   GestionClientesPage,
   InicioPage,
   ListadoClientesPage,
@@ -94,6 +95,15 @@ export const router = createBrowserRouter([
       ...rutasMenu,
       ...rutasConfiguracion,
       // Detalle fuera del menú: respeta el módulo Mascotas › Listado.
+      // Emisión desde Ventas; Comprobantes (el submódulo) sigue mostrando sus pestañas.
+      {
+        path: "ventas/comprobantes/nuevo",
+        element: (
+          <RutaModulo claves={["ventas", "/ventas/comprobantes"]}>
+            <GenerarComprobantePage />
+          </RutaModulo>
+        ),
+      },
       {
         path: "mascotas/nueva",
         element: (

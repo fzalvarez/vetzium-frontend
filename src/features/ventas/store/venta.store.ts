@@ -18,6 +18,8 @@ interface VentaState {
   agregar: (item: ItemVendible, mascotaId: number | null) => void;
   actualizar: (itemId: string, cambios: Partial<LineaVenta>) => void;
   quitar: (itemId: string) => void;
+  /** Empieza una venta nueva (tras emitir el comprobante). */
+  limpiar: () => void;
 }
 
 export const useVentaStore = create<VentaState>()((set) => ({
@@ -43,4 +45,6 @@ export const useVentaStore = create<VentaState>()((set) => ({
     set((s) => ({ lineas: s.lineas.map((l) => (l.item.id === itemId ? { ...l, ...cambios } : l)) })),
 
   quitar: (itemId) => set((s) => ({ lineas: s.lineas.filter((l) => l.item.id !== itemId) })),
+
+  limpiar: () => set({ clienteId: null, lineas: [] }),
 }));
