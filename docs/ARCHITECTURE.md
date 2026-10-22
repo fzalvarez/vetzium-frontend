@@ -39,6 +39,7 @@ src/
 | Feature | Backend | Rutas |
 |---|---|---|
 | `inicio` | — | `/` |
+| `configuracion` | — (localStorage) | `/configuracion` |
 | `ventas` | por definir | `/ventas/cuentas-activas`, `/ventas/comprobantes`, `/ventas/entradas-salidas` |
 | `en-construccion` | — | toda ruta del menú sin pantalla propia |
 | `error-pages` | — | `*` (404), `errorElement` |
@@ -63,6 +64,18 @@ o "en construcción" (con título `Módulo › Submódulo`).
 
 Para construir una pantalla del menú: página en `features/<f>/pages`, `lazy` en
 `paginas.ts` y su entrada en `PAGINAS` de `router.tsx`.
+
+### Módulos activables (Configuración)
+
+`/configuracion` lista `MENU` con un interruptor por módulo y por submódulo. La clave
+de un módulo es su `id` si tiene submódulos, si no su ruta; la de un submódulo, su ruta.
+`modulos.store` guarda las claves **desactivadas** (persistido en `localStorage`,
+`vetzium-modulos`), así un módulo nuevo aparece activo.
+
+- Sidebar: `filtrarMenu()` quita lo desactivado y los módulos sin submódulos activos.
+- Rutas: `RutaModulo` envuelve cada ruta del menú y muestra "Este módulo está
+  desactivado" si su módulo o submódulo lo está.
+- Inicio (`RUTAS_FIJAS`) y Configuración (pie del sidebar) no se pueden desactivar.
 
 ### Pantallas de listado
 

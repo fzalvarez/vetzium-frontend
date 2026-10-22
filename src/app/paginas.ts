@@ -9,3 +9,4 @@ export const EnConstruccionPage = lazy(() => import("@/features/en-construccion/
 export const CuentasActivasPage = lazy(() => import("@/features/ventas/pages/CuentasActivasPage"));
 export const ComprobantesPage = lazy(() => import("@/features/ventas/pages/ComprobantesPage"));
 export const EntradasSalidasPage = lazy(() => import("@/features/ventas/pages/EntradasSalidasPage"));
+export const ConfiguracionPage = lazy(() => import("@/features/configuracion/pages/ConfiguracionPage"));

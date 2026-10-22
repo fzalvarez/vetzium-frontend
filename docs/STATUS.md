@@ -25,8 +25,16 @@
         Entrada, Salida, Doc. de referencia, N.° de operación, Tipo de movimiento, Opciones).
 - [x] Componentes compartidos: `EncabezadoPagina`, `Tarjeta`, `Pestanas`, `Tabla`,
       `usePestanaUrl`.
+- [x] **Configuración** (`/configuracion`, enlace fijo al pie del sidebar): interruptor
+      por módulo y submódulo; lo desactivado sale del menú y su ruta muestra un aviso.
+      "Activar todos". Inicio y Configuración siempre visibles. Guardado en el navegador.
+      Verificado con Chrome headless (clics reales vía DevTools Protocol): desactivar
+      Hotel y Ventas › Comprobantes los quita del menú, la URL muestra el aviso, el
+      estado se conserva al recargar y "Activar todos" lo limpia.
 
 ## Siguiente
+
+- [ ] Configuración de módulos en el backend (hoy es por navegador) y quién puede cambiarla.
 
 - [ ] Columnas de las dos pestañas de Comprobantes.
 - [ ] Qué hace "Opciones" en cada tabla; filtros/búsqueda; acciones de cabecera.

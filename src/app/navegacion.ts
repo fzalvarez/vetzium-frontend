@@ -23,16 +23,25 @@ import {
 
 export type SubItem = { label: string; to: string };
 
-// Un módulo tiene ruta propia (`to`) o submódulos (`items`), no ambos.
+// Un módulo tiene ruta propia (`to`) o submódulos (`items` + `id`), no ambos.
 export type NavItem =
-  | { label: string; icon: LucideIcon; to: string; items?: never }
-  | { label: string; icon: LucideIcon; items: SubItem[]; to?: never };
+  | { label: string; icon: LucideIcon; to: string; items?: never; id?: never }
+  | { id: string; label: string; icon: LucideIcon; items: SubItem[]; to?: never };
+
+/** Clave con la que se activa/desactiva un módulo: su `id` si tiene submódulos, si no su ruta. */
+export function claveDe(item: NavItem): string {
+  return item.items ? item.id : item.to;
+}
+
+/** Módulos que no se pueden desactivar (siempre visibles). */
+export const RUTAS_FIJAS = new Set(["/"]);
 
 // Menú lateral, en el orden en que se muestra. El primer submódulo de cada módulo
 // usa la ruta base del módulo (p. ej. Ventas → /ventas).
 export const MENU: NavItem[] = [
   { label: "Inicio", icon: HomeIcon, to: "/" },
   {
+    id: "ventas",
     label: "Ventas",
     icon: ShoppingCartIcon,
     items: [
@@ -49,6 +58,7 @@ export const MENU: NavItem[] = [
   { label: "Sala de espera", icon: ArmchairIcon, to: "/sala-espera" },
   { label: "Hospitalizaciones", icon: BedIcon, to: "/hospitalizaciones" },
   {
+    id: "peluqueria",
     label: "Peluquería",
     icon: ScissorsIcon,
     items: [
@@ -61,6 +71,7 @@ export const MENU: NavItem[] = [
   },
   { label: "Hotel", icon: HotelIcon, to: "/hotel" },
   {
+    id: "transporte",
     label: "Transporte",
     icon: TruckIcon,
     items: [
@@ -71,6 +82,7 @@ export const MENU: NavItem[] = [
     ],
   },
   {
+    id: "clientes",
     label: "Clientes",
     icon: UsersIcon,
     items: [
@@ -79,6 +91,7 @@ export const MENU: NavItem[] = [
     ],
   },
   {
+    id: "mascotas",
     label: "Mascotas",
     icon: PawPrintIcon,
     items: [
@@ -87,6 +100,7 @@ export const MENU: NavItem[] = [
     ],
   },
   {
+    id: "eventos",
     label: "Eventos",
     icon: CalendarIcon,
     items: [
@@ -95,6 +109,7 @@ export const MENU: NavItem[] = [
     ],
   },
   {
+    id: "productos",
     label: "Productos",
     icon: PackageIcon,
     items: [
@@ -109,6 +124,7 @@ export const MENU: NavItem[] = [
   },
   { label: "Servicios", icon: StethoscopeIcon, to: "/servicios" },
   {
+    id: "proveedores",
     label: "Proveedores",
     icon: Building2Icon,
     items: [
@@ -124,11 +140,24 @@ export const MENU: NavItem[] = [
   { label: "Cloud", icon: CloudIcon, to: "/cloud" },
 ];
 
-/** Todas las rutas del menú con su título ("Ventas › Comprobantes"). */
-export function rutasDelMenu(): { to: string; titulo: string }[] {
+/**
+ * Todas las rutas del menú con su título ("Ventas › Comprobantes") y las claves que
+ * deben estar activas para abrirla (módulo y, si aplica, submódulo).
+ */
+export function rutasDelMenu(): { to: string; titulo: string; claves: string[] }[] {
   return MENU.flatMap((item) =>
     item.items
-      ? item.items.map((sub) => ({ to: sub.to, titulo: `${item.label} › ${sub.label}` }))
-      : [{ to: item.to, titulo: item.label }]
+      ? item.items.map((sub) => ({ to: sub.to, titulo: `${item.label} › ${sub.label}`, claves: [item.id, sub.to] }))
+      : [{ to: item.to, titulo: item.label, claves: [item.to] }]
   );
+}
+
+/** Menú sin lo desactivado; un módulo cuyos submódulos están todos desactivados no se muestra. */
+export function filtrarMenu(desactivados: ReadonlySet<string>): NavItem[] {
+  return MENU.flatMap((item): NavItem[] => {
+    if (desactivados.has(claveDe(item))) return [];
+    if (!item.items) return [item];
+    const items = item.items.filter((sub) => !desactivados.has(sub.to));
+    return items.length > 0 ? [{ ...item, items }] : [];
+  });
 }

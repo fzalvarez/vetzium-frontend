@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
-import { ChevronDownIcon, PawPrintIcon } from "lucide-react";
+import { ChevronDownIcon, PawPrintIcon, SettingsIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { MENU, type NavItem, type SubItem } from "@/app/navegacion";
+import { MENU, filtrarMenu, type NavItem, type SubItem } from "@/app/navegacion";
+import { useDesactivados } from "@/features/configuracion/hooks/useDesactivados";
 import { useSidebarStore } from "@/shared/store/sidebar.store";
 
 const itemCls = "flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-sm font-medium transition-all";
@@ -95,6 +96,7 @@ function Grupo({
 export function AppSidebar() {
   const { pathname } = useLocation();
   const isMobileOpen = useSidebarStore((s) => s.isMobileOpen);
+  const desactivados = useDesactivados();
 
   // Un solo módulo desplegado a la vez; al navegar se despliega el de la ruta actual.
   const [abierto, setAbierto] = useState<string | null>(() => moduloDeRuta(pathname));
@@ -125,7 +127,7 @@ export function AppSidebar() {
 
       {/* Navegación */}
       <div className="flex flex-col gap-0.5 flex-1">
-        {MENU.map((item) =>
+        {filtrarMenu(desactivados).map((item) =>
           item.items ? (
             <Grupo
               key={item.label}
@@ -139,6 +141,11 @@ export function AppSidebar() {
             <Enlace key={item.to} to={item.to} label={item.label} icon={item.icon} />
           )
         )}
+      </div>
+
+      {/* Fuera del menú configurable: siempre visible. */}
+      <div className="pt-3 border-t border-gray-200 dark:border-gray-800">
+        <Enlace to="/configuracion" label="Configuración" icon={SettingsIcon} />
       </div>
     </nav>
   );
