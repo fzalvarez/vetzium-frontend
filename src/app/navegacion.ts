@@ -2,6 +2,16 @@ import {
   ArmchairIcon,
   ArrowDownUpIcon,
   ArrowRightLeftIcon,
+  BadgePercentIcon,
+  CalendarRangeIcon,
+  ChartLineIcon,
+  ClipboardCheckIcon,
+  CoinsIcon,
+  NewspaperIcon,
+  ScrollTextIcon,
+  StarIcon,
+  TableIcon,
+  TrophyIcon,
   BedIcon,
   BookOpenIcon,
   BookUserIcon,
@@ -58,7 +68,15 @@ import {
 
 // `descripcion` se muestra en Configuración. Solo se llena cuando está claro qué hace
 // el módulo; si no, queda vacía.
-export type SubItem = { label: string; icon: LucideIcon; to: string; descripcion?: string };
+
+/** Entrada del menú con ruta propia (último nivel). */
+export type HojaMenu = { label: string; icon: LucideIcon; to: string; descripcion?: string };
+
+// Un submódulo tiene ruta propia o, si agrupa pantallas (3.er nivel, p. ej. Gestión ›
+// Rankings › Clientes), `items` + `id`.
+export type SubItem =
+  | (HojaMenu & { items?: never; id?: never })
+  | { id: string; label: string; icon: LucideIcon; descripcion?: string; items: HojaMenu[]; to?: never };
 
 // Un módulo tiene ruta propia (`to`) o submódulos (`items` + `id`), no ambos.
 export type NavItem =
@@ -68,6 +86,21 @@ export type NavItem =
 /** Clave con la que se activa/desactiva un módulo: su `id` si tiene submódulos, si no su ruta. */
 export function claveDe(item: NavItem): string {
   return item.items ? item.id : item.to;
+}
+
+/** Clave de un submódulo: su `id` si agrupa pantallas, si no su ruta. */
+export function claveSub(sub: SubItem): string {
+  return sub.items ? sub.id : sub.to;
+}
+
+/** Pantallas (con ruta) de un submódulo: él mismo o sus hijos. */
+export function hojasDe(sub: SubItem): HojaMenu[] {
+  return sub.items ?? [sub];
+}
+
+/** Todas las rutas que caen dentro de un módulo con submódulos. */
+export function rutasDeModulo(item: { items?: SubItem[] }): string[] {
+  return (item.items ?? []).flatMap(hojasDe).map((h) => h.to);
 }
 
 /** Módulos que no se pueden desactivar (siempre visibles). */
@@ -178,8 +211,40 @@ export const MENU: NavItem[] = [
   { label: "Guías de remisión", icon: FileTextIcon, to: "/guias-remision" },
   { label: "Laboratorio", icon: FlaskConicalIcon, to: "/laboratorio" },
   { label: "Reportes", icon: ChartColumnIcon, to: "/reportes" },
-  { label: "Gestión", icon: Settings2Icon, to: "/gestion" },
-  { label: "Marketing", icon: MegaphoneIcon, to: "/marketing" },
+  {
+    id: "gestion",
+    label: "Gestión",
+    icon: Settings2Icon,
+    items: [
+      { label: "Gráfico de ventas", icon: ChartLineIcon, to: "/gestion" },
+      { label: "Trimestral", icon: CalendarRangeIcon, to: "/gestion/trimestral" },
+      { label: "Ingresos", icon: CoinsIcon, to: "/gestion/ingresos" },
+      {
+        id: "gestion-rankings",
+        label: "Rankings",
+        icon: TrophyIcon,
+        items: [
+          { label: "Pacientes", icon: PawPrintIcon, to: "/gestion/rankings" },
+          { label: "Clientes", icon: UsersIcon, to: "/gestion/rankings/clientes" },
+          { label: "Ítems", icon: TagsIcon, to: "/gestion/rankings/items" },
+        ],
+      },
+      { label: "Detalle mensual", icon: TableIcon, to: "/gestion/detalle-mensual" },
+    ],
+  },
+  {
+    id: "marketing",
+    label: "Marketing",
+    icon: MegaphoneIcon,
+    items: [
+      { label: "Newsletter", icon: NewspaperIcon, to: "/marketing" },
+      { label: "Encuestas", icon: ClipboardCheckIcon, to: "/marketing/encuestas" },
+      { label: "Puntos", icon: StarIcon, to: "/marketing/puntos" },
+      { label: "Ajustes", icon: SlidersHorizontalIcon, to: "/marketing/ajustes" },
+      { label: "Promociones", icon: BadgePercentIcon, to: "/marketing/promociones" },
+      { label: "Estados de cuenta", icon: ScrollTextIcon, to: "/marketing/estados-cuenta" },
+    ],
+  },
   { label: "Cloud", icon: CloudIcon, to: "/cloud" },
   { label: "Gestión Multisede", icon: NetworkIcon, to: "/multisede" },
   { label: "WhatsApp", icon: MessageCircleIcon, to: "/whatsapp" },
@@ -211,22 +276,38 @@ export const MENU_CONFIGURACION = {
 
 /**
  * Todas las rutas del menú con su título ("Ventas › Comprobantes") y las claves que
- * deben estar activas para abrirla (módulo y, si aplica, submódulo).
+ * deben estar activas para abrirla (módulo, submódulo y, si aplica, 3.er nivel).
  */
 export function rutasDelMenu(): { to: string; titulo: string; claves: string[] }[] {
   return MENU.flatMap((item) =>
     item.items
-      ? item.items.map((sub) => ({ to: sub.to, titulo: `${item.label} › ${sub.label}`, claves: [item.id, sub.to] }))
+      ? item.items.flatMap((sub) =>
+          sub.items
+            ? sub.items.map((h) => ({
+                to: h.to,
+                titulo: `${item.label} › ${sub.label} › ${h.label}`,
+                claves: [item.id, sub.id, h.to],
+              }))
+            : [{ to: sub.to, titulo: `${item.label} › ${sub.label}`, claves: [item.id, sub.to] }]
+        )
       : [{ to: item.to, titulo: item.label, claves: [item.to] }]
   );
 }
 
-/** Menú sin lo desactivado; un módulo cuyos submódulos están todos desactivados no se muestra. */
+/**
+ * Menú sin lo desactivado. Un módulo (o submódulo con hijos) que se queda sin entradas
+ * activas no se muestra.
+ */
 export function filtrarMenu(desactivados: ReadonlySet<string>): NavItem[] {
   return MENU.flatMap((item): NavItem[] => {
     if (desactivados.has(claveDe(item))) return [];
     if (!item.items) return [item];
-    const items = item.items.filter((sub) => !desactivados.has(sub.to));
+    const items = item.items.flatMap((sub): SubItem[] => {
+      if (desactivados.has(claveSub(sub))) return [];
+      if (!sub.items) return [sub];
+      const hijos = sub.items.filter((h) => !desactivados.has(h.to));
+      return hijos.length > 0 ? [{ ...sub, items: hijos }] : [];
+    });
     return items.length > 0 ? [{ ...item, items }] : [];
   });
 }

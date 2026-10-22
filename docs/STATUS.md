@@ -118,6 +118,11 @@
 - [x] Verificado con Chrome headless y clics/tecleo reales: 13 tablas con 5 filas y pie
       "Mostrando 1–5 de 5", errores de validación, altas, filtro, selección, paso a la
       página 2 con 11 registros y cambio a 25 filas por página.
+- [x] Menú: **Gestión** (Gráfico de ventas, Trimestral, Ingresos, Rankings › Pacientes /
+      Clientes / Ítems, Detalle mensual) y **Marketing** (Newsletter, Encuestas, Puntos,
+      Ajustes, Promociones, Estados de cuenta), en construcción. El menú admite 3 niveles
+      (sidebar, rutas, títulos y activar/desactivar). Verificado: desactivar Rankings lo
+      quita del menú y su URL muestra el aviso.
 - [x] **Sala de espera** (`/sala-espera`, datos de ejemplo en memoria): tablero En espera →
       En atención → Atendidos hoy. Tarjeta: turno, hora de llegada, mascota (enlace a su
       página), propietario, motivo y tiempo (se actualiza cada 30 s; "demora" si espera > 30

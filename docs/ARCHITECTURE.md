@@ -67,6 +67,11 @@ submódulos (`items`); el primer submódulo usa la ruta base del
 módulo (Ventas → `/ventas`, Comprobantes → `/ventas/comprobantes`). En el sidebar se
 despliega un módulo a la vez y, al navegar, se abre el de la ruta actual.
 
+Hay un **3.er nivel**: un submódulo puede agrupar pantallas (`items` + `id`), p. ej.
+Gestión › Rankings › Pacientes / Clientes / Ítems. En el sidebar el grupo es un título con
+sus pantallas debajo (siempre visibles); en Configuración › General cada nivel tiene su
+interruptor. Helpers: `claveSub`, `hojasDe`, `rutasDeModulo`.
+
 `router.tsx` crea una ruta por cada entrada del menú: la pantalla de `PAGINAS` si existe
 o "en construcción" (con título `Módulo › Submódulo`).
 

@@ -2,7 +2,15 @@ import { useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { ChevronDownIcon, PawPrintIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { MENU, MENU_CONFIGURACION, filtrarMenu, type NavItem, type SubItem } from "@/app/navegacion";
+import {
+  MENU,
+  MENU_CONFIGURACION,
+  filtrarMenu,
+  rutasDeModulo,
+  type HojaMenu,
+  type NavItem,
+  type SubItem,
+} from "@/app/navegacion";
 import { useDesactivados } from "@/features/configuracion/hooks/useDesactivados";
 import { useSidebarStore } from "@/shared/store/sidebar.store";
 
@@ -16,7 +24,7 @@ const enSubmodulo = (pathname: string, to: string) => pathname === to || pathnam
 /** Módulo con submódulos que contiene la ruta actual, si hay. */
 function moduloDeRuta(pathname: string): string | null {
   return (
-    [...MENU, MENU_CONFIGURACION].find((item) => item.items?.some((sub) => enSubmodulo(pathname, sub.to)))?.label ??
+    [...MENU, MENU_CONFIGURACION].find((item) => rutasDeModulo(item).some((to) => enSubmodulo(pathname, to)))?.label ??
     null
   );
 }
@@ -33,6 +41,29 @@ function Enlace({ to, label, icon: Icon }: { to: string; label: string; icon: Na
     >
       <Icon className="size-4 shrink-0" />
       <span>{label}</span>
+    </NavLink>
+  );
+}
+
+/** Enlace a una pantalla dentro de un módulo desplegable. */
+function EnlaceSub({ hoja, visible, onClick }: { hoja: HojaMenu; visible: boolean; onClick: () => void }) {
+  return (
+    <NavLink
+      to={hoja.to}
+      end
+      tabIndex={visible ? undefined : -1}
+      onClick={onClick}
+      className={({ isActive }) =>
+        cn(
+          "flex items-center gap-2.5 px-3 py-2 rounded-lg text-[13px] transition-colors",
+          isActive
+            ? itemActivoCls
+            : "text-gray-500 hover:bg-brand-50 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-gray-200"
+        )
+      }
+    >
+      <hoja.icon className="size-3.5 shrink-0" />
+      <span>{hoja.label}</span>
     </NavLink>
   );
 }
@@ -75,24 +106,24 @@ function Grupo({
       >
         <div className="overflow-hidden">
           <div className="ml-5 mt-0.5 mb-1 pl-3 flex flex-col gap-0.5 border-l border-gray-200 dark:border-gray-800">
-            {items.map((sub) => (
-              <NavLink
-                key={sub.to}
-                to={sub.to}
-                end
-                tabIndex={abierto ? undefined : -1}
-                onClick={closeMobileSidebar}
-                className={({ isActive }) =>
-                  cn(
-                    "flex items-center gap-2.5 px-3 py-2 rounded-lg text-[13px] transition-colors",
-                    isActive ? itemActivoCls : "text-gray-500 hover:bg-brand-50 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-gray-200"
-                  )
-                }
-              >
-                <sub.icon className="size-3.5 shrink-0" />
-                <span>{sub.label}</span>
-              </NavLink>
-            ))}
+            {items.map((sub) =>
+              sub.items ? (
+                // 3.er nivel: título del grupo y sus pantallas debajo (siempre visibles).
+                <div key={sub.id} className="flex flex-col gap-0.5">
+                  <span className="flex items-center gap-2.5 px-3 pt-2 pb-1 text-[13px] font-medium text-gray-600 dark:text-gray-300">
+                    <sub.icon className="size-3.5 shrink-0" />
+                    {sub.label}
+                  </span>
+                  <div className="ml-4 pl-2 flex flex-col gap-0.5 border-l border-gray-200 dark:border-gray-800">
+                    {sub.items.map((h) => (
+                      <EnlaceSub key={h.to} hoja={h} visible={abierto} onClick={closeMobileSidebar} />
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                <EnlaceSub key={sub.to} hoja={sub} visible={abierto} onClick={closeMobileSidebar} />
+              )
+            )}
           </div>
         </div>
       </div>
@@ -141,7 +172,7 @@ export function AppSidebar() {
               item={item}
               items={item.items}
               abierto={abierto === item.label}
-              activo={item.items.some((sub) => enSubmodulo(pathname, sub.to))}
+              activo={rutasDeModulo(item).some((to) => enSubmodulo(pathname, to))}
               onToggle={() => setAbierto((actual) => (actual === item.label ? null : item.label))}
             />
           ) : (
@@ -156,7 +187,7 @@ export function AppSidebar() {
           item={MENU_CONFIGURACION}
           items={MENU_CONFIGURACION.items}
           abierto={abierto === MENU_CONFIGURACION.label}
-          activo={MENU_CONFIGURACION.items.some((sub) => enSubmodulo(pathname, sub.to))}
+          activo={rutasDeModulo(MENU_CONFIGURACION).some((to) => enSubmodulo(pathname, to))}
           onToggle={() =>
             setAbierto((actual) => (actual === MENU_CONFIGURACION.label ? null : MENU_CONFIGURACION.label))
           }

@@ -1,8 +1,8 @@
-import { RotateCcwIcon } from "lucide-react";
+import { RotateCcwIcon, type LucideIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
-import { MENU, RUTAS_FIJAS, claveDe, type NavItem } from "@/app/navegacion";
+import { MENU, RUTAS_FIJAS, claveDe, claveSub, type NavItem } from "@/app/navegacion";
 import { EncabezadoPagina } from "@/shared/components/EncabezadoPagina";
 import { Tarjeta } from "@/shared/components/Tarjeta";
 import { ReglasModulos } from "../components/ReglasModulos";
@@ -13,14 +13,14 @@ import { useDesactivados } from "../hooks/useDesactivados";
 // baja debajo del nombre.
 const filaCls = "grid grid-cols-[1fr_auto] md:grid-cols-[minmax(240px,1fr)_2fr_auto] items-center gap-x-6 gap-y-0.5 px-6";
 
-function Descripcion({ texto, submodulo = false }: { texto?: string; submodulo?: boolean }) {
+function Descripcion({ texto, nivel = 1 }: { texto?: string; nivel?: 1 | 2 | 3 }) {
   return (
     <p
       className={cn(
-        // En móvil, alineada con el nombre: tras el ícono del módulo (44px) o tras la
-        // sangría + ícono del submódulo (66px).
+        // En móvil, alineada con el nombre: tras el ícono del módulo (44px), tras la
+        // sangría + ícono del submódulo (66px) o del 3.er nivel (94px).
         "col-start-1 row-start-2 md:col-start-2 md:row-start-1 md:ml-0 text-sm",
-        submodulo ? "ml-16.5" : "ml-11",
+        nivel === 3 ? "ml-23.5" : nivel === 2 ? "ml-16.5" : "ml-11",
         texto ? "text-gray-600 dark:text-gray-300" : "italic text-gray-400 dark:text-gray-500"
       )}
     >
@@ -61,28 +61,80 @@ function FilaModulo({ item, desactivados }: { item: NavItem; desactivados: Reado
       {item.items && (
         <ul className={cn("pb-2", !activo && "opacity-50")}>
           {item.items.map((sub) => {
-            const subActivo = !desactivados.has(sub.to);
+            const subActivo = !desactivados.has(claveSub(sub));
             return (
-              <li key={sub.to} className={cn(filaCls, "py-2")}>
-                {/* Sangría alineada con el texto del módulo, con guía vertical. */}
-                <p className="ml-4 pl-7 border-l border-gray-200 py-0.5 flex items-center gap-2 text-sm text-gray-700 dark:border-gray-800 dark:text-gray-200">
-                  <sub.icon className="size-3.5 shrink-0 text-gray-400" />
-                  {sub.label}
-                </p>
-                <Descripcion texto={sub.descripcion} submodulo />
-                <Switch
-                  className="row-span-2 md:row-span-1"
-                  checked={subActivo}
-                  disabled={!activo}
-                  onCheckedChange={(v) => setActivo(sub.to, v)}
-                  aria-label={`${subActivo ? "Desactivar" : "Activar"} ${item.label} › ${sub.label}`}
+              <li key={claveSub(sub)}>
+                <FilaSub
+                  entrada={sub}
+                  nivel={2}
+                  ruta={`${item.label} › ${sub.label}`}
+                  activo={subActivo}
+                  habilitado={activo}
+                  onCambiar={(v) => setActivo(claveSub(sub), v)}
                 />
+                {/* 3.er nivel (p. ej. Gestión › Rankings › Clientes). */}
+                {sub.items && (
+                  <ul className={cn(!subActivo && "opacity-50")}>
+                    {sub.items.map((h) => (
+                      <li key={h.to}>
+                        <FilaSub
+                          entrada={h}
+                          nivel={3}
+                          ruta={`${item.label} › ${sub.label} › ${h.label}`}
+                          activo={!desactivados.has(h.to)}
+                          habilitado={activo && subActivo}
+                          onCambiar={(v) => setActivo(h.to, v)}
+                        />
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </li>
             );
           })}
         </ul>
       )}
     </li>
+  );
+}
+
+/** Fila de submódulo (nivel 2) o de su pantalla hija (nivel 3), con sangría y guía. */
+function FilaSub({
+  entrada,
+  nivel,
+  ruta,
+  activo,
+  habilitado,
+  onCambiar,
+}: {
+  entrada: { label: string; icon: LucideIcon; descripcion?: string };
+  nivel: 2 | 3;
+  ruta: string;
+  activo: boolean;
+  habilitado: boolean;
+  onCambiar: (activo: boolean) => void;
+}) {
+  const Icono = entrada.icon;
+  return (
+    <div className={cn(filaCls, "py-2")}>
+      <p
+        className={cn(
+          "pl-7 border-l border-gray-200 py-0.5 flex items-center gap-2 text-sm text-gray-700 dark:border-gray-800 dark:text-gray-200",
+          nivel === 2 ? "ml-4" : "ml-11"
+        )}
+      >
+        <Icono className="size-3.5 shrink-0 text-gray-400" />
+        {entrada.label}
+      </p>
+      <Descripcion texto={entrada.descripcion} nivel={nivel} />
+      <Switch
+        className="row-span-2 md:row-span-1"
+        checked={activo}
+        disabled={!habilitado}
+        onCheckedChange={onCambiar}
+        aria-label={`${activo ? "Desactivar" : "Activar"} ${ruta}`}
+      />
+    </div>
   );
 }
 

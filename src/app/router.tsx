@@ -1,6 +1,6 @@
 import { createBrowserRouter, type RouteObject } from "react-router-dom";
 import AdminLayout from "./layouts/AdminLayout";
-import { MENU_CONFIGURACION, rutasDelMenu } from "./navegacion";
+import { MENU_CONFIGURACION, hojasDe, rutasDelMenu } from "./navegacion";
 import {
   AlmacenesPage,
   CargarStockPage,
@@ -17,6 +17,7 @@ import {
   GestionClientesPage,
   InicioPage,
   ListadoClientesPage,
+  ListadoEventosPage,
   ListadoMascotasPage,
   LotesPage,
   MascotaPage,
@@ -45,6 +46,7 @@ const PAGINAS: Record<string, React.ReactNode> = {
   "/clientes": <ListadoClientesPage />,
   "/clientes/gestion": <GestionClientesPage />,
   "/mascotas": <ListadoMascotasPage />,
+  "/eventos/listado": <ListadoEventosPage />,
   "/productos": <CatalogoPage />,
   "/productos/descargar-stock": <DescargarStockPage />,
   "/productos/cargar-stock": <CargarStockPage />,
@@ -72,7 +74,7 @@ const rutasMenu: RouteObject[] = rutasDelMenu().map(({ to, titulo, claves }) =>
 );
 
 // Configuración no se puede desactivar: sus rutas no pasan por RutaModulo.
-const rutasConfiguracion: RouteObject[] = MENU_CONFIGURACION.items.map((sub) => ({
+const rutasConfiguracion: RouteObject[] = MENU_CONFIGURACION.items.flatMap(hojasDe).map((sub) => ({
   path: sub.to.slice(1),
   element: PAGINAS[sub.to] ?? <EnConstruccionPage />,
   handle: { titulo: `${MENU_CONFIGURACION.label} › ${sub.label}` },
