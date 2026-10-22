@@ -21,12 +21,14 @@ import {
   type LucideIcon,
 } from "lucide-react";
 
-export type SubItem = { label: string; to: string };
+// `descripcion` se muestra en Configuración. Solo se llena cuando está claro qué hace
+// el módulo; si no, queda vacía.
+export type SubItem = { label: string; to: string; descripcion?: string };
 
 // Un módulo tiene ruta propia (`to`) o submódulos (`items` + `id`), no ambos.
 export type NavItem =
-  | { label: string; icon: LucideIcon; to: string; items?: never; id?: never }
-  | { id: string; label: string; icon: LucideIcon; items: SubItem[]; to?: never };
+  | { label: string; icon: LucideIcon; to: string; descripcion?: string; items?: never; id?: never }
+  | { id: string; label: string; icon: LucideIcon; descripcion?: string; items: SubItem[]; to?: never };
 
 /** Clave con la que se activa/desactiva un módulo: su `id` si tiene submódulos, si no su ruta. */
 export function claveDe(item: NavItem): string {
@@ -87,7 +89,7 @@ export const MENU: NavItem[] = [
     icon: UsersIcon,
     items: [
       { label: "Listado", to: "/clientes" },
-      { label: "Gestión", to: "/clientes/gestion" },
+      { label: "Gestión", to: "/clientes/gestion", descripcion: "Indicadores de gestión de clientes." },
     ],
   },
   {

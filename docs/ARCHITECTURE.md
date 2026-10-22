@@ -50,9 +50,8 @@ src/
 
 `AdminLayout` (patrón de `tms`): sidebar fijo de 256px (en `< lg` se abre con el botón
 del header, con fondo oscuro que lo cierra), header sticky de 64px con las acciones
-(hoy solo el tema) y contenido centrado a 1440px. Una ruta con
-`handle: { anchoCompleto: true }` usa todo el ancho. Las páginas se cargan lazy
-dentro de un `Suspense`.
+(hoy solo el tema) y el contenido a **todo el ancho** disponible (sin centrar ni
+ancho máximo). Las páginas se cargan lazy dentro de un `Suspense`.
 
 ### Menú lateral
 
@@ -69,7 +68,9 @@ Para construir una pantalla del menú: página en `features/<f>/pages`, `lazy` e
 
 ### Módulos activables (Configuración)
 
-`/configuracion` lista `MENU` con un interruptor por módulo y por submódulo. La clave
+`/configuracion` lista `MENU` con un interruptor y la `descripcion` de cada módulo y
+submódulo ("Sin descripción" si está vacía; solo se llena cuando está claro qué hace,
+hoy solo Clientes › Gestión). La clave
 de un módulo es su `id` si tiene submódulos, si no su ruta; la de un submódulo, su ruta.
 `modulos.store` guarda las claves **desactivadas** (persistido en `localStorage`,
 `vetzium-modulos`), así un módulo nuevo aparece activo.

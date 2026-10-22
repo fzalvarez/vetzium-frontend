@@ -42,8 +42,14 @@
       - **Descargar stock** (Descargas emitidas, Por ítems) y **Cargar stock** (Cargas
         emitidas, Por ítems): columnas por definir.
 
+- [x] Contenido de las pantallas a todo el ancho (sin centrar). Verificado a 1920px.
+- [x] Configuración muestra la descripción de cada módulo y submódulo (definida en
+      `navegacion.ts`). Solo Clientes › Gestión tiene descripción; el resto
+      "Sin descripción" hasta definirlas.
+
 ## Siguiente
 
+- [ ] Descripciones de los módulos y submódulos.
 - [ ] Por definir: pestañas Ubicación, Zona, Información y Etiquetas de Clientes ›
       Gestión; columnas de Descargar stock y Cargar stock; qué se hace con los clientes
       seleccionados (acciones masivas).

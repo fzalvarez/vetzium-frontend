@@ -8,6 +8,14 @@ import { Tarjeta } from "@/shared/components/Tarjeta";
 import { useModulosStore } from "../store/modulos.store";
 import { useDesactivados } from "../hooks/useDesactivados";
 
+function Descripcion({ texto }: { texto?: string }) {
+  return texto ? (
+    <p className="text-xs text-gray-500 dark:text-gray-400">{texto}</p>
+  ) : (
+    <p className="text-xs italic text-gray-400 dark:text-gray-500">Sin descripción</p>
+  );
+}
+
 function FilaModulo({ item, desactivados }: { item: NavItem; desactivados: ReadonlySet<string> }) {
   const setActivo = useModulosStore((s) => s.setActivo);
   const clave = claveDe(item);
@@ -22,8 +30,11 @@ function FilaModulo({ item, desactivados }: { item: NavItem; desactivados: Reado
           <Icon className="size-4 text-brand-600 dark:text-brand-400" />
         </div>
         <div className="flex-1 min-w-0">
-          <p className="text-sm font-semibold text-gray-800 dark:text-gray-100">{item.label}</p>
-          {fijo && <p className="text-xs text-gray-500 dark:text-gray-400">Siempre visible</p>}
+          <p className="text-sm font-semibold text-gray-800 dark:text-gray-100">
+            {item.label}
+            {fijo && <span className="ml-2 text-xs font-normal text-gray-500 dark:text-gray-400">· Siempre visible</span>}
+          </p>
+          <Descripcion texto={item.descripcion} />
         </div>
         <Switch
           checked={activo}
@@ -36,7 +47,7 @@ function FilaModulo({ item, desactivados }: { item: NavItem; desactivados: Reado
       {item.items && (
         <ul
           className={cn(
-            "mt-3 ml-4.5 pl-7 border-l border-gray-200 flex flex-col gap-2.5 dark:border-gray-800",
+            "mt-3 ml-4.5 pl-7 border-l border-gray-200 flex flex-col gap-3 dark:border-gray-800",
             !activo && "opacity-50"
           )}
         >
@@ -44,7 +55,10 @@ function FilaModulo({ item, desactivados }: { item: NavItem; desactivados: Reado
             const subActivo = !desactivados.has(sub.to);
             return (
               <li key={sub.to} className="flex items-center gap-3">
-                <span className="flex-1 text-sm text-gray-600 dark:text-gray-300">{sub.label}</span>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm text-gray-700 dark:text-gray-200">{sub.label}</p>
+                  <Descripcion texto={sub.descripcion} />
+                </div>
                 <Switch
                   checked={subActivo}
                   disabled={!activo}
