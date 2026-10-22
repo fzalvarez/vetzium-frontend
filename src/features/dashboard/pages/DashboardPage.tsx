@@ -1,6 +1,7 @@
 import { ArmchairIcon, CalendarCheckIcon, ReceiptIcon, WalletIcon } from "lucide-react";
 import { EncabezadoPagina } from "@/shared/components/EncabezadoPagina";
 import { formatearCompacto, formatearNumero, formatearSoles } from "@/shared/utils/formato";
+import { useSalaEsperaStore } from "@/features/sala-espera/store/sala-espera.store";
 import { BarrasHorizontales } from "../components/BarrasHorizontales";
 import { GraficoBarras } from "../components/GraficoBarras";
 import { GraficoDona } from "../components/GraficoDona";
@@ -22,6 +23,9 @@ const ventasDelMes = Array.from({ length: DIAS_DEL_MES }, (_, i) => ({
 }));
 
 export default function DashboardPage() {
+  // Sala de espera: los turnos reales del tablero (no el número de ejemplo).
+  const enEspera = useSalaEsperaStore((s) => s.turnos.filter((t) => t.estado === "espera").length);
+
   return (
     <>
       <EncabezadoPagina
@@ -37,7 +41,7 @@ export default function DashboardPage() {
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
           <TarjetaKpi etiqueta="Ventas del día" valor={formatearSoles(KPIS.ventasDelDia)} icono={ReceiptIcon} />
           <TarjetaKpi etiqueta="Ventas del mes" valor={formatearSoles(KPIS.ventasDelMes)} icono={WalletIcon} />
-          <TarjetaKpi etiqueta="Sala de espera" valor={formatearNumero(KPIS.salaDeEspera)} icono={ArmchairIcon} />
+          <TarjetaKpi etiqueta="Sala de espera" valor={formatearNumero(enEspera)} icono={ArmchairIcon} />
           <TarjetaKpi etiqueta="Citas de hoy" valor={formatearNumero(KPIS.citasDeHoy)} icono={CalendarCheckIcon} />
         </div>
 

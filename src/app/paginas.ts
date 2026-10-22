@@ -6,11 +6,12 @@ import { lazy } from "react";
 // con otras exportaciones rompe el fast refresh de Vite.
 export const InicioPage = lazy(() => import("@/features/inicio/pages/InicioPage"));
 export const DashboardPage = lazy(() => import("@/features/dashboard/pages/DashboardPage"));
-export const EnConstruccionPage =lazy(() => import("@/features/en-construccion/pages/EnConstruccionPage"));
+export const EnConstruccionPage = lazy(() => import("@/features/en-construccion/pages/EnConstruccionPage"));
 export const ListadoMascotasPage = lazy(() => import("@/features/mascotas/pages/ListadoMascotasPage"));
 export const MascotaPage = lazy(() => import("@/features/mascotas/pages/MascotaPage"));
-export const VentasPage =lazy(() => import("@/features/ventas/pages/VentasPage"));
-export const CuentasActivasPage =lazy(() => import("@/features/ventas/pages/CuentasActivasPage"));
+export const SalaEsperaPage = lazy(() => import("@/features/sala-espera/pages/SalaEsperaPage"));
+export const VentasPage = lazy(() => import("@/features/ventas/pages/VentasPage"));
+export const CuentasActivasPage = lazy(() => import("@/features/ventas/pages/CuentasActivasPage"));
 export const ComprobantesPage = lazy(() => import("@/features/ventas/pages/ComprobantesPage"));
 export const EntradasSalidasPage = lazy(() => import("@/features/ventas/pages/EntradasSalidasPage"));
 export const ConfiguracionPage = lazy(() => import("@/features/configuracion/pages/ConfiguracionPage"));
@@ -24,7 +25,7 @@ export const CatalogoPage = lazy(() => import("@/features/productos/pages/Catalo
 export const DescargarStockPage = lazy(() => import("@/features/productos/pages/DescargarStockPage"));
 export const CargarStockPage = lazy(() => import("@/features/productos/pages/CargarStockPage"));
 export const StockAlmacenPage = lazy(() => import("@/features/productos/pages/StockAlmacenPage"));
-export const AlmacenesPage =lazy(() => import("@/features/productos/pages/AlmacenesPage"));
+export const AlmacenesPage = lazy(() => import("@/features/productos/pages/AlmacenesPage"));
 export const LotesPage = lazy(() => import("@/features/productos/pages/LotesPage"));
 export const DirectorioProveedoresPage = lazy(() => import("@/features/proveedores/pages/DirectorioProveedoresPage"));
 export const OrdenesCompraPage = lazy(() => import("@/features/proveedores/pages/OrdenesCompraPage"));

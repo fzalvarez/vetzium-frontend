@@ -18,6 +18,7 @@ export function BuscadorSeleccion<T>({
   disabled = false,
   sinResultados = "Sin resultados.",
   id,
+  enLinea = false,
 }: {
   opciones: T[];
   filtrar: (opcion: T, busqueda: string) => boolean;
@@ -28,6 +29,9 @@ export function BuscadorSeleccion<T>({
   disabled?: boolean;
   sinResultados?: string;
   id?: string;
+  /** Lista dentro del flujo (empuja el contenido) en vez de flotante: para usar dentro
+   * de un modal, cuyo cuerpo con scroll recortaría una lista flotante. */
+  enLinea?: boolean;
 }) {
   const idLista = useId();
   const [texto, setTexto] = useState("");
@@ -62,34 +66,39 @@ export function BuscadorSeleccion<T>({
 
   return (
     <div className="relative w-full">
-      <SearchIcon className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-gray-400" />
-      <input
-        id={id}
-        type="text"
-        role="combobox"
-        aria-expanded={abierto}
-        aria-controls={idLista}
-        aria-autocomplete="list"
-        autoComplete="off"
-        value={texto}
-        disabled={disabled}
-        placeholder={placeholder}
-        onChange={(e) => {
-          setTexto(e.target.value);
-          setAbierto(true);
-          setResaltado(0);
-        }}
-        onFocus={() => setAbierto(true)}
-        onBlur={() => setAbierto(false)}
-        onKeyDown={alTeclear}
-        className="h-10 w-full rounded-lg border border-gray-300 bg-white pl-9 pr-3 text-sm text-gray-800 outline-none transition-all focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
-      />
+      <div className="relative">
+        <SearchIcon className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-gray-400" />
+        <input
+          id={id}
+          type="text"
+          role="combobox"
+          aria-expanded={abierto}
+          aria-controls={idLista}
+          aria-autocomplete="list"
+          autoComplete="off"
+          value={texto}
+          disabled={disabled}
+          placeholder={placeholder}
+          onChange={(e) => {
+            setTexto(e.target.value);
+            setAbierto(true);
+            setResaltado(0);
+          }}
+          onFocus={() => setAbierto(true)}
+          onBlur={() => setAbierto(false)}
+          onKeyDown={alTeclear}
+          className="h-10 w-full rounded-lg border border-gray-300 bg-white pl-9 pr-3 text-sm text-gray-800 outline-none transition-all focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
+        />
+      </div>
 
       {abierto && !disabled && (
         <ul
           id={idLista}
           role="listbox"
-          className="absolute left-0 right-0 top-full z-30 mt-1 max-h-80 overflow-y-auto rounded-lg border border-gray-200 bg-white py-1 shadow-theme-lg custom-scrollbar dark:border-gray-700 dark:bg-gray-800"
+          className={cn(
+            "mt-1 max-h-80 overflow-y-auto rounded-lg border border-gray-200 bg-white py-1 custom-scrollbar dark:border-gray-700 dark:bg-gray-800",
+            enLinea ? "relative" : "absolute left-0 right-0 top-full z-30 shadow-theme-lg"
+          )}
         >
           {resultados.length === 0 ? (
             <li className="px-3 py-2 text-sm text-gray-500 dark:text-gray-400">{sinResultados}</li>

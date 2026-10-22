@@ -113,10 +113,17 @@
       correlativo y aviso): Entrada / Salida de caja, Descargar stock (DS-…), Cargar
       stock (CS-…), Nuevo almacén, Crear nuevo proveedor (RUC 11 dígitos, correo) y
       Nueva orden de compra (OC-…, IGV y monto calculados al escribir).
-- [x] Avisos arriba a la derecha (abajo tapaban la paginación tras guardar).
+- [x] Avisos arriba al centro, bajo la barra (en las esquinas tapaban la paginación o los
+      botones del encabezado).
 - [x] Verificado con Chrome headless y clics/tecleo reales: 13 tablas con 5 filas y pie
       "Mostrando 1–5 de 5", errores de validación, altas, filtro, selección, paso a la
       página 2 con 11 registros y cambio a 25 filas por página.
+- [x] **Sala de espera** (`/sala-espera`, datos de ejemplo en memoria): tablero En espera →
+      En atención → Atendidos hoy. Tarjeta: turno, hora de llegada, mascota (enlace a su
+      página), propietario, motivo y tiempo (se actualiza cada 30 s; "demora" si espera > 30
+      min). Llamar / Finalizar. "Agregar a la sala": mascota (sin las que ya están en espera o
+      atención) y motivo. El KPI "Sala de espera" del Dashboard cuenta los turnos en espera.
+      Verificado con clics reales.
 - [x] **Reglas de los módulos** (Configuración › General, arriba de los módulos; se
       guarda en el navegador): Productos › Lotes "Aviso de vencimiento" = 30 días (1–365).
       Lotes muestra "Vencido" o "Por vencer · N días" junto a la fecha. Verificado: con 30

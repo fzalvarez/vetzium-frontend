@@ -12,7 +12,6 @@ export const VENTAS_POR_DIA: number[] = [
 export const KPIS = {
   ventasDelDia: VENTAS_POR_DIA[VENTAS_POR_DIA.length - 1],
   ventasDelMes: VENTAS_POR_DIA.reduce((a, b) => a + b, 0),
-  salaDeEspera: 4,
   citasDeHoy: 12,
 };
 

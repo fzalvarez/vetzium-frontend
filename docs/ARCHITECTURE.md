@@ -39,6 +39,7 @@ src/
 | Feature | Backend | Rutas |
 |---|---|---|
 | `inicio` | — | `/` |
+| `sala-espera` | por definir (`sala-espera.store` en memoria) | `/sala-espera` |
 | `mascotas` | por definir (`mascotas.store` en memoria) | `/mascotas` (listado), `/mascotas/:id` (mascota abierta, fuera del menú) |
 | `dashboard` | por definir (hoy `datos-ejemplo.ts`) | `/dashboard` |
 | `configuracion` | — (módulos: localStorage; resto: `configuracion.store` en memoria) | `/configuracion` (General), `/configuracion/usuarios`, `/roles`, `/metodos-pago`, `/datos-fiscales`; el resto en construcción |
@@ -141,8 +142,10 @@ Mientras no hay backend, cada feature tiene `datos-ejemplo.ts` (5 registros cohe
 entre tablas) y la página muestra `EtiquetaEjemplo`; las altas viven en memoria.
 
 Altas con `ModalFormulario` (formulario en grilla de 2 columnas + Cancelar/Guardar) y
-react-hook-form + zod. Los avisos (sonner) salen arriba a la derecha, bajo la barra
-superior: abajo tapaban la paginación.
+react-hook-form + zod. Los avisos (sonner) salen arriba al centro, bajo la barra
+superior: entre el título y los botones del encabezado (en las esquinas tapaban la
+paginación o esos botones). Dentro de un modal, `BuscadorSeleccion enLinea` muestra la
+lista en el flujo (flotante quedaría recortada por el scroll del modal).
 
 Sobre la tabla va `BarraHerramientas`: `Buscador` y acciones a la izquierda (`children`)
 y `derecha` alineado a la derecha. Los botones habituales están en `AccionesTabla`

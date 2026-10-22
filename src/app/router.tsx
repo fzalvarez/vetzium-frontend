@@ -23,6 +23,7 @@ import {
   MetodosPagoPage,
   OrdenesCompraPage,
   RolesPage,
+  SalaEsperaPage,
   StockAlmacenPage,
   UsuariosPage,
   VentasPage,
@@ -36,6 +37,7 @@ import RouteErrorBoundary from "@/features/error-pages/pages/RouteErrorBoundary"
 const PAGINAS: Record<string, React.ReactNode> = {
   "/": <InicioPage />,
   "/dashboard": <DashboardPage />,
+  "/sala-espera": <SalaEsperaPage />,
   "/ventas": <VentasPage />,
   "/ventas/cuentas-activas": <CuentasActivasPage />,
   "/ventas/comprobantes": <ComprobantesPage />,
