@@ -44,7 +44,8 @@
 
 - [x] Contenido de las pantallas a todo el ancho (sin centrar). Verificado a 1920px.
 - [x] Configuración muestra la descripción de cada módulo y submódulo (definida en
-      `navegacion.ts`). Solo Clientes › Gestión tiene descripción; el resto
+      `navegacion.ts`) en columnas: Módulo · Descripción · Activo (en móvil la
+      descripción va debajo del nombre). Solo Clientes › Gestión tiene descripción; el resto
       "Sin descripción" hasta definirlas.
 
 ## Siguiente

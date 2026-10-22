@@ -8,11 +8,21 @@ import { Tarjeta } from "@/shared/components/Tarjeta";
 import { useModulosStore } from "../store/modulos.store";
 import { useDesactivados } from "../hooks/useDesactivados";
 
+// Tres columnas desde md (Módulo · Descripción · Activo); en móvil la descripción
+// baja debajo del nombre.
+const filaCls = "grid grid-cols-[1fr_auto] md:grid-cols-[minmax(240px,1fr)_2fr_auto] items-center gap-x-6 gap-y-0.5 px-6";
+
 function Descripcion({ texto }: { texto?: string }) {
-  return texto ? (
-    <p className="text-xs text-gray-500 dark:text-gray-400">{texto}</p>
-  ) : (
-    <p className="text-xs italic text-gray-400 dark:text-gray-500">Sin descripción</p>
+  return (
+    <p
+      className={cn(
+        // En móvil, alineada con el nombre (ícono/sangría de 44px).
+        "col-start-1 row-start-2 ml-11 md:col-start-2 md:row-start-1 md:ml-0 text-sm",
+        texto ? "text-gray-600 dark:text-gray-300" : "italic text-gray-400 dark:text-gray-500"
+      )}
+    >
+      {texto || "Sin descripción"}
+    </p>
   );
 }
 
@@ -24,19 +34,20 @@ function FilaModulo({ item, desactivados }: { item: NavItem; desactivados: Reado
   const Icon = item.icon;
 
   return (
-    <li className="px-6 py-4">
-      <div className="flex items-center gap-3">
-        <div className="w-9 h-9 rounded-lg bg-brand-50 flex items-center justify-center shrink-0 dark:bg-brand-500/15">
-          <Icon className="size-4 text-brand-600 dark:text-brand-400" />
-        </div>
-        <div className="flex-1 min-w-0">
+    <li>
+      <div className={cn(filaCls, "py-3")}>
+        <div className="flex items-center gap-3 min-w-0">
+          <div className="w-8 h-8 rounded-lg bg-brand-50 flex items-center justify-center shrink-0 dark:bg-brand-500/15">
+            <Icon className="size-4 text-brand-600 dark:text-brand-400" />
+          </div>
           <p className="text-sm font-semibold text-gray-800 dark:text-gray-100">
             {item.label}
             {fijo && <span className="ml-2 text-xs font-normal text-gray-500 dark:text-gray-400">· Siempre visible</span>}
           </p>
-          <Descripcion texto={item.descripcion} />
         </div>
+        <Descripcion texto={item.descripcion} />
         <Switch
+          className="row-span-2 md:row-span-1"
           checked={activo}
           disabled={fijo}
           onCheckedChange={(v) => setActivo(clave, v)}
@@ -45,21 +56,18 @@ function FilaModulo({ item, desactivados }: { item: NavItem; desactivados: Reado
       </div>
 
       {item.items && (
-        <ul
-          className={cn(
-            "mt-3 ml-4.5 pl-7 border-l border-gray-200 flex flex-col gap-3 dark:border-gray-800",
-            !activo && "opacity-50"
-          )}
-        >
+        <ul className={cn("pb-2", !activo && "opacity-50")}>
           {item.items.map((sub) => {
             const subActivo = !desactivados.has(sub.to);
             return (
-              <li key={sub.to} className="flex items-center gap-3">
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm text-gray-700 dark:text-gray-200">{sub.label}</p>
-                  <Descripcion texto={sub.descripcion} />
-                </div>
+              <li key={sub.to} className={cn(filaCls, "py-2")}>
+                {/* Sangría alineada con el texto del módulo, con guía vertical. */}
+                <p className="ml-4 pl-7 border-l border-gray-200 py-0.5 text-sm text-gray-700 dark:border-gray-800 dark:text-gray-200">
+                  {sub.label}
+                </p>
+                <Descripcion texto={sub.descripcion} />
                 <Switch
+                  className="row-span-2 md:row-span-1"
                   checked={subActivo}
                   disabled={!activo}
                   onCheckedChange={(v) => setActivo(sub.to, v)}
@@ -98,6 +106,19 @@ export default function ConfiguracionPage() {
             módulo se ocultan todos sus submódulos.
           </p>
         </div>
+
+        {/* Encabezado de columnas (solo desde md, donde hay columnas). */}
+        <div
+          className={cn(
+            filaCls,
+            "hidden md:grid py-3 bg-gray-50 border-b border-gray-200 text-xs font-semibold text-gray-500 uppercase tracking-wider dark:bg-white/5 dark:border-gray-800 dark:text-gray-400"
+          )}
+        >
+          <span>Módulo</span>
+          <span>Descripción</span>
+          <span>Activo</span>
+        </div>
+
         <ul className="divide-y divide-gray-200 dark:divide-gray-800">
           {MENU.map((item) => (
             <FilaModulo key={claveDe(item)} item={item} desactivados={desactivados} />
