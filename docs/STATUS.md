@@ -88,7 +88,13 @@
       Chrome headless en claro y oscuro, con hover real (tooltip de barra y centro de la
       dona).
 
+- [x] Barra superior: Buscar, Calendario, Maximizar ventana (pantalla completa real,
+      alterna a Restaurar), Ayuda, tema y Mi cuenta. Verificado con clics reales en
+      Chrome headless; en móvil se ocultan Calendario y Maximizar.
+
 ## Siguiente
+
+- [ ] Qué abren Buscar, Calendario, Ayuda y Mi cuenta (hoy "Próximamente").
 
 - [ ] Dashboard: reemplazar `datos-ejemplo.ts` por la API; confirmar especies, período
       del "Promedio de visitas diarias" y si Dashboard reemplaza a Inicio.

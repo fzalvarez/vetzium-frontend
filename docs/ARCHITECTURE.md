@@ -52,7 +52,9 @@ src/
 
 `AdminLayout` (patrón de `tms`): sidebar fijo de 256px (en `< lg` se abre con el botón
 del header, con fondo oscuro que lo cierra), header sticky de 64px con las acciones
-(hoy solo el tema) y el contenido a **todo el ancho** disponible (sin centrar ni
+(Buscar, Calendario, Maximizar ventana —Fullscreen API, `usePantallaCompleta`—, Ayuda,
+tema y Mi cuenta; botones `BotonHeader`; en móvil se ocultan Calendario y Maximizar)
+y el contenido a **todo el ancho** disponible (sin centrar ni
 ancho máximo). Las páginas se cargan lazy dentro de un `Suspense`.
 
 ### Menú lateral
