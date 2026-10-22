@@ -88,6 +88,10 @@
       Chrome headless en claro y oscuro, con hover real (tooltip de barra y centro de la
       dona).
 
+- [x] Ventas del mes muestra los 31 días en el eje (en columnas angostas, como en
+      móvil, las etiquetas van verticales). El gráfico reserva su alto y se mide antes
+      de pintar, así no aparece vacío ni hace saltar la tarjeta. Verificado a 500,
+      1366 y 1920px.
 - [x] Barra superior: Buscar, Calendario, Maximizar ventana (pantalla completa real,
       alterna a Restaurar), Ayuda, tema y Mi cuenta. Verificado con clics reales en
       Chrome headless; en móvil se ocultan Calendario y Maximizar.

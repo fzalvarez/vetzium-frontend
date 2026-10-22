@@ -56,8 +56,6 @@ export default function DashboardPage() {
               alto={300}
               formatear={formatearSoles}
               formatearEje={(v) => `S/ ${formatearCompacto(v)}`}
-              // Día 1 y cada 5 días, para no saturar el eje.
-              mostrarEtiqueta={(i) => i === 0 || (i + 1) % 5 === 0}
             />
           </TarjetaGrafico>
 

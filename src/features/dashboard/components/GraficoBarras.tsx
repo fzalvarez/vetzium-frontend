@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { cn } from "@/lib/utils";
 import { useAncho } from "@/shared/hooks/useAncho";
 
 export interface DatoBarra {
@@ -7,8 +8,10 @@ export interface DatoBarra {
   valor: number | null;
 }
 
-const MARGEN = { arriba: 12, derecha: 4, abajo: 28, izquierda: 52 };
+const MARGEN = { arriba: 12, derecha: 4, izquierda: 52 };
 const DIVISIONES = 4;
+// Ancho de columna bajo el cual las etiquetas del eje X no caben en horizontal.
+const RANURA_MIN_HORIZONTAL = 15;
 
 /** Máximo "redondo" del eje: paso de 1, 2, 2.5 o 5 × 10ⁿ por división. */
 function maximoEje(valor: number): number {
@@ -30,7 +33,6 @@ export function GraficoBarras({
   datos,
   formatear,
   formatearEje,
-  mostrarEtiqueta = () => true,
   alto: ALTO = 240,
 }: {
   datos: DatoBarra[];
@@ -38,16 +40,17 @@ export function GraficoBarras({
   alto?: number;
   formatear: (valor: number) => string;
   formatearEje: (valor: number) => string;
-  /** Qué etiquetas del eje X se escriben (para no saturarlo con muchos puntos). */
-  mostrarEtiqueta?: (indice: number) => boolean;
 }) {
   const [ref, ancho] = useAncho<HTMLDivElement>();
   const [activo, setActivo] = useState<number | null>(null);
 
   const maximo = maximoEje(Math.max(0, ...datos.map((d) => d.valor ?? 0)));
   const anchoPlot = Math.max(0, ancho - MARGEN.izquierda - MARGEN.derecha);
-  const altoPlot = ALTO - MARGEN.arriba - MARGEN.abajo;
   const ranura = datos.length > 0 ? anchoPlot / datos.length : 0;
+  // Todas las etiquetas se escriben; si no caben en horizontal, van verticales.
+  const etiquetasVerticales = ranura < RANURA_MIN_HORIZONTAL;
+  const margenAbajo = etiquetasVerticales ? 34 : 28;
+  const altoPlot = ALTO - MARGEN.arriba - margenAbajo;
   const anchoBarra = Math.max(2, Math.min(ranura * 0.7, 28));
   const y = (v: number) => MARGEN.arriba + altoPlot * (1 - v / maximo);
   const xCentro = (i: number) => MARGEN.izquierda + ranura * i + ranura / 2;
@@ -55,7 +58,8 @@ export function GraficoBarras({
   const datoActivo = activo !== null ? datos[activo] : null;
 
   return (
-    <div ref={ref} className="relative" onMouseLeave={() => setActivo(null)}>
+    // Alto reservado desde el inicio: la tarjeta no salta mientras se mide el ancho.
+    <div ref={ref} className="relative" style={{ height: ALTO }} onMouseLeave={() => setActivo(null)}>
       {ancho > 0 && (
         <svg width={ancho} height={ALTO} className="block overflow-visible">
           {/* Grilla y eje Y */}
@@ -95,12 +99,24 @@ export function GraficoBarras({
                   }
                 />
               )}
-              {mostrarEtiqueta(i) && (
+              {etiquetasVerticales ? (
+                <text
+                  transform={`translate(${xCentro(i)}, ${y(0) + 6}) rotate(-90)`}
+                  dy="0.32em"
+                  textAnchor="end"
+                  className="fill-gray-500 text-[10px] tabular-nums dark:fill-gray-400"
+                >
+                  {d.etiqueta}
+                </text>
+              ) : (
                 <text
                   x={xCentro(i)}
                   y={ALTO - 8}
                   textAnchor="middle"
-                  className="fill-gray-500 text-[11px] tabular-nums dark:fill-gray-400"
+                  className={cn(
+                    "fill-gray-500 tabular-nums dark:fill-gray-400",
+                    ranura < 18 ? "text-[10px]" : "text-[11px]"
+                  )}
                 >
                   {d.etiqueta}
                 </text>
