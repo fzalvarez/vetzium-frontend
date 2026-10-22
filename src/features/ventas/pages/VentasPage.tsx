@@ -1,10 +1,11 @@
-import { Trash2Icon } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { ReceiptTextIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input, SelectNativo } from "@/components/ui/input";
+import { SelectNativo } from "@/components/ui/input";
 import { BuscadorSeleccion } from "@/shared/components/BuscadorSeleccion";
 import { EncabezadoPagina } from "@/shared/components/EncabezadoPagina";
 import { EtiquetaEjemplo, Insignia } from "@/shared/components/Insignia";
-import { Celda, Fila, Tabla, type Columna } from "@/shared/components/Tabla";
+import { Tabla, type Columna } from "@/shared/components/Tabla";
 import { Tarjeta } from "@/shared/components/Tarjeta";
 import { formatearNumero, formatearSoles } from "@/shared/utils/formato";
 import { coincide } from "@/shared/utils/texto";
@@ -12,9 +13,10 @@ import { useClientesStore } from "@/features/clientes/store/clientes.store";
 import { useConfiguracionStore } from "@/features/configuracion/store/configuracion.store";
 import { useMascotasStore } from "@/features/mascotas/store/mascotas.store";
 import { BarraCliente } from "../components/BarraCliente";
+import { FilaLineaVenta } from "../components/FilaLineaVenta";
 import { ResumenVenta } from "../components/ResumenVenta";
 import { ITEMS_VENDIBLES_EJEMPLO } from "../datos-ejemplo";
-import { calcularLinea, calcularTotales } from "../lib/totales";
+import { calcularTotales } from "../lib/totales";
 import { ALMACENES_VENTA, useVentaStore } from "../store/venta.store";
 import type { ItemVendible } from "../types/venta";
 
@@ -30,7 +32,11 @@ const COLUMNAS: Columna[] = [
 ];
 
 export default function VentasPage() {
+  const navigate = useNavigate();
   const tasaIgv = useConfiguracionStore((s) => s.datosFiscales.tasaIgv);
+  const usuarios = useConfiguracionStore((s) => s.usuarios);
+  // Vendedores que pueden comisionar: usuarios activos.
+  const vendedores = usuarios.filter((u) => u.activo);
   const clientes = useClientesStore((s) => s.clientes);
   const todasMascotas = useMascotasStore((s) => s.mascotas);
   // La venta en curso vive en un store: se conserva al ir a registrar una mascota y volver.
@@ -109,63 +115,27 @@ export default function VentasPage() {
             vacia={lineas.length === 0}
             mensajeVacio={cliente ? "Agrega productos o servicios a la cuenta." : "Selecciona un cliente para empezar."}
           >
-            {lineas.map((l) => {
-              const m = calcularLinea(l, tasaIgv);
-              return (
-                <Fila key={l.item.id}>
-                  <Celda destacada>
-                    {l.item.nombre}
-                    {l.item.icbper && <span className="ml-2 text-xs font-normal text-gray-500">(afecto a ICBPER)</span>}
-                  </Celda>
-                  <Celda alinear="derecha" numerica>{formatearSoles(m.valorUnitario)}</Celda>
-                  <Celda alinear="centro">
-                    <Input
-                      type="number"
-                      min={1}
-                      step={1}
-                      value={l.cantidad}
-                      onChange={(e) => actualizar(l.item.id, { cantidad: Math.max(1, Math.floor(Number(e.target.value) || 1)) })}
-                      aria-label={`Cantidad de ${l.item.nombre}`}
-                      className="mx-auto h-8 w-20 text-center tabular-nums"
-                    />
-                  </Celda>
-                  <Celda alinear="derecha" numerica>{formatearSoles(m.subtotal)}</Celda>
-                  <Celda alinear="derecha" numerica>{formatearSoles(m.impuestos)}</Celda>
-                  <Celda alinear="derecha" numerica destacada>{formatearSoles(m.total)}</Celda>
-                  <Celda>
-                    <SelectNativo
-                      value={l.mascotaId ?? ""}
-                      onChange={(e) => actualizar(l.item.id, { mascotaId: e.target.value ? Number(e.target.value) : null })}
-                      aria-label={`Mascota de ${l.item.nombre}`}
-                      className="h-8 w-36"
-                    >
-                      <option value="">Sin mascota</option>
-                      {mascotas.map((ms) => (
-                        <option key={ms.id} value={ms.id}>
-                          {ms.nombre}
-                        </option>
-                      ))}
-                    </SelectNativo>
-                  </Celda>
-                  <Celda alinear="centro">
-                    <Button
-                      variant="ghost"
-                      size="icon-sm"
-                      aria-label={`Quitar ${l.item.nombre}`}
-                      title="Quitar"
-                      onClick={() => quitar(l.item.id)}
-                      className="hover:text-error-600 dark:hover:text-error-400"
-                    >
-                      <Trash2Icon className="size-4" />
-                    </Button>
-                  </Celda>
-                </Fila>
-              );
-            })}
+            {lineas.map((l) => (
+              <FilaLineaVenta
+                key={l.item.id}
+                linea={l}
+                tasaIgv={tasaIgv}
+                mascotas={mascotas}
+                vendedores={vendedores}
+                onActualizar={(cambios) => actualizar(l.item.id, cambios)}
+                onQuitar={() => quitar(l.item.id)}
+              />
+            ))}
           </Tabla>
 
-          <div className="border-t border-gray-200 p-5 dark:border-gray-800">
+          <div className="flex flex-col gap-5 border-t border-gray-200 p-5 dark:border-gray-800">
             <ResumenVenta totales={totales} />
+            <div className="flex justify-end">
+              <Button onClick={() => navigate("/ventas/comprobantes/nuevo")} disabled={!cliente || lineas.length === 0}>
+                <ReceiptTextIcon className="size-4" />
+                Ir a caja y generar comprobante
+              </Button>
+            </div>
           </div>
         </Tarjeta>
       </div>

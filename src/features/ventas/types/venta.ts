@@ -13,10 +13,24 @@ export interface ItemVendible {
   icbper: boolean;
 }
 
+/** Descuento en monto (S/, con IGV) o en porcentaje. */
+export interface Descuento {
+  tipo: "monto" | "porcentaje";
+  valor: number;
+}
+
 /** Línea de la cuenta en la pantalla de venta. */
 export interface LineaVenta {
   item: ItemVendible;
   cantidad: number;
   /** Id de la mascota del cliente; null = sin mascota. */
   mascotaId: number | null;
+  /** Precio unitario con IGV cambiado para esta venta; ausente = precio de lista. */
+  precio?: number;
+  descuento?: Descuento | null;
+  /** Regalo: la línea se registra pero no se cobra (descuento del 100 %). */
+  regalo?: boolean;
+  /** Usuario que comisiona por la línea. */
+  vendedorId?: number | null;
+  comentario?: string;
 }
