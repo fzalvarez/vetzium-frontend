@@ -57,8 +57,20 @@
         Estado (Recibido/Aprobado), Valor neto, Impuestos, Monto, Opciones.
       - Los botones muestran "Próximamente" (verificado con clic real).
 - [x] `Button` y `ThemeToggle` pasan de colores fijos heredados a tokens de marca.
+- [x] Productos, estructura visual sin datos, verificada con Chrome headless:
+      - **Lotes**: barra Buscar producto, Más filtros, Agrupar, Borrar, Actualizar; a la
+        derecha Exportar y Opciones. Tabla ID, Fecha de registro, Producto, # Lote,
+        Almacén, Fecha de vencimiento, Cantidad entrada, Saldo, Opciones.
+      - **Almacenes**: barra Estados (Todos), Borrar, Actualizar, + Nuevo; a la derecha
+        Exportar y Opciones. Tabla ID, Nombre de almacén, Código personalizado, Tipo de
+        almacén, Estado, Usar para ventas, Opciones.
+- [x] Botones de barra compartidos (`AccionesTabla`) y `SelectorFiltro`; Órdenes de compra
+      los usa (sin cambio visual).
 
 ## Siguiente
+
+- [ ] Por definir en Productos: estados de un almacén (el filtro solo tiene "Todos") y
+      tipos de almacén además de "Principal".
 
 - [ ] Por definir en Proveedores: Recepciones y Pagos; qué borra "Borrar"; qué filtros
       tiene "Más filtros" y por qué campos se agrupa; qué incluye el menú Opciones.

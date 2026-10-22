@@ -2,6 +2,7 @@ import { createBrowserRouter, type RouteObject } from "react-router-dom";
 import AdminLayout from "./layouts/AdminLayout";
 import { rutasDelMenu } from "./navegacion";
 import {
+  AlmacenesPage,
   CargarStockPage,
   CatalogoPage,
   ComprobantesPage,
@@ -14,6 +15,7 @@ import {
   GestionClientesPage,
   InicioPage,
   ListadoClientesPage,
+  LotesPage,
   OrdenesCompraPage,
 } from "./paginas";
 import { RutaModulo } from "@/features/configuracion/components/RutaModulo";
@@ -32,6 +34,8 @@ const PAGINAS: Record<string, React.ReactNode> = {
   "/productos": <CatalogoPage />,
   "/productos/descargar-stock": <DescargarStockPage />,
   "/productos/cargar-stock": <CargarStockPage />,
+  "/productos/almacenes": <AlmacenesPage />,
+  "/productos/lotes": <LotesPage />,
   "/proveedores": <DirectorioProveedoresPage />,
   "/proveedores/ordenes-compra": <OrdenesCompraPage />,
 };

@@ -43,7 +43,7 @@ src/
 | `ventas` | por definir | `/ventas/cuentas-activas`, `/ventas/comprobantes`, `/ventas/entradas-salidas` |
 | `clientes` | por definir | `/clientes` (listado), `/clientes/gestion` |
 | `proveedores` | por definir | `/proveedores` (directorio), `/proveedores/ordenes-compra` |
-| `productos` | por definir | `/productos` (catálogo), `/productos/descargar-stock`, `/productos/cargar-stock` |
+| `productos` | por definir | `/productos` (catálogo), `/productos/descargar-stock`, `/productos/cargar-stock`, `/productos/almacenes`, `/productos/lotes` |
 | `en-construccion` | — | toda ruta del menú sin pantalla propia |
 | `error-pages` | — | `*` (404), `errorElement` |
 
@@ -91,9 +91,10 @@ columna (p. ej. la casilla de seleccionar todos). Una vista sin columnas definid
 muestra `PorDefinir`.
 
 Sobre la tabla va `BarraHerramientas`: `Buscador` y acciones a la izquierda (`children`)
-y `derecha` alineado a la derecha (p. ej. Exportar, Opciones). Botones `size="sm"`; la
-acción principal con la variante por defecto. Un botón cuya acción aún no existe llama a
-`proximamente("Acción")` (toast informativo).
+y `derecha` alineado a la derecha. Los botones habituales están en `AccionesTabla`
+(`BotonMasFiltros`, `BotonAgrupar`, `BotonBorrar`, `BotonActualizar`, `BotonNuevo` y
+`AccionesDerecha` = Exportar + Opciones); sin `onClick` muestran `proximamente()`.
+Filtros tipo "Estados: Todos" con `SelectorFiltro`.
 
 Colores solo con tokens (`brand-*`, `gray-*`, `error-*`…), también en `components/ui`.
 Colores solo con tokens (`brand-*`, `gray-*`) para cambiar la identidad desde `index.css`.
